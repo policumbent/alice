@@ -1,16 +1,12 @@
 {
   "name": "frontend",
   "version": "0.0.1",
-  "description": "Frontend per sincro dati con policumbent-ant",
-  "author": "Łukasz Holeczek",
-  "homepage": "localhost",
+  "description": "",
+  "author": "",
+  "homepage": "",
   "copyright": "Copyright 2018 creativeLabs Łukasz Holeczek",
   "license": "MIT",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:gabelluardo/frontend.git"
-  },
   "dependencies": {
     "@coreui/coreui": "^2.1.7",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
@@ -42,7 +38,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build ",
+    "postbuild": "mv build ../server/templates/react",
     "test": "react-scripts test",
     "test:cov": "react-scripts test --coverage",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
