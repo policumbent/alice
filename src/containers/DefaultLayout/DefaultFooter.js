@@ -15,7 +15,7 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span className="ml-auto">frasi</span>
+        <span className="ml-auto"></span>
       </React.Fragment>
     );
   }
