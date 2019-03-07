@@ -310,19 +310,22 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-var elements = 27;
+var elements = 100;
 var data1 = [];
 var data2 = [];
 var data3 = [];
+var label = [];
+
 
 for (var i = 0; i <= elements; i++) {
   data1.push(random(50, 200));
   data2.push(random(80, 100));
   data3.push(65);
+  label.push('');
 }
 
 const mainChart = {
-  labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+  labels: label,
   datasets: [
     {
       label: 'My First dataset',
@@ -394,7 +397,68 @@ const mainChartOpts = {
       hoverBorderWidth: 3,
     },
   },
+  animation: {
+        duration: 0
+    },
 };
+
+class Graph extends Component{
+
+	componentWillMount(){
+		this.setState(mainChart);
+	}
+
+	componentDidMount(){
+
+		var _this = this;
+
+		setInterval(function(){
+			var oldDataSet1 = _this.state.datasets[0];
+            var oldDataSet2 = _this.state.datasets[1];
+			var oldDataSet3 = _this.state.datasets[2];
+
+			var newData1 = [];
+            var newData2 = [];
+            var newData3 = [];
+
+			for(var x=1; x< _this.state.labels.length; x++){
+				newData1.push(oldDataSet1.data[x]);
+                newData2.push(oldDataSet2.data[x]);
+                newData3.push(oldDataSet3.data[x]);
+			}
+            newData1.push(random(50, 200));
+            newData2.push(random(80, 100));
+            newData3.push(65);
+
+			var newDataSet1 = {
+				...oldDataSet1
+			};
+            var newDataSet2 = {
+				...oldDataSet2
+			};
+            var newDataSet3 = {
+				...oldDataSet3
+			};
+
+			newDataSet1.data = newData1;
+			newDataSet2.data = newData2;
+			newDataSet3.data = newData3;
+
+			var newState = {
+				...mainChart,
+				datasets: [newDataSet1,newDataSet2,newDataSet3]
+			};
+
+			_this.setState(newState);
+		}, 1000);
+	}
+
+	render() {
+		return (
+            <Line data={this.state} options={mainChartOpts} height={300}/>
+        );
+	}
+}
 
 class Dashboard extends Component {
   constructor(props) {
@@ -408,6 +472,7 @@ class Dashboard extends Component {
       radioSelected: 2,
     };
   }
+
 
   toggle() {
     this.setState({
@@ -535,6 +600,7 @@ class Dashboard extends Component {
                     <CardTitle className="mb-0">Traffic</CardTitle>
                     <div className="small text-muted">November 2015</div>
                   </Col>
+
                   <Col sm="7" className="d-none d-sm-inline-block">
                     <Button color="primary" className="float-right"><i className="icon-cloud-download"></i></Button>
                     <ButtonToolbar className="float-right" aria-label="Toolbar with button groups">
@@ -546,10 +612,12 @@ class Dashboard extends Component {
                     </ButtonToolbar>
                   </Col>
                 </Row>
+
                 <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                  <Line data={mainChart} options={mainChartOpts} height={300} />
+                  <Graph/>
                 </div>
               </CardBody>
+
               <CardFooter>
                 <Row className="text-center">
                   <Col sm={12} md className="mb-sm-2 mb-0">
