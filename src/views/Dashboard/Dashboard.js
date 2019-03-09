@@ -396,6 +396,9 @@ const mainChartOpts = {
       hoverRadius: 4,
       hoverBorderWidth: 3,
     },
+    line: {
+        tension: 0,
+    }
   },
   animation: {
         duration: 0

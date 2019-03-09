@@ -212,10 +212,6 @@ export default {
       name: 'Widgets',
       url: '/widgets',
       icon: 'icon-calculator',
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
     },
     {
       divider: true,

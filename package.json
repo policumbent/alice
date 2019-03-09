@@ -31,7 +31,8 @@
     "react-router-dom": "^4.3.1",
     "react-test-renderer": "^16.8.2",
     "reactstrap": "^7.1.0",
-    "simple-line-icons": "^2.4.1"
+    "simple-line-icons": "^2.4.1",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "react-scripts": "2.1.5"
@@ -45,7 +46,7 @@
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"
   },
-    "eslintConfig": {
+  "eslintConfig": {
     "extends": "react-app"
   },
   "browserslist": [
