@@ -4,7 +4,7 @@ let socket;
 
 var SocketIoHelper = {
   setup: function() {
-    socket = openSocket("http://localhost:8080");
+    socket = openSocket("http://"+ document.domain + ":"+ window.location.port);
 
     //avvenuta connessione
     socket.on("my response", function(msg) {
