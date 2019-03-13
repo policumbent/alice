@@ -40,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
-    "postbuild": "mv build ../server/templates/react",
+    "postbuild": "rm -rf ../datasync/templates/react; mv build ../datasync/templates/react",
     "test": "react-scripts test",
     "test:cov": "react-scripts test --coverage",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
