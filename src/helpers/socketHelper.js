@@ -4,15 +4,23 @@ let socket;
 
 var SocketIoHelper = {
   setup: function() {
-    socket = openSocket("http://"+ document.domain + ":"+ window.location.port);
+    //SOLO PER LO SVILUPPO
+    let port;
+    if (window.location.port === "3000") {
+      port = "5000";
+    } else {
+      port = window.location.port;
+    }
 
-    //avvenuta connessione
-    socket.on("my response", function(msg) {
+    socket = openSocket("http://" + document.domain + ":" + port);
+
+    // connessione
+    socket.on("connection", () => {
       //alert(msg);
     });
   },
   getData: function(cb) {
-    socket.on("json response", data => cb(data));
+    socket.on("json response", data => cb(JSON.parse(data)));
   },
 
   requestData: function() {
