@@ -1,45 +1,32 @@
 import React, {
-  Component,
-  lazy,
-  Suspense
+  Component
 } from "react";
 import {
   Bar,
   Line
 } from "react-chartjs-2";
 import {
-  Badge,
-  Button,
   ButtonDropdown,
   ButtonGroup,
-  ButtonToolbar,
   Card,
   CardBody,
-  CardFooter,
-  CardHeader,
-  CardTitle,
   Col,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  Progress,
-  Row,
-  Table
+  Row
 } from "reactstrap";
 import {
   CustomTooltips
 } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 import {
-  getStyle,
-  hexToRgba
+  getStyle
 } from "@coreui/coreui/dist/js/coreui-utilities";
 import SocketIoHelper from "../../helpers/socketHelper";
 
-const Widget03 = lazy(() => import("../../views/Widgets/Widget03"));
-
 const brandPrimary = getStyle("--primary");
-const brandSuccess = getStyle("--success");
+//const brandSuccess = getStyle("--success");
 const brandInfo = getStyle("--info");
 const brandWarning = getStyle("--warning");
 const brandDanger = getStyle("--danger");
@@ -220,94 +207,14 @@ const cardChartOpts4 = {
   }
 };
 
-// sparkline charts
-const sparkLineChartData = [{
-    data: [35, 23, 56, 22, 97, 23, 64],
-    label: "New Clients"
-  },
-  {
-    data: [65, 59, 84, 84, 51, 55, 40],
-    label: "Recurring Clients"
-  },
-  {
-    data: [35, 23, 56, 22, 97, 23, 64],
-    label: "Pageviews"
-  },
-  {
-    data: [65, 59, 84, 84, 51, 55, 40],
-    label: "Organic"
-  },
-  {
-    data: [78, 81, 80, 45, 34, 12, 40],
-    label: "CTR"
-  },
-  {
-    data: [1, 13, 9, 17, 34, 41, 38],
-    label: "Bounce Rate"
-  }
-];
-
-const makeSparkLineData = (dataSetNo, variant) => {
-  const dataset = sparkLineChartData[dataSetNo];
-  const data = {
-    labels: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday"
-    ],
-    datasets: [{
-      backgroundColor: "transparent",
-      borderColor: variant ? variant : "#c2cfd6",
-      data: dataset.data,
-      label: dataset.label
-    }]
-  };
-  return () => data;
-};
-
-const sparklineChartOpts = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips
-  },
-  responsive: true,
-  maintainAspectRatio: true,
-  scales: {
-    xAxes: [{
-      display: false
-    }],
-    yAxes: [{
-      display: false
-    }]
-  },
-  elements: {
-    line: {
-      borderWidth: 2
-    },
-    point: {
-      radius: 0,
-      hitRadius: 10,
-      hoverRadius: 4,
-      hoverBorderWidth: 3
-    }
-  },
-  legend: {
-    display: false
-  }
-};
-
 // Main Chart
 
 //Random Numbers
-function random(min, max) {
+/*function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
+}*/
 
-var elements = 150;
+var elements = 20;
 var data1 = [];
 var data2 = [];
 var data3 = [];
@@ -412,62 +319,61 @@ class Graph extends Component {
     this.data = this.props.data;
   }
 
-  componentWillReceiveProps() {
-    this.data = this.props.data;
-    var _this = this;
+  componentDidUpdate() {
+    if (this.data !== this.props.data) {
+      this.data = this.props.data;
+      var _this = this;
 
-    var oldDataSet1 = _this.state.datasets[0];
-    var oldDataSet2 = _this.state.datasets[1];
-    var oldDataSet3 = _this.state.datasets[2];
-    var labels = _this.state.labels;
-    /*var time = Math.round(_this.data.Minutes * 100 * 60) / 100;
-    var minutes = Math.floor(time / 60);
-    var seconds = time % 60;*/
+      var oldDataSet1 = _this.state.datasets[0];
+      var oldDataSet2 = _this.state.datasets[1];
+      var oldDataSet3 = _this.state.datasets[2];
+      var labels = _this.state.labels;
+      /*var time = Math.round(_this.data.Minutes * 100 * 60) / 100;
+      var minutes = Math.floor(time / 60);
+      var seconds = time % 60;*/
 
-    var newData1 = [];
-    var newData2 = [];
-    var newData3 = [];
+      var newData1 = [];
+      var newData2 = [];
+      var newData3 = [];
 
-    for (var x = 1; x < _this.state.labels.length; x++) {
-      newData1.push(oldDataSet1.data[x]);
-      newData2.push(oldDataSet2.data[x]);
-      newData3.push(oldDataSet3.data[x]);
+      for (var x = 1; x < _this.state.labels.length; x++) {
+        newData1.push(oldDataSet1.data[x]);
+        newData2.push(oldDataSet2.data[x]);
+        newData3.push(oldDataSet3.data[x]);
+      }
+
+      // TODO: stampare secondi asse x ?
+      labels.shift();
+      labels.push("");
+
+      newData1.push(_this.data.Watts);
+      newData2.push(_this.data.Hrate);
+      newData3.push(_this.data.Speed);
+
+      var newDataSet1 = {
+        ...oldDataSet1
+      };
+      var newDataSet2 = {
+        ...oldDataSet2
+      };
+      var newDataSet3 = {
+        ...oldDataSet3
+      };
+
+      newDataSet1.data = newData1;
+      newDataSet2.data = newData2;
+      newDataSet3.data = newData3;
+
+      var newState = {
+        ..._this.state,
+        datasets: [newDataSet1, newDataSet2, newDataSet3]
+      };
+
+      _this.setState(newState);
     }
-
-    // TODO: stampare secondi asse x ?
-    labels.shift();
-    labels.push("");
-
-    newData1.push(_this.data.Watts);
-    newData2.push(_this.data.Hrate);
-    newData3.push(_this.data.Speed);
-
-    var newDataSet1 = {
-      ...oldDataSet1
-    };
-    var newDataSet2 = {
-      ...oldDataSet2
-    };
-    var newDataSet3 = {
-      ...oldDataSet3
-    };
-
-    newDataSet1.data = newData1;
-    newDataSet2.data = newData2;
-    newDataSet3.data = newData3;
-
-    var newState = {
-      ..._this.state,
-      datasets: [newDataSet1, newDataSet2, newDataSet3]
-    };
-
-
-    _this.setState(newState);
-
   }
 
   render() {
-    console.log(this.data);
     return <Line data={this.state} options={this.props.opts} height={300} />;
   }
 }
@@ -481,7 +387,7 @@ class Dashboard extends Component {
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
-      data: '',
+      data: ""
     };
 
     SocketIoHelper.requestData();
@@ -503,19 +409,18 @@ class Dashboard extends Component {
     });
 
     setTimeout(function() {
-      SocketIoHelper.requestData()
+      SocketIoHelper.requestData();
     }, 2000);
-
   }
 
   componentDidMount() {
     SocketIoHelper.getData(data => {
-      this.updateData(data)
+      this.updateData(data);
     });
   }
 
-
   render() {
+    console.log(this.state.data);
     return (
       <div className="animated fadeIn">
         <Row>
@@ -666,7 +571,11 @@ class Dashboard extends Component {
                   className="chart-wrapper"
                   style={{height: 400 + "px", marginTop: 0 + "px"}}
                 >
-                  <Graph state={mainChartData} opts={mainChartOpts} data={this.state.data}/>
+                  <Graph
+                    state={mainChartData}
+                    opts={mainChartOpts}
+                    data={this.state.data}
+                  />
                 </div>
               </CardBody>
             </Card>
