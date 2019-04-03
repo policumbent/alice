@@ -214,7 +214,7 @@ const cardChartOpts4 = {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }*/
 
-var elements = 20;
+var elements = 180;
 var data1 = [];
 var data2 = [];
 var data3 = [];
@@ -410,7 +410,7 @@ class Dashboard extends Component {
 
     setTimeout(function() {
       SocketIoHelper.requestData();
-    }, 2000);
+    }, 500);
   }
 
   componentDidMount() {
