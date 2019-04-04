@@ -25,6 +25,10 @@ var SocketIoHelper = {
 
   requestData: function() {
     socket.emit("json request");
+  },
+
+  giveData: function(data){
+    socket.emit("give json",data);
   }
 };
 
