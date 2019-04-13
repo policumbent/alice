@@ -256,7 +256,7 @@ const mainChartOpts = {
     yAxes: [{
       ticks: {
         beginAtZero: true,
-        maxTicksLimit: 5,
+        maxTicksLimit: 10,
         stepSize: Math.ceil(450 / 9),
         max: 450
       }
