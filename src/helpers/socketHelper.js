@@ -20,15 +20,15 @@ var SocketIoHelper = {
     });
   },
   getData: function(cb) {
-    socket.on("json response", data => cb(JSON.parse(data)));
+    socket.on("data response", data => cb(JSON.parse(data)));
   },
 
   requestData: function() {
-    socket.emit("json request");
+    socket.emit("data request");
   },
 
-  giveData: function(data){
-    socket.emit("give json",data);
+  giveData: function(data) {
+    socket.emit("give json", data);
   }
 };
 

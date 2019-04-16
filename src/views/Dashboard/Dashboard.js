@@ -346,9 +346,9 @@ class Graph extends Component {
       labels.shift();
       labels.push("");
 
-      newData1.push(_this.data.Watts);
-      newData2.push(_this.data.Hrate);
-      newData3.push(_this.data.Speed);
+      newData1.push(_this.data.power);
+      newData2.push(_this.data.heartrate);
+      newData3.push(_this.data.speed);
 
       var newDataSet1 = {
         ...oldDataSet1
