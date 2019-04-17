@@ -46,9 +46,9 @@ class MainChart extends Component {
       labels.push("");
 
       newData1.push(_this.data.power);
-      newData2.push(_this.data.heartrate);
+      newData2.push(_this.data.cadence);
       newData3.push(_this.data.speed);
-      newData4.push(_this.data.cadence);
+      newData4.push(_this.data.heartrate);
 
 
       var newDataSet1 = {
