@@ -2,7 +2,6 @@ import React, {
   Component
 } from "react";
 import {
-  Bar,
   Line
 } from "react-chartjs-2";
 import {
@@ -25,187 +24,11 @@ import {
 } from "@coreui/coreui/dist/js/coreui-utilities";
 import SocketIoHelper from "../../helpers/socketHelper";
 
-const brandPrimary = getStyle("--primary");
-//const brandSuccess = getStyle("--success");
+//const brandPrimary = getStyle("--primary");
+const brandSuccess = getStyle("--success");
 const brandInfo = getStyle("--info");
 const brandWarning = getStyle("--warning");
 const brandDanger = getStyle("--danger");
-
-// Card Chart 1
-const cardChartData1 = {
-  labels: ["January", "February", "March", "April", "May", "June", "July"],
-  datasets: [{
-    label: "My First dataset",
-    backgroundColor: brandPrimary,
-    borderColor: "rgba(255,255,255,.55)",
-    data: [65, 59, 84, 84, 51, 55, 40]
-  }]
-};
-
-const cardChartOpts1 = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips
-  },
-  maintainAspectRatio: false,
-  legend: {
-    display: false
-  },
-  scales: {
-    xAxes: [{
-      gridLines: {
-        color: "transparent",
-        zeroLineColor: "transparent"
-      },
-      ticks: {
-        fontSize: 2,
-        fontColor: "transparent"
-      }
-    }],
-    yAxes: [{
-      display: false,
-      ticks: {
-        display: false,
-        min: Math.min.apply(Math, cardChartData1.datasets[0].data) - 5,
-        max: Math.max.apply(Math, cardChartData1.datasets[0].data) + 5
-      }
-    }]
-  },
-  elements: {
-    line: {
-      borderWidth: 1
-    },
-    point: {
-      radius: 4,
-      hitRadius: 10,
-      hoverRadius: 4
-    }
-  }
-};
-
-// Card Chart 2
-const cardChartData2 = {
-  labels: ["January", "February", "March", "April", "May", "June", "July"],
-  datasets: [{
-    label: "My First dataset",
-    backgroundColor: brandInfo,
-    borderColor: "rgba(255,255,255,.55)",
-    data: [1, 18, 9, 17, 34, 22, 11]
-  }]
-};
-
-const cardChartOpts2 = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips
-  },
-  maintainAspectRatio: false,
-  legend: {
-    display: false
-  },
-  scales: {
-    xAxes: [{
-      gridLines: {
-        color: "transparent",
-        zeroLineColor: "transparent"
-      },
-      ticks: {
-        fontSize: 2,
-        fontColor: "transparent"
-      }
-    }],
-    yAxes: [{
-      display: false,
-      ticks: {
-        display: false,
-        min: Math.min.apply(Math, cardChartData2.datasets[0].data) - 5,
-        max: Math.max.apply(Math, cardChartData2.datasets[0].data) + 5
-      }
-    }]
-  },
-  elements: {
-    line: {
-      tension: 0.00001,
-      borderWidth: 1
-    },
-    point: {
-      radius: 4,
-      hitRadius: 10,
-      hoverRadius: 4
-    }
-  }
-};
-
-// Card Chart 3
-const cardChartData3 = {
-  labels: ["January", "February", "March", "April", "May", "June", "July"],
-  datasets: [{
-    label: "My First dataset",
-    backgroundColor: "rgba(255,255,255,.2)",
-    borderColor: "rgba(255,255,255,.55)",
-    data: [78, 81, 80, 45, 34, 12, 40]
-  }]
-};
-
-const cardChartOpts3 = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips
-  },
-  maintainAspectRatio: false,
-  legend: {
-    display: false
-  },
-  scales: {
-    xAxes: [{
-      display: false
-    }],
-    yAxes: [{
-      display: false
-    }]
-  },
-  elements: {
-    line: {
-      borderWidth: 2
-    },
-    point: {
-      radius: 0,
-      hitRadius: 10,
-      hoverRadius: 4
-    }
-  }
-};
-
-// Card Chart 4
-const cardChartData4 = {
-  labels: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-  datasets: [{
-    label: "My First dataset",
-    backgroundColor: "rgba(255,255,255,.3)",
-    borderColor: "transparent",
-    data: [78, 81, 80, 45, 34, 12, 40, 75, 34, 89, 32, 68, 54, 72, 18, 98]
-  }]
-};
-
-const cardChartOpts4 = {
-  tooltips: {
-    enabled: false,
-    custom: CustomTooltips
-  },
-  maintainAspectRatio: false,
-  legend: {
-    display: false
-  },
-  scales: {
-    xAxes: [{
-      display: false,
-      barPercentage: 0.6
-    }],
-    yAxes: [{
-      display: false
-    }]
-  }
-};
 
 // Main Chart
 
@@ -214,17 +37,11 @@ const cardChartOpts4 = {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }*/
 
-var elements = 180;
-var data1 = [];
-var data2 = [];
-var data3 = [];
+var elements = 250;
 var label = [];
 
 // lascio per caricare lo storico
 for (var i = 0; i <= elements; i++) {
-  /*data1.push(random(50, 200));
-  data2.push(random(80, 100));
-  data3.push(65);*/
   label.push("");
 }
 
@@ -249,16 +66,15 @@ const mainChartOpts = {
   },
   scales: {
     xAxes: [{
+      display: false,
       gridLines: {
-        drawOnChartArea: false
+        drawOnChartArea: true
       }
     }],
     yAxes: [{
+      display: true,
       ticks: {
         beginAtZero: true,
-        maxTicksLimit: 10,
-        stepSize: Math.ceil(450 / 9),
-        max: 450
       }
     }]
   },
@@ -275,7 +91,7 @@ const mainChartOpts = {
   },
   animation: {
     duration: 0
-  }
+  },
 };
 
 const mainChartData = {
@@ -287,16 +103,16 @@ const mainChartData = {
       borderColor: brandInfo,
       pointHoverBackgroundColor: "#fff",
       borderWidth: 2,
-      data: data1
+      data: []
     },
     {
-      label: "Heartrate",
+      label: "Cadence",
       fill: false,
-      backgroundColor: brandDanger,
-      borderColor: brandDanger,
+      backgroundColor: brandSuccess,
+      borderColor: brandSuccess,
       pointHoverBackgroundColor: "#fff",
       borderWidth: 2,
-      data: data2
+      data: []
     },
     {
       label: "Speed",
@@ -306,12 +122,21 @@ const mainChartData = {
       pointHoverBackgroundColor: "#fff",
       borderWidth: 2,
       //borderDash: [8, 5],
-      data: data3
+      data: []
+    },
+    {
+      label: "Heartrate",
+      fill: false,
+      backgroundColor: brandDanger,
+      borderColor: brandDanger,
+      pointHoverBackgroundColor: "#fff",
+      borderWidth: 2,
+      data: []
     }
   ]
 };
 
-class Graph extends Component {
+class MainChart extends Component {
   constructor(props) {
     super(props);
 
@@ -327,6 +152,8 @@ class Graph extends Component {
       var oldDataSet1 = _this.state.datasets[0];
       var oldDataSet2 = _this.state.datasets[1];
       var oldDataSet3 = _this.state.datasets[2];
+      var oldDataSet4 = _this.state.datasets[3];
+
       var labels = _this.state.labels;
       /*var time = Math.round(_this.data.Minutes * 100 * 60) / 100;
       var minutes = Math.floor(time / 60);
@@ -335,11 +162,14 @@ class Graph extends Component {
       var newData1 = [];
       var newData2 = [];
       var newData3 = [];
+      var newData4 = [];
 
       for (var x = 1; x < _this.state.labels.length; x++) {
         newData1.push(oldDataSet1.data[x]);
         newData2.push(oldDataSet2.data[x]);
         newData3.push(oldDataSet3.data[x]);
+        newData4.push(oldDataSet4.data[x]);
+
       }
 
       // TODO: stampare secondi asse x ?
@@ -349,6 +179,8 @@ class Graph extends Component {
       newData1.push(_this.data.power);
       newData2.push(_this.data.heartrate);
       newData3.push(_this.data.speed);
+      newData4.push(_this.data.cadence);
+
 
       var newDataSet1 = {
         ...oldDataSet1
@@ -359,14 +191,18 @@ class Graph extends Component {
       var newDataSet3 = {
         ...oldDataSet3
       };
+      var newDataSet4 = {
+        ...oldDataSet4
+      };
 
       newDataSet1.data = newData1;
       newDataSet2.data = newData2;
       newDataSet3.data = newData3;
+      newDataSet4.data = newData4;
 
       var newState = {
         ..._this.state,
-        datasets: [newDataSet1, newDataSet2, newDataSet3]
+        datasets: [newDataSet1, newDataSet2, newDataSet3, newDataSet4]
       };
 
       _this.setState(newState);
@@ -376,6 +212,246 @@ class Graph extends Component {
   render() {
     return <Line data={this.state} options={this.props.opts} height={300} />;
   }
+}
+
+
+var miniElements = 80;
+var miniLabel = [];
+
+// lascio per caricare lo storico
+for (i = 0; i <= miniElements; i++) {
+  miniLabel.push("");
+}
+
+// Card Charts
+
+// Power
+const cardChartData1 = {
+  labels: miniLabel,
+  datasets: [{
+    backgroundColor: "rgba(255,255,255,.2)",
+    borderColor: "rgba(255,255,255,.55)",
+    data: []
+  }]
+};
+
+const cardChartOpts1 = {
+  tooltips: {
+    enabled: false,
+  },
+  maintainAspectRatio: false,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      display: false
+    }],
+    yAxes: [{
+      display: false,
+      ticks: {
+        beginAtZero: true,
+        max: 450
+      }
+    }],
+  },
+  elements: {
+    line: {
+      borderWidth: 2
+    },
+    point: {
+      radius: 0,
+      hitRadius: 10,
+      hoverRadius: 0
+    }
+  },
+  animation: {
+    duration: 0
+  }
+};
+
+// Cadence
+const cardChartData2 = {
+  labels: miniLabel,
+  datasets: [{
+    backgroundColor: "rgba(255,255,255,.2)",
+    borderColor: "rgba(255,255,255,.55)",
+    data: []
+  }]
+};
+
+const cardChartOpts2 = {
+  tooltips: {
+    enabled: false,
+  },
+  maintainAspectRatio: false,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      display: false
+    }],
+    yAxes: [{
+      display: false,
+      ticks: {
+        min: 50,
+        max: 150
+      }
+    }],
+  },
+  elements: {
+    line: {
+      borderWidth: 2
+    },
+    point: {
+      radius: 0,
+      hitRadius: 10,
+      hoverRadius: 0
+    }
+  },
+  animation: {
+    duration: 0
+  }
+};
+
+// Speed
+const cardChartData3 = {
+  labels: miniLabel,
+  datasets: [{
+    backgroundColor: "rgba(255,255,255,.2)",
+    borderColor: "rgba(255,255,255,.55)",
+    data: []
+  }]
+};
+
+const cardChartOpts3 = {
+  tooltips: {
+    enabled: false,
+  },
+  maintainAspectRatio: false,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      display: false
+    }],
+    yAxes: [{
+      display: false,
+      ticks: {
+        beginAtZero: true,
+        max: 160
+      }
+    }],
+  },
+  elements: {
+    line: {
+      borderWidth: 2
+    },
+    point: {
+      radius: 0,
+      hitRadius: 10,
+      hoverRadius: 0
+    }
+  },
+  animation: {
+    duration: 0
+  }
+};
+
+// Heartrate
+const cardChartData4 = {
+  labels: miniLabel,
+  datasets: [{
+    backgroundColor: "rgba(255,255,255,.2)",
+    borderColor: "rgba(255,255,255,.55)",
+    data: []
+  }]
+};
+
+const cardChartOpts4 = {
+  tooltips: {
+    enabled: false,
+  },
+  maintainAspectRatio: false,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      display: false
+    }],
+    yAxes: [{
+      display: false,
+      ticks: {
+        min: 100,
+        max: 200
+      }
+    }],
+  },
+  elements: {
+    line: {
+      borderWidth: 2
+    },
+    point: {
+      radius: 0,
+      hitRadius: 10,
+      hoverRadius: 0
+    }
+  },
+  animation: {
+    duration: 0
+  }
+};
+
+class CardChart extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = this.props.state;
+    this.data = this.props.data;
+    this.value = this.props.value;
+  }
+
+  componentDidUpdate() {
+    if (this.data !== this.props.data) {
+      this.data = this.props.data;
+      var _this = this;
+
+      var oldDataSet = _this.state.datasets[0];
+      var labels = _this.state.labels;
+      var newData = [];
+
+      for (var x = 1; x < _this.state.labels.length; x++) {
+        newData.push(oldDataSet.data[x]);
+      }
+
+      labels.shift();
+      labels.push("");
+
+      var value = _this.data[_this.value];
+      newData.push(value);
+
+      var newDataSet = {
+        ...oldDataSet
+      };
+
+      newDataSet.data = newData;
+
+      var newState = {
+        ..._this.state,
+        datasets: [newDataSet]
+      };
+
+      _this.setState(newState);
+    }
+  }
+
+  render() {
+    return <Line data={this.state} options={this.props.opts} height={70} />;
+  }
+
 }
 
 class Dashboard extends Component {
@@ -410,7 +486,7 @@ class Dashboard extends Component {
 
     setTimeout(function() {
       SocketIoHelper.requestData();
-    }, 500);
+    }, 50);
   }
 
   componentDidMount() {
@@ -447,21 +523,22 @@ class Dashboard extends Component {
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>Members online</div>
+                <div className="text-value">{this.state.data.power}</div>
+                <div>Power</div>
               </CardBody>
-              <div className="chart-wrapper mx-3" style={{height: "70px"}}>
-                <Line
-                  data={cardChartData2}
-                  options={cardChartOpts2}
-                  height={70}
+              <div className="chart-wrapper" style={{height: "70px"}}>
+                <CardChart
+                  state={cardChartData1}
+                  opts={cardChartOpts1}
+                  value='power'
+                  data={this.state.data}
                 />
               </div>
             </Card>
           </Col>
 
           <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-primary">
+            <Card className="text-white bg-success">
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
                   <Dropdown
@@ -481,14 +558,15 @@ class Dashboard extends Component {
                     </DropdownMenu>
                   </Dropdown>
                 </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>Members online</div>
+                <div className="text-value">{this.state.data.cadence}</div>
+                <div>Cadence</div>
               </CardBody>
-              <div className="chart-wrapper mx-3" style={{height: "70px"}}>
-                <Line
-                  data={cardChartData1}
-                  options={cardChartOpts1}
-                  height={70}
+              <div className="chart-wrapper" style={{height: "70px"}}>
+                <CardChart
+                  state={cardChartData2}
+                  opts={cardChartOpts2}
+                  value='cadence'
+                  data={this.state.data}
                 />
               </div>
             </Card>
@@ -515,14 +593,15 @@ class Dashboard extends Component {
                     </DropdownMenu>
                   </Dropdown>
                 </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>Members online</div>
+                <div className="text-value">{this.state.data.speed}</div>
+                <div>Speed</div>
               </CardBody>
               <div className="chart-wrapper" style={{height: "70px"}}>
-                <Line
-                  data={cardChartData3}
-                  options={cardChartOpts3}
-                  height={70}
+                <CardChart
+                  state={cardChartData3}
+                  opts={cardChartOpts3}
+                  value='speed'
+                  data={this.state.data}
                 />
               </div>
             </Card>
@@ -549,14 +628,15 @@ class Dashboard extends Component {
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>Members online</div>
+                <div className="text-value">{this.state.data.heartrate}</div>
+                <div>Heartrate</div>
               </CardBody>
-              <div className="chart-wrapper mx-3" style={{height: "70px"}}>
-                <Bar
-                  data={cardChartData4}
-                  options={cardChartOpts4}
-                  height={70}
+              <div className="chart-wrapper" style={{height: "70px"}}>
+                <CardChart
+                  state={cardChartData4}
+                  opts={cardChartOpts4}
+                  value='heartrate'
+                  data={this.state.data}
                 />
               </div>
             </Card>
@@ -571,7 +651,7 @@ class Dashboard extends Component {
                   className="chart-wrapper"
                   style={{height: 400 + "px", marginTop: 0 + "px"}}
                 >
-                  <Graph
+                  <MainChart
                     state={mainChartData}
                     opts={mainChartOpts}
                     data={this.state.data}
