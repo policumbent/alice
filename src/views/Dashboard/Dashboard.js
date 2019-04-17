@@ -37,7 +37,7 @@ const brandDanger = getStyle("--danger");
   return Math.floor(Math.random() * (max - min + 1) + min);
 }*/
 
-var elements = 250;
+var elements = 200;
 var label = [];
 
 // lascio per caricare lo storico
@@ -486,7 +486,7 @@ class Dashboard extends Component {
 
     setTimeout(function() {
       SocketIoHelper.requestData();
-    }, 50);
+    }, 500);
   }
 
   componentDidMount() {
