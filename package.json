@@ -1,11 +1,6 @@
 {
-  "name": "frontend",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "homepage": "",
-  "copyright": "Copyright 2018 creativeLabs Łukasz Holeczek",
-  "license": "MIT",
+  "name": "MARTA",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@coreui/coreui": "^2.1.7",

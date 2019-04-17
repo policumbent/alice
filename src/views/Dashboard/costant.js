@@ -11,9 +11,11 @@ const brandInfo = getStyle("--info");
 const brandWarning = getStyle("--warning");
 const brandDanger = getStyle("--danger");
 
+var elements = 200;
+var miniElements = 50;
+
 // Main Chart
 
-var elements = 200;
 var label = [];
 
 for (var i = 0; i <= elements; i++) {
@@ -113,7 +115,6 @@ const mainChartData = {
 
 // Card Charts
 
-var miniElements = 80;
 var miniLabel = [];
 
 // lascio per caricare lo storico
