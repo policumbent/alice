@@ -29,7 +29,16 @@ var SocketIoHelper = {
 
   giveData: function(data) {
     socket.emit("give json", data);
-  }
+  },
+
+  requestSettings: function() {
+    socket.emit("settings request");
+  },
+
+  getSettings: function(cb) {
+    socket.on("settings response",
+      settings => cb(JSON.parse(settings)));
+  },
 };
 
 export default SocketIoHelper;
