@@ -13,7 +13,6 @@ import {
   //  DropdownToggle,
   Row
 } from "reactstrap";
-import SocketIoHelper from "../../helpers/socketHelper";
 import {
   mainChartOpts,
   mainChartData,
@@ -30,12 +29,11 @@ import {
   CardChart,
   MainChart
 } from "./Graph"
+import SocketIoHelper from "../../helpers/socketHelper";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
 
     this.state = {
       dropdownOpen: false,
@@ -46,11 +44,6 @@ class Dashboard extends Component {
     SocketIoHelper.requestData();
   }
 
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-  }
 
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
@@ -81,11 +74,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-info">
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
-                  <Dropdown
-                    id="card1"
-                    isOpen={this.state.card1}
-                    toggle={() => {
-                      this.setState({card1: !this.state.card1});}}>
+                  <Dropdown id="card1">
                     <Dropdown className="p-0" color="transparent">
                       <i className="icon-settings" />
                     </Dropdown>
@@ -109,11 +98,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-success">
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
-                  <Dropdown
-                    id="card2"
-                    isOpen={this.state.card2}
-                    toggle={() => {
-                      this.setState({card2: !this.state.card2});}}>
+                  <Dropdown id="card2">
                     <Dropdown className="p-0" color="transparent">
                       <i className="icon-location-pin" />
                     </Dropdown>
@@ -137,13 +122,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-warning">
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
-                  <Dropdown
-                    id="card3"
-                    isOpen={this.state.card3}
-                    toggle={() => {
-                      this.setState({card3: !this.state.card3});
-                    }}
-                  >
+                  <Dropdown id="card3">
                     <Dropdown className="p-0" color="transparent">
                       <i className="icon-settings" />
                     </Dropdown>
@@ -167,17 +146,11 @@ class Dashboard extends Component {
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
-                  <ButtonDropdown
-                    id="card4"
-                    isOpen={this.state.card4}
-                    toggle={() => {
-                      this.setState({card4: !this.state.card4});
-                    }}
-                  >
+                  <Dropdown id="card4">
                     <Dropdown className="p-0" color="transparent">
                       <i className="icon-settings" />
                     </Dropdown>
-                  </ButtonDropdown>
+                  </Dropdown>
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.heartrate}</div>
                 <div>Heartrate</div>
