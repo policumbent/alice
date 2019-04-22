@@ -27,13 +27,12 @@ import {
 import SocketIoHelper from "../../helpers/socketHelper";
 
 class Dashboard extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
-
     this.state = {
-      dropdownOpen: false,
-      radioSelected: 2,
       data: ""
     };
 
@@ -49,19 +48,26 @@ class Dashboard extends Component {
       data
     });
 
-    setTimeout(function() {
-      SocketIoHelper.requestData();
-    }, 500);
+    if (this._isMounted) {
+      setTimeout(function() {
+        SocketIoHelper.requestData();
+      }, 500);
+    }
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     SocketIoHelper.getData(data => {
       this.updateData(data);
     });
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   render() {
-    console.log(this.state.data);
     return (
       <div className="animated fadeIn">
         <Row>
