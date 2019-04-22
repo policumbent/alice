@@ -19,6 +19,16 @@ var SocketIoHelper = {
       //alert(msg);
     });
   },
+
+  giveData: function(data) {
+    socket.emit("give json", data);
+  },
+
+  // ricezione pacchetti tipo 0
+  /*
+   * Servono due funzioni poiche' i dati 
+   * vengono richiesti dentro un setTimeout
+   */
   getData: function(cb) {
     socket.on("data response", data => cb(JSON.parse(data)));
   },
@@ -27,15 +37,9 @@ var SocketIoHelper = {
     socket.emit("data request");
   },
 
-  giveData: function(data) {
-    socket.emit("give json", data);
-  },
-
-  requestSettings: function() {
-    socket.emit("settings request");
-  },
-
+  // ricezione pacchetti tipo 1
   getSettings: function(cb) {
+    socket.emit("settings request");
     socket.on("settings response",
       settings => cb(JSON.parse(settings)));
   },

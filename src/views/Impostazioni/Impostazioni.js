@@ -2,27 +2,15 @@ import React, {
   Component
 } from "react";
 import {
-  Badge,
   Button,
-  ButtonDropdown,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Col,
-  Collapse,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Fade,
   Form,
   FormGroup,
-  FormText,
-  FormFeedback,
   Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Label,
   Row,
 } from "reactstrap";
@@ -38,7 +26,6 @@ class Impostazioni extends Component {
       gui_settings: ""
     };
 
-    SocketIoHelper.requestSettings();
     SocketIoHelper.getSettings(settings => {
       this.setState({
         settings
@@ -55,6 +42,7 @@ class Impostazioni extends Component {
   }
 
   render() {
+    console.log(this.state.settings);
     return (
       <div className="animated fadeIn" >
         <Row>
