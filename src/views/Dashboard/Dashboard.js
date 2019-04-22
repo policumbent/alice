@@ -2,15 +2,10 @@ import React, {
   Component
 } from "react";
 import {
-  ButtonDropdown,
   ButtonGroup,
   Card,
   CardBody,
   Col,
-  Dropdown,
-  //  DropdownItem,
-  //  DropdownMenu,
-  //  DropdownToggle,
   Row
 } from "reactstrap";
 import {
@@ -35,6 +30,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
 
+
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
@@ -43,7 +39,6 @@ class Dashboard extends Component {
 
     SocketIoHelper.requestData();
   }
-
 
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
@@ -73,12 +68,8 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-info">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id="card1">
-                    <Dropdown className="p-0" color="transparent">
-                      <i className="icon-settings" />
-                    </Dropdown>
-                  </Dropdown>
+                <ButtonGroup id="card1" className="float-right">
+                  <i className="icon-settings" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.power}</div>
                 <div>Power</div>
@@ -97,12 +88,8 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-success">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id="card2">
-                    <Dropdown className="p-0" color="transparent">
-                      <i className="icon-location-pin" />
-                    </Dropdown>
-                  </Dropdown>
+                <ButtonGroup id="card2" className="float-right">
+                  <i className="icon-location-pin" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.cadence}</div>
                 <div>Cadence</div>
@@ -121,12 +108,8 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-warning">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id="card3">
-                    <Dropdown className="p-0" color="transparent">
-                      <i className="icon-settings" />
-                    </Dropdown>
-                  </Dropdown>
+                <ButtonGroup id="card3" className="float-right">
+                  <i className="icon-settings" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.speed}</div>
                 <div>Speed</div>
@@ -145,12 +128,8 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id="card4">
-                    <Dropdown className="p-0" color="transparent">
-                      <i className="icon-settings" />
-                    </Dropdown>
-                  </Dropdown>
+                <ButtonGroup id="card4" className="float-right">
+                  <i className="icon-settings" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.heartrate}</div>
                 <div>Heartrate</div>
