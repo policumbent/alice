@@ -14,12 +14,18 @@ import {
   Label,
   Row,
 } from "reactstrap";
-
+import {
+  AppSwitch
+} from '@coreui/react'
 import SocketIoHelper from "../../helpers/socketHelper";
 
 class Impostazioni extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
+
+    this._isMounted = true;
 
     this.state = {
       settings: "",
@@ -33,13 +39,17 @@ class Impostazioni extends Component {
     });
   }
 
-  loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  );
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   componentDidMount() {
 
   }
+
+  loading = () => (
+    <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  );
 
   render() {
     console.log(this.state.settings);
@@ -52,229 +62,100 @@ class Impostazioni extends Component {
                 <strong>Raspberry pi</strong>
               </CardHeader>
               <CardBody>
-                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
+                <Form action="" encType="multipart/form-data" className="form-horizontal">
                   <FormGroup row>
-                    <Col md="3">
+                    <Col md="10">
                       <Label>Log</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.log} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
+                    <Col md="10">
                       <Label>Video</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.video} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
+                    <Col md="10">
                       <Label>Ant</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.ant} />
+                    </Col>
+                  </FormGroup>
+
+                  <FormGroup row>
+                    <Col md="10">
+                      <Label>Potenza media</Label>
+                    </Col>
+                    <Col md="2">
+                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.average_power_time} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label>Ant running</Label>
+                    <Col md="10">
+                      <Label>Led Mode</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.led_mode} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label>Video running</Label>
+                    <Col md="10">
+                      <Label>Circonferenza</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.circumference} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label>powermeter_running</Label>
+                    <Col md="10">
+                      <Label>Csv</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.csv} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label>hr running</Label>
+                    <Col md="10">
+                      <Label>Timer</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.timer} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label>speed_running</Label>
+                    <Col md="10">
+                      <Label>Calibrazione</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.calibration} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label>average_power_time</Label>
+                    <Col md="10">
+                      <Label>Valore calibrazione</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
+                    <Col md="2">
+                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.calibration_value} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label>Log</Label>
+                    <Col md="10">
+                      <Label>Record video</Label>
                     </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label>Log</Label>
-                    </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label>Log</Label>
-                    </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label>Log</Label>
-                    </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label>Log</Label>
-                    </Col>
-                    <Col md="9">
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio1" name="inline-radios" value="option1" />
-                        <Label className="form-check-label" check htmlFor="inline-radio1">Si</Label>
-                      </FormGroup>
-                      <FormGroup check inline>
-                        <Input className="form-check-input" type="radio" id="inline-radio2" name="inline-radios" value="option2" />
-                        <Label className="form-check-label" check htmlFor="inline-radio2">No</Label>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Testo</Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                      <Input type="text" id="text-input" name="text-input" placeholder="Text" />
+                    <Col md="2">
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.video_record} />
                     </Col>
                   </FormGroup>
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" size="sm" color="success"><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                <Button type="submit" size="sl" color="success"><i className="fa fa-dot-circle-o"></i> Save</Button>
               </CardFooter>
 
             </Card>
