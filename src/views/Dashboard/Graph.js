@@ -41,7 +41,6 @@ class MainChart extends Component {
 
       }
 
-      // TODO: stampare secondi asse x ?
       labels.shift();
       labels.push("");
 
