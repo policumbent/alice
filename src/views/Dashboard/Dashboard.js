@@ -4,6 +4,7 @@ import React, {
 import {
   ButtonGroup,
   Card,
+  CardHeader,
   CardBody,
   Col,
   Row
@@ -26,6 +27,44 @@ import {
 } from "./Graph"
 import SocketIoHelper from "../../helpers/socketHelper";
 
+function Extra(props) {
+  if (!props.showExtra) {
+    return null;
+  }
+
+  return (
+    <Row>
+      <Col xs="12" sm="6" lg="3">
+        <Card className="text-white bg-primary">
+          <CardBody className="pb-2">
+            <div>Time</div>
+            <div className="text-value text-center">{props.time}</div>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col xs="12" sm="6" lg="3">
+        <Card className="text-white bg-dark">
+          <CardBody className="pb-2">
+            <div>Gear</div>
+            <div className="text-value text-center">{props.gear}</div>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col xs="12" sm="6" lg="3">
+        <Card className="text-dark bg-secondary">
+          <CardBody className="pb-2">
+            <div>Distance</div>
+            <div className="text-value text-center">{props.distance}</div>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+  );
+}
+
+
 class Dashboard extends Component {
   _isMounted = false;
 
@@ -33,7 +72,8 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      data: ""
+      data: "",
+      showExtra: true
     };
 
     SocketIoHelper.requestData();
@@ -51,7 +91,7 @@ class Dashboard extends Component {
     if (this._isMounted) {
       setTimeout(function() {
         SocketIoHelper.requestData();
-      }, 500);
+      }, 300);
     }
   }
 
@@ -171,6 +211,14 @@ class Dashboard extends Component {
             </Card>
           </Col>
         </Row>
+
+        <Extra
+          showExtra={this.state.showExtra}
+          gear={this.state.data.gear}
+          distance={this.state.data.distance}
+          time={this.state.data.time}
+        />
+        
       </div>
     );
   }
