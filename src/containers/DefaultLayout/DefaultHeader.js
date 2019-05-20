@@ -1,9 +1,20 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
-import {Nav, NavItem, NavLink} from "reactstrap";
+import React, {
+  Component
+} from "react";
+import {
+  Link
+} from "react-router-dom";
+import {
+  Nav,
+  NavItem,
+  NavLink
+} from "reactstrap";
 import PropTypes from "prop-types";
 
-import {AppNavbarBrand, AppSidebarToggler} from "@coreui/react";
+import {
+  AppNavbarBrand,
+  AppSidebarToggler
+} from "@coreui/react";
 import logo from "../../assets/img/brand/logo.svg";
 import sygnet from "../../assets/img/brand/sygnet.svg";
 
@@ -16,7 +27,10 @@ const defaultProps = {};
 class DefaultHeader extends Component {
   render() {
     // eslint-disable-next-line
-    const {children, ...attributes} = this.props;
+    const {
+      children,
+      ...attributes
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -28,12 +42,12 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <Nav className="ml-auto" navbar>
           <NavItem className="px-3">
-            <Link to="/" className="nav-link">
+            <Link to="/dashboard" className="nav-link">
               Dashboard
             </Link>
           </NavItem>
           <NavItem className="px-3">
-            <NavLink href="#">Settings</NavLink>
+            <Link to="/impostazioni" className="nav-link">Settings</Link>
           </NavItem>
         </Nav>
       </React.Fragment>
