@@ -7,7 +7,6 @@ import {
 import {
   Nav,
   NavItem,
-  NavLink
 } from "reactstrap";
 import PropTypes from "prop-types";
 
@@ -42,9 +41,7 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <Nav className="ml-auto" navbar>
           <NavItem className="px-3">
-            <Link to="/dashboard" className="nav-link">
-              Dashboard
-            </Link>
+            <Link to="/dashboard" className="nav-link">Dashboard</Link>
           </NavItem>
           <NavItem className="px-3">
             <Link to="/impostazioni" className="nav-link">Settings</Link>

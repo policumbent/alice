@@ -68,7 +68,7 @@ class Impostazioni extends Component {
                       <Label>Log</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.log} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.log} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -76,7 +76,7 @@ class Impostazioni extends Component {
                       <Label>Video</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.video} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.video} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -84,7 +84,7 @@ class Impostazioni extends Component {
                       <Label>Ant</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.ant} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.ant} />
                     </Col>
                   </FormGroup>
 
@@ -157,7 +157,6 @@ class Impostazioni extends Component {
               <CardFooter>
                 <Button type="submit" size="sl" color="success"><i className="fa fa-dot-circle-o"></i> Save</Button>
               </CardFooter>
-
             </Card>
           </Col>
 

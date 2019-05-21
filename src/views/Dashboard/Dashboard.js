@@ -4,7 +4,6 @@ import React, {
 import {
   ButtonGroup,
   Card,
-  CardHeader,
   CardBody,
   Col,
   Row
@@ -218,7 +217,6 @@ class Dashboard extends Component {
           distance={this.state.data.distance}
           time={this.state.data.time}
         />
-        
       </div>
     );
   }
