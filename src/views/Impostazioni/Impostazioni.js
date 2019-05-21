@@ -45,7 +45,7 @@ class Impostazioni extends Component {
   }
 
   handleChange = (name, value) => {
-    console.log(value);
+    console.log(!value);
     const settings = this.state.settings;
     settings[name] = !value;
     this.setState({
@@ -55,8 +55,6 @@ class Impostazioni extends Component {
 
   saveSettings = () => {
     SocketIoHelper.saveSettings(this.state.settings);
-    //console.log("Settings saved");
-    //console.log(this.state.settings);
   };
 
   loading = () => (
