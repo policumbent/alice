@@ -43,6 +43,10 @@ var SocketIoHelper = {
     socket.on("settings_response",
       settings => cb(JSON.parse(settings)));
   },
+
+  saveSettings: function(sett) {
+    socket.emit("save_settings", sett);
+  }
 };
 
 export default SocketIoHelper;

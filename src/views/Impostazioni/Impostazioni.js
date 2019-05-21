@@ -32,6 +32,7 @@ class Impostazioni extends Component {
       gui_settings: ""
     };
 
+
     SocketIoHelper.getSettings(settings => {
       this.setState({
         settings
@@ -43,9 +44,20 @@ class Impostazioni extends Component {
     this._isMounted = false;
   }
 
-  componentDidMount() {
+  handleChange = (name, value) => {
+    console.log(value);
+    const settings = this.state.settings;
+    settings[name] = !value;
+    this.setState({
+      settings
+    });
+  };
 
-  }
+  saveSettings = () => {
+    SocketIoHelper.saveSettings(this.state.settings);
+    //console.log("Settings saved");
+    //console.log(this.state.settings);
+  };
 
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
@@ -68,7 +80,7 @@ class Impostazioni extends Component {
                       <Label>Log</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.log} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label defaultChecked={this.state.settings.log} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -76,7 +88,7 @@ class Impostazioni extends Component {
                       <Label>Video</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.video} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label defaultChecked={this.state.settings.video} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -84,32 +96,32 @@ class Impostazioni extends Component {
                       <Label>Ant</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.ant} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label defaultChecked={this.state.settings.ant} />
                     </Col>
                   </FormGroup>
 
                   <FormGroup row>
-                    <Col md="10">
+                    <Col md="9">
                       <Label>Potenza media</Label>
                     </Col>
-                    <Col md="2">
-                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.average_power_time} />
+                    <Col md="3">
+                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.average_power_time} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="10">
+                    <Col md="9">
                       <Label>Led Mode</Label>
                     </Col>
-                    <Col md="2">
-                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.led_mode} />
+                    <Col md="3">
+                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.led_mode} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="10">
+                    <Col md="9">
                       <Label>Circonferenza</Label>
                     </Col>
-                    <Col md="2">
-                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.circumference} />
+                    <Col md="3">
+                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.circumference} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -117,15 +129,17 @@ class Impostazioni extends Component {
                       <Label>Csv</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.csv} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                        onChange={this.handleChange.bind(this,'csv',this.state.settings.csv)}
+                        defaultChecked={this.state.settings.csv} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="10">
+                    <Col md="9">
                       <Label>Timer</Label>
                     </Col>
-                    <Col md="2">
-                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.timer} />
+                    <Col md="3">
+                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.timer} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -133,15 +147,17 @@ class Impostazioni extends Component {
                       <Label>Calibrazione</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.calibration} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                        onChange={this.handleChange.bind(this,'calibration',this.state.settings.calibration)}
+                        defaultChecked={this.state.settings.calibration} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="10">
+                    <Col md="9">
                       <Label>Valore calibrazione</Label>
                     </Col>
-                    <Col md="2">
-                      <Input type="text" id="text-input" name="text-input" placeholder={this.state.settings.calibration_value} />
+                    <Col md="3">
+                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.calibration_value} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -149,13 +165,24 @@ class Impostazioni extends Component {
                       <Label>Record video</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label checked={this.state.settings.video_record} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                      onChange={this.handleChange.bind(this,'video_record',this.state.settings.video_record)}
+                      defaultChecked={this.state.settings.video_record}
+                      />
                     </Col>
                   </FormGroup>
                 </Form>
               </CardBody>
+
               <CardFooter>
-                <Button type="submit" size="sl" color="success"><i className="fa fa-dot-circle-o"></i> Save</Button>
+                <Row>
+                  <Col md="9">
+                    <Button type="submit" size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-dot-circle-o"></i> Save</Button>
+                  </Col>
+                  <Col md="3">
+                    <div className="text-center">{this.state.settings.update}</div>
+                  </Col>
+                </Row>
               </CardFooter>
             </Card>
           </Col>
