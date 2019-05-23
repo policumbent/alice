@@ -13,6 +13,7 @@ import {
   Input,
   Label,
   Row,
+  Alert,
 } from "reactstrap";
 import {
   AppSwitch
@@ -29,33 +30,53 @@ class Impostazioni extends Component {
 
     this.state = {
       settings: "",
-      gui_settings: ""
+      gui_settings: "",
+      visible: false,
     };
 
-
-    SocketIoHelper.getSettings(settings => {
-      this.setState({
-        settings
-      })
-    });
+    this.getSettings();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
+  onDismiss = () => {
+    this.setState({
+      visible: false
+    });
+  }
+
+  showMessage = () => {
+    this.setState({
+      visible: true
+    })
+    setTimeout(this.onDismiss, 2500);
+  }
+
   handleChange = (name, value) => {
-    console.log(!value);
     const settings = this.state.settings;
     settings[name] = !value;
+
     this.setState({
       settings
     });
+
+    console.log(!value);
   };
 
   saveSettings = () => {
     SocketIoHelper.saveSettings(this.state.settings);
+    this.showMessage();
   };
+
+  getSettings = () => {
+    SocketIoHelper.getSettings(settings => {
+      this.setState({
+        settings
+      })
+    });
+  }
 
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
@@ -78,7 +99,7 @@ class Impostazioni extends Component {
                       <Label>Log</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label defaultChecked={this.state.settings.log} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.log} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -86,7 +107,7 @@ class Impostazioni extends Component {
                       <Label>Video</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label defaultChecked={this.state.settings.video} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.video} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -94,7 +115,7 @@ class Impostazioni extends Component {
                       <Label>Ant</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label defaultChecked={this.state.settings.ant} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.ant} />
                     </Col>
                   </FormGroup>
 
@@ -129,7 +150,7 @@ class Impostazioni extends Component {
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
                         onChange={this.handleChange.bind(this,'csv',this.state.settings.csv)}
-                        defaultChecked={this.state.settings.csv} />
+                        checked={this.state.settings.csv} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -147,7 +168,7 @@ class Impostazioni extends Component {
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
                         onChange={this.handleChange.bind(this,'calibration',this.state.settings.calibration)}
-                        defaultChecked={this.state.settings.calibration} />
+                        checked={this.state.settings.calibration} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -165,7 +186,7 @@ class Impostazioni extends Component {
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
                       onChange={this.handleChange.bind(this,'video_record',this.state.settings.video_record)}
-                      defaultChecked={this.state.settings.video_record}
+                      checked={this.state.settings.video_record}
                       />
                     </Col>
                   </FormGroup>
@@ -175,7 +196,9 @@ class Impostazioni extends Component {
               <CardFooter>
                 <Row>
                   <Col md="9">
-                    <Button type="submit" size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-dot-circle-o"></i> Save</Button>
+                    <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
+                    &ensp;
+                    <Button type="submit" size="sl" color="danger" onClick={this.getSettings}><i className="fa fa-refresh"></i> Reload</Button>
                   </Col>
                   <Col md="3">
                     <div className="text-center">{this.state.settings.update}</div>
@@ -194,6 +217,11 @@ class Impostazioni extends Component {
 
               </CardBody>
             </Card>
+
+            <Alert color="warning" isOpen={this.state.visible} toggle={this.onDismiss}>
+              Impostazioni salvate
+            </Alert>
+
           </Col>
         </Row>
       </div>
