@@ -56,9 +56,9 @@ class Impostazioni extends Component {
 
   handleSwitch = name => {
     const settings = this.state.settings;
-    const value = settings[name];
+    const value = !settings[name];
 
-    settings[name] = !value;
+    settings[name] = value;
     this.setState({
       settings
     });
@@ -66,15 +66,14 @@ class Impostazioni extends Component {
 
   handleText = (name, event) => {
     const settings = this.state.settings;
-    if (event.target.validity.valid) {
-      const value = event.target.value;
+    const value = event.target.value;
 
+    if (event.target.validity.valid) {
       settings[name] = value;
       this.setState({
         settings
       });
     }
-
   };
 
   saveSettings = () => {

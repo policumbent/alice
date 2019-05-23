@@ -98,6 +98,7 @@ class Dashboard extends Component {
     this._isMounted = true;
 
     SocketIoHelper.getData(data => {
+      //TODO: if per taurus o taurusx
       this.updateData(data);
     });
   }
