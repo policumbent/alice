@@ -45,24 +45,36 @@ class Impostazioni extends Component {
     this.setState({
       visible: false
     });
-  }
+  };
 
   showMessage = () => {
     this.setState({
       visible: true
     })
     setTimeout(this.onDismiss, 2500);
-  }
+  };
 
-  handleChange = (name, value) => {
+  handleSwitch = name => {
     const settings = this.state.settings;
-    settings[name] = !value;
+    const value = settings[name];
 
+    settings[name] = !value;
     this.setState({
       settings
     });
+  };
 
-    console.log(!value);
+  handleText = (name, event) => {
+    const settings = this.state.settings;
+    if (event.target.validity.valid) {
+      const value = event.target.value;
+
+      settings[name] = value;
+      this.setState({
+        settings
+      });
+    }
+
   };
 
   saveSettings = () => {
@@ -76,7 +88,7 @@ class Impostazioni extends Component {
         settings
       })
     });
-  }
+  };
 
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
@@ -84,6 +96,7 @@ class Impostazioni extends Component {
 
   render() {
     console.log(this.state.settings);
+    console.disableYellowBox = true;
     return (
       <div className="animated fadeIn" >
         <Row>
@@ -124,7 +137,9 @@ class Impostazioni extends Component {
                       <Label>Potenza media</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.average_power_time} />
+                      <Input className="text-center" type="number" pattern="[0-9]*"
+                        value={this.state.settings.average_power_time}
+                        onChange={this.handleText.bind(this,'average_power_time')}/>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -132,7 +147,9 @@ class Impostazioni extends Component {
                       <Label>Led Mode</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.led_mode} />
+                      <Input className="text-center" type="number" pattern="[0-9]*"
+                        value={this.state.settings.led_mode}
+                        onChange={this.handleText.bind(this,'led_mode')}/>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -140,7 +157,9 @@ class Impostazioni extends Component {
                       <Label>Circonferenza</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.circumference} />
+                      <Input className="text-center" type="number" pattern="[0-9]*"
+                        value={this.state.settings.circumference}
+                        onChange={this.handleText.bind(this,'circumference')}/>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -149,7 +168,7 @@ class Impostazioni extends Component {
                     </Col>
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleChange.bind(this,'csv',this.state.settings.csv)}
+                        onChange={this.handleSwitch.bind(this,'csv')}
                         checked={this.state.settings.csv} />
                     </Col>
                   </FormGroup>
@@ -158,7 +177,9 @@ class Impostazioni extends Component {
                       <Label>Timer</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.timer} />
+                      <Input className="text-center" type="number" pattern="[0-9]*"
+                        value={this.state.settings.timer}
+                        onInput={this.handleText.bind(this,'timer')}/>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -167,7 +188,7 @@ class Impostazioni extends Component {
                     </Col>
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleChange.bind(this,'calibration',this.state.settings.calibration)}
+                        onChange={this.handleSwitch.bind(this,'calibration')}
                         checked={this.state.settings.calibration} />
                     </Col>
                   </FormGroup>
@@ -176,7 +197,9 @@ class Impostazioni extends Component {
                       <Label>Valore calibrazione</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="text" id="text-input" name="text-input" placeholder={this.state.settings.calibration_value} />
+                      <Input className="text-center" type="number" pattern="[0-9]*"
+                        value={this.state.settings.calibration_value}
+                        onInput={this.handleText.bind(this,'calibration_value')}/>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -185,7 +208,7 @@ class Impostazioni extends Component {
                     </Col>
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                      onChange={this.handleChange.bind(this,'video_record',this.state.settings.video_record)}
+                      onChange={this.handleSwitch.bind(this,'video_record')}
                       checked={this.state.settings.video_record}
                       />
                     </Col>
