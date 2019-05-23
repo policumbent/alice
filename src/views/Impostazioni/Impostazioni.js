@@ -136,7 +136,7 @@ class Impostazioni extends Component {
                       <Label>Potenza media</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="number" pattern="[0-9]*"
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.average_power_time}
                         onChange={this.handleText.bind(this,'average_power_time')}/>
                     </Col>
@@ -146,7 +146,7 @@ class Impostazioni extends Component {
                       <Label>Led Mode</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="number" pattern="[0-9]*"
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.led_mode}
                         onChange={this.handleText.bind(this,'led_mode')}/>
                     </Col>
@@ -156,7 +156,7 @@ class Impostazioni extends Component {
                       <Label>Circonferenza</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="number" pattern="[0-9]*"
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.circumference}
                         onChange={this.handleText.bind(this,'circumference')}/>
                     </Col>
@@ -176,7 +176,7 @@ class Impostazioni extends Component {
                       <Label>Timer</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="number" pattern="[0-9]*"
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.timer}
                         onInput={this.handleText.bind(this,'timer')}/>
                     </Col>
@@ -196,7 +196,7 @@ class Impostazioni extends Component {
                       <Label>Valore calibrazione</Label>
                     </Col>
                     <Col md="3">
-                      <Input className="text-center" type="number" pattern="[0-9]*"
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.calibration_value}
                         onInput={this.handleText.bind(this,'calibration_value')}/>
                     </Col>
