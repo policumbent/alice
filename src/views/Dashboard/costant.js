@@ -11,14 +11,14 @@ const brandInfo = getStyle("--info");
 const brandWarning = getStyle("--warning");
 const brandDanger = getStyle("--danger");
 
-var elements = 200;
-var miniElements = 50;
+const numElement = 200;
+const numCardElement = 50;
 
 // Main Chart
 
 var label = [];
 
-for (var i = 0; i <= elements; i++) {
+for (var i = 0; i < numElement; i++) {
   label.push("");
 }
 
@@ -51,7 +51,7 @@ const mainChartOpts = {
     yAxes: [{
       display: true,
       ticks: {
-        beginAtZero: true,
+        beginAtZero: true
       }
     }]
   },
@@ -68,7 +68,7 @@ const mainChartOpts = {
   },
   animation: {
     duration: 0
-  },
+  }
 };
 
 const mainChartData = {
@@ -118,7 +118,7 @@ const mainChartData = {
 var miniLabel = [];
 
 // lascio per caricare lo storico
-for (i = 0; i <= miniElements; i++) {
+for (i = 0; i < numCardElement; i++) {
   miniLabel.push("");
 }
 
@@ -134,7 +134,7 @@ const cardChartData1 = {
 
 const cardChartOpts1 = {
   tooltips: {
-    enabled: false,
+    enabled: false
   },
   maintainAspectRatio: false,
   legend: {
@@ -150,7 +150,7 @@ const cardChartOpts1 = {
         beginAtZero: true,
         max: 450
       }
-    }],
+    }]
   },
   elements: {
     line: {
@@ -179,7 +179,7 @@ const cardChartData2 = {
 
 const cardChartOpts2 = {
   tooltips: {
-    enabled: false,
+    enabled: false
   },
   maintainAspectRatio: false,
   legend: {
@@ -195,7 +195,7 @@ const cardChartOpts2 = {
         min: 50,
         max: 150
       }
-    }],
+    }]
   },
   elements: {
     line: {
@@ -224,7 +224,7 @@ const cardChartData3 = {
 
 const cardChartOpts3 = {
   tooltips: {
-    enabled: false,
+    enabled: false
   },
   maintainAspectRatio: false,
   legend: {
@@ -240,7 +240,7 @@ const cardChartOpts3 = {
         beginAtZero: true,
         max: 160
       }
-    }],
+    }]
   },
   elements: {
     line: {
@@ -269,7 +269,7 @@ const cardChartData4 = {
 
 const cardChartOpts4 = {
   tooltips: {
-    enabled: false,
+    enabled: false
   },
   maintainAspectRatio: false,
   legend: {
@@ -285,7 +285,7 @@ const cardChartOpts4 = {
         min: 100,
         max: 200
       }
-    }],
+    }]
   },
   elements: {
     line: {
@@ -312,5 +312,7 @@ export {
   cardChartOpts1,
   cardChartOpts2,
   cardChartOpts3,
-  cardChartOpts4
+  cardChartOpts4,
+  numCardElement,
+  numElement
 };

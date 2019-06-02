@@ -24,6 +24,11 @@ var SocketIoHelper = {
     socket.emit("give_json", data);
   },
 
+  getHistory: function(cb) {
+    socket.emit("history_request");
+    socket.on("history_response", history => cb(history));
+    },
+
   // pacchetti tipo 0
   /*
    * Servono due funzioni poiche' i dati
@@ -40,8 +45,7 @@ var SocketIoHelper = {
   // pacchetti tipo 1
   getSettings: function(cb) {
     socket.emit("settings_request");
-    socket.on("settings_response",
-      settings => cb(JSON.parse(settings)));
+    socket.on("settings_response", settings => cb(JSON.parse(settings)));
   },
 
   saveSettings: function(sett) {

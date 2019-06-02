@@ -9,8 +9,20 @@ class MainChart extends Component {
   constructor(props) {
     super(props);
 
-    this.state = this.props.state;
     this.data = this.props.data;
+    this.history = this.props.history;
+    this.state = this.props.state;
+
+    this.manageHistory(this.state, this.history);
+
+  }
+
+  manageHistory(data, chart) {
+    data.datasets[0].data = chart.power;
+    data.datasets[1].data = chart.cadence;
+    data.datasets[2].data = chart.speed;
+    data.datasets[3].data = chart.heartrate;
+
   }
 
   componentDidUpdate() {
@@ -34,11 +46,22 @@ class MainChart extends Component {
       var newData4 = [];
 
       for (var x = 1; x < _this.state.labels.length; x++) {
-        newData1.push(oldDataSet1.data[x]);
-        newData2.push(oldDataSet2.data[x]);
-        newData3.push(oldDataSet3.data[x]);
-        newData4.push(oldDataSet4.data[x]);
+        let value1 = oldDataSet1.data[x];
+        let value2 = oldDataSet2.data[x];
+        let value3 = oldDataSet3.data[x];
+        let value4 = oldDataSet4.data[x];
 
+        if (value1 !== undefined) {
+          newData1.push(value1);
+          newData2.push(value2);
+          newData3.push(value3);
+          newData4.push(value4);
+        } else {
+          newData1.unshift(value1);
+          newData2.unshift(value2);
+          newData3.unshift(value3);
+          newData4.unshift(value4);
+        }
       }
 
       labels.shift();
@@ -48,7 +71,6 @@ class MainChart extends Component {
       newData2.push(_this.data.cadence);
       newData3.push(_this.data.speed);
       newData4.push(_this.data.heartrate);
-
 
       var newDataSet1 = {
         ...oldDataSet1
@@ -89,6 +111,13 @@ class CardChart extends Component {
     this.state = this.props.state;
     this.data = this.props.data;
     this.value = this.props.value;
+    this.history = this.props.history;
+
+    this.manageHistory(this.state, this.history);
+  }
+
+  manageHistory(data, chart) {
+    data.datasets[0].data = chart[this.value];
   }
 
   componentDidUpdate() {
@@ -101,7 +130,12 @@ class CardChart extends Component {
       var newData = [];
 
       for (var x = 1; x < _this.state.labels.length; x++) {
-        newData.push(oldDataSet.data[x]);
+        let value = oldDataSet.data[x];
+        if (value !== undefined) {
+          newData.push(value);
+        } else {
+          newData.unshift(value);
+        }
       }
 
       labels.shift();
