@@ -26,9 +26,16 @@ class DefaultFooter extends Component {
   }
 
   getFrase = () => {
-    let pos = Math.floor(Math.random() * raccolta.length);
+    let precFrase = this.state.frase;
+    let frase = precFrase;
+
+    while (frase === precFrase) {
+      let pos = Math.floor(Math.random() * raccolta.length);
+      frase = raccolta[pos];
+    }
+
     this.setState({
-      frase: raccolta[pos]
+      frase: frase
     });
   }
   componentDidMount() {
