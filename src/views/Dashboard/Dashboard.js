@@ -255,7 +255,7 @@ class Dashboard extends Component {
             <CardBody>
               <div
                 className="chart-wrapper"
-                style={{height: 400 + "px", marginTop: 0 + "px"}}
+                style={{height: 340 + "px", marginTop: 0 + "px"}}
               >
                 <MainChart
                   state={mainChartData}
