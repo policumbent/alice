@@ -100,7 +100,7 @@ class MainChart extends Component {
   }
 
   render() {
-    return <Line data={this.state} options={this.props.opts} height={300} />;
+    return <Line data={this.state} options={this.props.opts}/>;
   }
 }
 
@@ -160,7 +160,7 @@ class CardChart extends Component {
   }
 
   render() {
-    return <Line data={this.state} options={this.props.opts} height={70} />;
+    return <Line data={this.state} options={this.props.opts}/>;
   }
 }
 
