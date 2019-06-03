@@ -3,9 +3,9 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {Container} from "reactstrap";
 
 import {
-  AppAside,
+//  AppAside,
   AppBreadcrumb,
-  /*AppFooter,*/
+  AppFooter,
   AppHeader,
   AppSidebar,
   AppSidebarFooter,
@@ -19,8 +19,8 @@ import navigation from "../../_nav";
 // routes config
 import routes from "../../routes";
 
-const DefaultAside = React.lazy(() => import("./DefaultAside"));
-/*const DefaultFooter = React.lazy(() => import('./DefaultFooter'));*/
+//const DefaultAside = React.lazy(() => import("./DefaultAside"));
+const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
 
 class DefaultLayout extends Component {
@@ -72,12 +72,12 @@ class DefaultLayout extends Component {
               </Suspense>
             </Container>
           </main>
-          <AppAside fixed>
-            <Suspense fallback={this.loading()}>
-              <DefaultAside />
-            </Suspense>
-          </AppAside>
         </div>
+        <AppFooter>
+          <Suspense fallback={this.loading()}>
+            <DefaultFooter />
+          </Suspense>
+        </AppFooter>
       </div>
     );
   }
