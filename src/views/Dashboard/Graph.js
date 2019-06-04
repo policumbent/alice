@@ -14,7 +14,6 @@ class MainChart extends Component {
     this.state = this.props.state;
 
     this.manageHistory(this.state, this.history);
-
   }
 
   manageHistory(data, chart) {
@@ -22,7 +21,6 @@ class MainChart extends Component {
     data.datasets[1].data = chart.cadence;
     data.datasets[2].data = chart.speed;
     data.datasets[3].data = chart.heartrate;
-
   }
 
   componentDidUpdate() {
@@ -72,30 +70,22 @@ class MainChart extends Component {
       newData3.push(_this.data.speed);
       newData4.push(_this.data.heartrate);
 
-      var newDataSet1 = {
-        ...oldDataSet1
-      };
-      var newDataSet2 = {
-        ...oldDataSet2
-      };
-      var newDataSet3 = {
-        ...oldDataSet3
-      };
-      var newDataSet4 = {
-        ...oldDataSet4
-      };
-
-      newDataSet1.data = newData1;
-      newDataSet2.data = newData2;
-      newDataSet3.data = newData3;
-      newDataSet4.data = newData4;
-
-      var newState = {
+      _this.setState({
         ..._this.state,
-        datasets: [newDataSet1, newDataSet2, newDataSet3, newDataSet4]
-      };
-
-      _this.setState(newState);
+        datasets: [{
+          ...oldDataSet1,
+          data: newData1
+        }, {
+          ...oldDataSet2,
+          data: newData2
+        }, {
+          ...oldDataSet3,
+          data: newData3
+        }, {
+          ...oldDataSet4,
+          data: newData4
+        }]
+      });
     }
   }
 
@@ -113,7 +103,8 @@ class CardChart extends Component {
     this.value = this.props.value;
     this.history = this.props.history;
 
-    this.manageHistory(this.state, this.history);
+    if (this.history !== undefined)
+      this.manageHistory(this.state, this.history);
   }
 
   manageHistory(data, chart) {
@@ -144,18 +135,13 @@ class CardChart extends Component {
       var value = _this.data[_this.value];
       newData.push(value);
 
-      var newDataSet = {
-        ...oldDataSet
-      };
-
-      newDataSet.data = newData;
-
-      var newState = {
+      _this.setState({
         ..._this.state,
-        datasets: [newDataSet]
-      };
-
-      _this.setState(newState);
+        datasets: [{
+          ...oldDataSet,
+          data: newData
+        }]
+      });
     }
   }
 
