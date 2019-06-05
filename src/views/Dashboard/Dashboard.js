@@ -173,7 +173,7 @@ class Dashboard extends Component {
               <div className="text-value">{this.state.data.power}</div>
               <div>Power</div>
             </CardBody>
-            <div className="chart-wrapper" style={{height: "70px"}}>
+            <div className="chart-wrapper" style={{height: "60px"}}>
               <CardChart
                 state={cardChartData1}
                 opts={cardChartOpts1}
@@ -194,7 +194,7 @@ class Dashboard extends Component {
               <div className="text-value">{this.state.data.cadence}</div>
               <div>Cadence</div>
             </CardBody>
-            <div className="chart-wrapper" style={{height: "70px"}}>
+            <div className="chart-wrapper" style={{height: "60px"}}>
               <CardChart
                 state={cardChartData2}
                 opts={cardChartOpts2}
@@ -215,7 +215,7 @@ class Dashboard extends Component {
               <div className="text-value">{this.state.data.speed}</div>
               <div>Speed</div>
             </CardBody>
-            <div className="chart-wrapper" style={{height: "70px"}}>
+            <div className="chart-wrapper" style={{height: "60px"}}>
               <CardChart
                 state={cardChartData3}
                 opts={cardChartOpts3}
@@ -236,7 +236,7 @@ class Dashboard extends Component {
               <div className="text-value">{this.state.data.heartrate}</div>
               <div>Heartrate</div>
             </CardBody>
-            <div className="chart-wrapper" style={{height: "70px"}}>
+            <div className="chart-wrapper" style={{height: "60px"}}>
               <CardChart
                 state={cardChartData4}
                 opts={cardChartOpts4}
@@ -255,7 +255,7 @@ class Dashboard extends Component {
             <CardBody>
               <div
                 className="chart-wrapper"
-                style={{height: 340 + "px", marginTop: 0 + "px"}}
+                style={{height: 400 + "px", marginTop: 0 + "px"}}
               >
                 <MainChart
                   state={mainChartData}
