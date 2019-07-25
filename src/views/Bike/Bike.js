@@ -14,6 +14,7 @@ import {
   Label,
   Row,
   Alert,
+  Collapse,
 } from "reactstrap";
 import {
   AppSwitch
@@ -30,7 +31,7 @@ class Bike extends Component {
 
     this.state = {
       settings: "",
-      gui_settings: "",
+      collapse: false,
       visible: false,
     };
 
@@ -46,6 +47,10 @@ class Bike extends Component {
       visible: false
     });
   };
+
+  toggle = () => {
+    this.setState({ collapse: !this.state.collapse });
+  }
 
   showMessage = () => {
     this.setState({
@@ -102,7 +107,30 @@ class Bike extends Component {
           <Col xs="12" xl="6">
             <Card>
               <CardHeader>
-                <strong>Raspberry pi</strong>
+                <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+                  <strong>State</strong>
+                </Button>
+              </CardHeader>
+              <Collapse isOpen={!this.state.collapse}>
+                <CardBody>
+                  <p>
+                    Qua dentro vanno le informazioni sullo state
+                  </p>
+                </CardBody>
+              </Collapse>
+
+
+            </Card>
+
+            <Alert color="warning" isOpen={this.state.visible} toggle={this.onDismiss}>
+              Impostazioni salvate
+            </Alert>
+          </Col>
+
+          <Col xs="12" xl="6">
+            <Card>
+              <CardHeader>
+                <strong>Impostazioni</strong>
               </CardHeader>
               <CardBody>
                 <Form action="" encType="multipart/form-data" className="form-horizontal">
@@ -228,21 +256,8 @@ class Bike extends Component {
                 </Row>
               </CardFooter>
             </Card>
-          </Col>
 
-          <Col xs="12" xl="6">
-            <Card>
-              <CardHeader>
-                <strong>GUI</strong>
-              </CardHeader>
-              <CardBody>
 
-              </CardBody>
-            </Card>
-
-            <Alert color="warning" isOpen={this.state.visible} toggle={this.onDismiss}>
-              Impostazioni salvate
-            </Alert>
 
           </Col>
         </Row>
