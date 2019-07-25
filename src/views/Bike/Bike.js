@@ -20,7 +20,7 @@ import {
 } from '@coreui/react'
 import SocketIoHelper from "../../helpers/socketHelper";
 
-class Impostazioni extends Component {
+class Bike extends Component {
   _isMounted = false;
 
   constructor(props) {
@@ -138,7 +138,7 @@ class Impostazioni extends Component {
                     <Col md="3">
                       <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.average_power_time}
-                        onChange={this.handleText.bind(this,'average_power_time')}/>
+                        onChange={this.handleText.bind(this, 'average_power_time')} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -148,7 +148,7 @@ class Impostazioni extends Component {
                     <Col md="3">
                       <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.led_mode}
-                        onChange={this.handleText.bind(this,'led_mode')}/>
+                        onChange={this.handleText.bind(this, 'led_mode')} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -158,7 +158,7 @@ class Impostazioni extends Component {
                     <Col md="3">
                       <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.circumference}
-                        onChange={this.handleText.bind(this,'circumference')}/>
+                        onChange={this.handleText.bind(this, 'circumference')} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -167,7 +167,7 @@ class Impostazioni extends Component {
                     </Col>
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleSwitch.bind(this,'csv')}
+                        onChange={this.handleSwitch.bind(this, 'csv')}
                         checked={this.state.settings.csv} />
                     </Col>
                   </FormGroup>
@@ -178,7 +178,7 @@ class Impostazioni extends Component {
                     <Col md="3">
                       <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.timer}
-                        onInput={this.handleText.bind(this,'timer')}/>
+                        onInput={this.handleText.bind(this, 'timer')} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -187,7 +187,7 @@ class Impostazioni extends Component {
                     </Col>
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleSwitch.bind(this,'calibration')}
+                        onChange={this.handleSwitch.bind(this, 'calibration')}
                         checked={this.state.settings.calibration} />
                     </Col>
                   </FormGroup>
@@ -198,7 +198,7 @@ class Impostazioni extends Component {
                     <Col md="3">
                       <Input className="text-center" type="number" min="0" pattern="[0-9]*"
                         value={this.state.settings.calibration_value}
-                        onInput={this.handleText.bind(this,'calibration_value')}/>
+                        onInput={this.handleText.bind(this, 'calibration_value')} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -207,8 +207,8 @@ class Impostazioni extends Component {
                     </Col>
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                      onChange={this.handleSwitch.bind(this,'video_record')}
-                      checked={this.state.settings.video_record}
+                        onChange={this.handleSwitch.bind(this, 'video_record')}
+                        checked={this.state.settings.video_record}
                       />
                     </Col>
                   </FormGroup>
@@ -253,4 +253,4 @@ class Impostazioni extends Component {
 
 }
 
-export default Impostazioni;
+export default Bike;

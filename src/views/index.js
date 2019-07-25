@@ -25,7 +25,7 @@ import {
   BrandButtons
 } from './Buttons';
 import Dashboard from './Dashboard';
-import Impostazioni from './Impostazioni';
+import Bike from './Bike';
 import {
   CoreUIIcons,
   FontAwesome,
