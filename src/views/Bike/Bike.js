@@ -24,6 +24,7 @@ import SocketIoHelper from "../../helpers/socketHelper";
 
 class Bike extends Component {
   _isMounted = false;
+  inputSettings = undefined;
 
   constructor(props) {
     super(props);
@@ -33,6 +34,7 @@ class Bike extends Component {
       state: "",
       visible: false,
     };
+
   }
 
   componentDidMount() {
@@ -55,14 +57,17 @@ class Bike extends Component {
   }
 
   saveSettings = () => {
-    SocketIoHelper.saveSettings(this.state.settings);
+    this.inputSettings.update = currentTime()
+    SocketIoHelper.saveSettings(this.inputSettings);
     this.showMessage();
+    this.reloadStatus();
   };
 
   toggleButton = () => {
     this.reloadStatus();
   }
 
+  // funzioni per l'allert a schermo
   onDismiss = () => {
     this.setState({
       visible: false
@@ -76,15 +81,16 @@ class Bike extends Component {
     setTimeout(this.onDismiss, 2500);
   };
 
+  // funzioni per gli input
   handleSwitch = name => {
-    const settings = this.wSettings;
+    const settings = this.inputSettings;
     const value = !settings[name];
 
     settings[name] = value;
   };
 
   handleText = (name, event) => {
-    const settings = this.wSettings;
+    const settings = this.inputSettings;
     const value = event.target.value;
 
     if (event.target.validity.valid) {
@@ -99,6 +105,9 @@ class Bike extends Component {
   render() {
     if (this.state.state === "") {
       return null;
+    }
+    if (this.inputSettings === undefined) {
+      this.inputSettings = JSON.parse(JSON.stringify(this.state.settings));
     }
     return (
       <div className="animated fadeIn" >
@@ -120,61 +129,16 @@ class Bike extends Component {
               <CardHeader>
                 <strong>Impostazioni</strong>
               </CardHeader>
-              {/* <CardBody>
+              <CardBody>
                 <Form action="" encType="multipart/form-data" className="form-horizontal">
                   <FormGroup row>
                     <Col md="10">
                       <Label>Log</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label ref={this.state.settings.log} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="10">
-                      <Label>Video</Label>
-                    </Col>
-                    <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.video} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="10">
-                      <Label>Ant</Label>
-                    </Col>
-                    <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.ant} />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Potenza media</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        value={this.state.settings.average_power_time}
-                        onChange={this.handleText.bind(this, 'average_power_time')} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Led Mode</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        value={this.state.settings.led_mode}
-                        onChange={this.handleText.bind(this, 'led_mode')} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Circonferenza</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        value={this.state.settings.circumference}
-                        onChange={this.handleText.bind(this, 'circumference')} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                        onChange={this.handleSwitch.bind(this, 'log')}
+                        defaultChecked={this.state.settings.log} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -188,33 +152,64 @@ class Bike extends Component {
                     </Col>
                   </FormGroup>
                   <FormGroup row>
-                    <Col md="9">
-                      <Label>Timer</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        value={this.state.settings.timer}
-                        onInput={this.handleText.bind(this, 'timer')} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
                     <Col md="10">
-                      <Label>Calibrazione</Label>
+                      <Label>Ant</Label>
                     </Col>
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleSwitch.bind(this, 'calibration')}
-                        checked={this.state.settings.calibration} />
+                        onChange={this.handleSwitch.bind(this, 'ant')}
+                        defaultChecked={this.state.settings.ant} />
                     </Col>
                   </FormGroup>
+                  <FormGroup row>
+                    <Col md="9">
+                      <Label>Potenza media</Label>
+                    </Col>
+                    <Col md="3">
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                        defaultValue={this.state.settings.potenza}
+                        onChange={this.handleText.bind(this, 'potenza')} />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="9">
+                      <Label>Led Mode</Label>
+                    </Col>
+                    <Col md="3">
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                        defaultValue={this.state.settings.led}
+                        onChange={this.handleText.bind(this, 'led')} />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="9">
+                      <Label>Circonferenza</Label>
+                    </Col>
+                    <Col md="3">
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                        defaultValue={this.state.settings.circonferenza}
+                        onChange={this.handleText.bind(this, 'circonferenza')} />
+                    </Col>
+                  </FormGroup>
+
                   <FormGroup row>
                     <Col md="9">
                       <Label>Valore calibrazione</Label>
                     </Col>
                     <Col md="3">
                       <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        value={this.state.settings.calibration_value}
+                        defaultValue={this.state.settings.calibration_value}
                         onInput={this.handleText.bind(this, 'calibration_value')} />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="9">
+                      <Label>Run</Label>
+                    </Col>
+                    <Col md="3">
+                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                        defaultValue={this.state.settings.run}
+                        onInput={this.handleText.bind(this, 'run')} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -224,24 +219,24 @@ class Bike extends Component {
                     <Col md="2">
                       <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
                         onChange={this.handleSwitch.bind(this, 'video_record')}
-                        checked={this.state.settings.video_record}
+                        defaultChecked={this.state.settings.video_record}
                       />
                     </Col>
                   </FormGroup>
                 </Form>
-              </CardBody> */}
+              </CardBody>
 
-              {/* <CardFooter>
+              <CardFooter>
                 <Row>
                   <Col md="9">
                     <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
                     &ensp;
                   </Col>
                   <Col md="3">
-                    <div className="text-center">{this.wSettings.update}</div>
+                    <div className="text-center">{this.state.settings.update}</div>
                   </Col>
                 </Row>
-              </CardFooter> */}
+              </CardFooter>
             </Card>
           </Col>
         </Row>
@@ -316,4 +311,15 @@ class CardState extends Component {
     )
   }
 }
+
+function currentTime() {
+  var today = new Date();
+
+  var date = today.getDate() + '/' + (today.getMonth() + 1);
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = time + '-' + date;
+
+  return dateTime
+}
+
 export default Bike;
