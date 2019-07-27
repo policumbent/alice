@@ -21,25 +21,46 @@ import {
 } from '@coreui/react'
 import SocketIoHelper from "../../helpers/socketHelper";
 
+
 class Bike extends Component {
   _isMounted = false;
 
   constructor(props) {
     super(props);
 
-    this._isMounted = true;
-
     this.state = {
       settings: "",
-      collapse: false,
+      state: "",
       visible: false,
     };
+  }
 
-    this.getSettings();
+  componentDidMount() {
+    this._isMounted = true;
+    this.reloadStatus();
+
   }
 
   componentWillUnmount() {
     this._isMounted = false;
+  }
+
+  reloadStatus() {
+    SocketIoHelper.getSettings(settings =>
+      this.setState({ settings })
+    )
+    SocketIoHelper.getState(state =>
+      this.setState({ state })
+    );
+  }
+
+  saveSettings = () => {
+    SocketIoHelper.saveSettings(this.state.settings);
+    this.showMessage();
+  };
+
+  toggleButton = () => {
+    this.reloadStatus();
   }
 
   onDismiss = () => {
@@ -47,10 +68,6 @@ class Bike extends Component {
       visible: false
     });
   };
-
-  toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  }
 
   showMessage = () => {
     this.setState({
@@ -60,38 +77,19 @@ class Bike extends Component {
   };
 
   handleSwitch = name => {
-    const settings = this.state.settings;
+    const settings = this.wSettings;
     const value = !settings[name];
 
     settings[name] = value;
-    this.setState({
-      settings
-    });
   };
 
   handleText = (name, event) => {
-    const settings = this.state.settings;
+    const settings = this.wSettings;
     const value = event.target.value;
 
     if (event.target.validity.valid) {
       settings[name] = value;
-      this.setState({
-        settings
-      });
     }
-  };
-
-  saveSettings = () => {
-    SocketIoHelper.saveSettings(this.state.settings);
-    this.showMessage();
-  };
-
-  getSettings = () => {
-    SocketIoHelper.getSettings(settings => {
-      this.setState({
-        settings
-      })
-    });
   };
 
   loading = () => (
@@ -99,28 +97,18 @@ class Bike extends Component {
   );
 
   render() {
-    console.log(this.state.settings);
-    console.disableYellowBox = true;
+    if (this.state.state === "") {
+      return null;
+    }
     return (
       <div className="animated fadeIn" >
         <Row>
           <Col xs="12" xl="6">
-            <Card>
-              <CardHeader>
-                <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
-                  <strong>State</strong>
-                </Button>
-              </CardHeader>
-              <Collapse isOpen={!this.state.collapse}>
-                <CardBody>
-                  <p>
-                    Qua dentro vanno le informazioni sullo state
-                  </p>
-                </CardBody>
-              </Collapse>
-
-
-            </Card>
+            <CardState
+              settings={this.state.settings}
+              state={this.state.state}
+              toggleButton={this.toggleButton}
+            />
 
             <Alert color="warning" isOpen={this.state.visible} toggle={this.onDismiss}>
               Impostazioni salvate
@@ -132,14 +120,14 @@ class Bike extends Component {
               <CardHeader>
                 <strong>Impostazioni</strong>
               </CardHeader>
-              <CardBody>
+              {/* <CardBody>
                 <Form action="" encType="multipart/form-data" className="form-horizontal">
                   <FormGroup row>
                     <Col md="10">
                       <Label>Log</Label>
                     </Col>
                     <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label checked={this.state.settings.log} />
+                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} disabled={true} label ref={this.state.settings.log} />
                     </Col>
                   </FormGroup>
                   <FormGroup row>
@@ -241,31 +229,91 @@ class Bike extends Component {
                     </Col>
                   </FormGroup>
                 </Form>
-              </CardBody>
+              </CardBody> */}
 
-              <CardFooter>
+              {/* <CardFooter>
                 <Row>
                   <Col md="9">
                     <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
                     &ensp;
-                    <Button type="submit" size="sl" color="danger" onClick={this.getSettings}><i className="fa fa-refresh"></i> Reload</Button>
                   </Col>
                   <Col md="3">
-                    <div className="text-center">{this.state.settings.update}</div>
+                    <div className="text-center">{this.wSettings.update}</div>
                   </Col>
                 </Row>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
-
-
-
           </Col>
         </Row>
       </div>
 
     );
   }
-
 }
 
+class CardState extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      status: "",
+      collapse: false,
+    };
+  }
+
+  componentWillReceiveProps() {
+    this.updateStatus();
+  }
+
+  componentDidMount() {
+    this.updateStatus();
+  }
+
+  toggle = () => {
+    this.setState({ collapse: !this.state.collapse });
+  };
+
+  updateStatus() {
+    let jstate = JSON.parse(JSON.stringify(this.props.state));
+    let jsettings = JSON.parse(JSON.stringify(this.props.settings));
+
+    // rimuovo i campi superflui dall'output
+    delete jstate["dest"];
+    delete jstate["type"];
+    delete jsettings["dest"];
+    delete jsettings["type"];
+
+    let state = JSON.stringify(jstate, null, 1).replace(/\{|\}|"|,|/g, "").replace("\n", "");
+    let settings = JSON.stringify(jsettings, null, 1).replace(/\{|\}|"|,/g, "");
+
+    this.setState({
+      status: state + settings
+    });
+  };
+
+  render() {
+    return (
+      <Card>
+        <CardHeader>
+          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+            <strong>Status</strong>
+          </Button>
+        </CardHeader>
+        <Collapse isOpen={!this.state.collapse}>
+          <CardBody >
+            <pre>
+              <code>
+                {this.state.status}
+              </code>
+            </pre>
+          </CardBody>
+        </Collapse>
+        <CardFooter>
+          <Button type="submit" size="sl" color="danger" onClick={this.props.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
+        </CardFooter>
+
+      </Card>
+    )
+  }
+}
 export default Bike;

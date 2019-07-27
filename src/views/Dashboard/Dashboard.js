@@ -77,9 +77,9 @@ class Dashboard extends Component {
       showExtra: true
     };
 
-    SocketIoHelper.getHistory(list =>
+    SocketIoHelper.getHistory(list => {
       this.history(list)
-    );
+    });
 
     SocketIoHelper.requestData();
   }
@@ -125,16 +125,17 @@ class Dashboard extends Component {
         miniChart: miniChart
       }
     }
-    if (this._isMounted)
-      this.setState(newState);
+    this.setState(newState);
+    console.log(this.state.history)
+
   }
 
   updateData(data) {
-    if (this._isMounted) {
-      this.setState({
-        data
-      });
+    this.setState({
+      data
+    });
 
+    if (this._isMounted) {
       setTimeout(function () {
         SocketIoHelper.requestData();
       }, 300);
@@ -144,9 +145,12 @@ class Dashboard extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    SocketIoHelper.getHistory(list =>
-      this.history(list)
-    );
+    // per quando si cambiano tab della pagina
+    SocketIoHelper.getHistory(list => {
+      this.history(list);
+    });
+
+    console.log(this.state.history)
 
     SocketIoHelper.getData(data => {
       //TODO: if per taurus o taurusx

@@ -25,8 +25,8 @@ var SocketIoHelper = {
   },
 
   getHistory: function (cb) {
-    fetch(socket.emit("history_request")).then(() =>
-      socket.on("history_response", history => cb(history)));
+    socket.emit("history_request");
+    socket.on("history_response", history => cb(history));
   },
 
   // pacchetti tipo 0
@@ -42,19 +42,21 @@ var SocketIoHelper = {
     socket.emit("data_request");
   },
 
-  // pacchetti tipo 1
+  // pacchetto tipo 1
+  getState: function (cb) {
+    socket.emit("state_request");
+    socket.on("state_response", state => cb(JSON.parse(state)));
+
+  },
+
+  // pacchetti tipo 3
   getSettings: function (cb) {
-    fetch(socket.emit("settings_request")).then(
-      socket.on("settings_response", settings => cb(JSON.parse(settings))));
+    socket.emit("settings_request");
+    socket.on("settings_response", settings => cb(JSON.parse(settings)));
   },
 
   saveSettings: function (sett) {
     socket.emit("save_setting", sett);
-  },
-
-  getState: function (cb) {
-    fetch(socket.emit("state_request")).then(
-      socket.on("state_response", state => cb(JSON.parse(state))));
   }
 };
 
