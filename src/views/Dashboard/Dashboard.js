@@ -6,7 +6,8 @@ import {
   Card,
   CardBody,
   Col,
-  Row
+  Row,
+  Colors
 } from "reactstrap";
 import {
   mainChartOpts,
@@ -61,6 +62,24 @@ function Extra(props) {
           </CardBody>
         </Card>
       </Col>
+
+      <Col xs="12" sm="6" lg="3">
+        <Card className="text-white bg-purple">
+          <CardBody className="pb-2">
+            <Row>
+              <Col xs="6" sm="6" lg="6">
+                <div className="text-center">Temperature</div>
+                <div className="text-value text-center">{props.weather.temperature}</div>
+              </Col>
+              <Col xs="6" sm="6" lg="6">
+                <div className="text-center">Humidity</div>
+                <div className="text-value text-center">{props.weather.humidity}</div>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </Col>
+
     </Row>
   );
 }
@@ -74,6 +93,7 @@ class Dashboard extends Component {
     this.state = {
       data: "",
       history: "",
+      weather: "",
       showExtra: true
     };
 
@@ -126,8 +146,6 @@ class Dashboard extends Component {
       }
     }
     this.setState(newState);
-    console.log(this.state.history)
-
   }
 
   updateData(data) {
@@ -149,13 +167,13 @@ class Dashboard extends Component {
     SocketIoHelper.getHistory(list => {
       this.history(list);
     });
-
-    console.log(this.state.history)
-
     SocketIoHelper.getData(data => {
       //TODO: if per taurus o taurusx
       this.updateData(data);
     });
+    SocketIoHelper.getWeather(weather =>
+      this.setState({ weather })
+    );
   }
 
   componentWillUnmount() {
@@ -279,6 +297,7 @@ class Dashboard extends Component {
           gear={this.state.data.gear}
           distance={this.state.data.distance}
           time={this.state.data.time}
+          weather={this.state.weather}
         />
       </div>
     );

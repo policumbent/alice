@@ -19,7 +19,7 @@ var SocketIoHelper = {
       //alert(msg);
     });
   },
-
+  // funzione template
   giveData: function (data) {
     socket.emit("give_json", data);
   },
@@ -27,6 +27,10 @@ var SocketIoHelper = {
   getHistory: function (cb) {
     socket.emit("history_request");
     socket.on("history_response", history => cb(history));
+  },
+
+  getWeather: function (cb) {
+    socket.on("weather_response", weather => cb(JSON.parse(weather)));
   },
 
   // pacchetti tipo 0
@@ -46,7 +50,6 @@ var SocketIoHelper = {
   getState: function (cb) {
     socket.emit("state_request");
     socket.on("state_response", state => cb(JSON.parse(state)));
-
   },
 
   // pacchetti tipo 3
