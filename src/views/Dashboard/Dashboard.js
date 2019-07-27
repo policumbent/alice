@@ -125,16 +125,17 @@ class Dashboard extends Component {
         miniChart: miniChart
       }
     }
-    this.setState(newState);
+    if (this._isMounted)
+      this.setState(newState);
   }
 
   updateData(data) {
-    this.setState({
-      data
-    });
-
     if (this._isMounted) {
-      setTimeout(function() {
+      this.setState({
+        data
+      });
+
+      setTimeout(function () {
         SocketIoHelper.requestData();
       }, 300);
     }
@@ -163,119 +164,119 @@ class Dashboard extends Component {
     }
     return (
       <div className="animated fadeIn">
-      <Row>
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-info">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card1" className="float-right">
-                <i className="icon-settings" />
-              </ButtonGroup>
-              <div className="text-value">{this.state.data.power}</div>
-              <div>Power</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{height: "60px"}}>
-              <CardChart
-                state={cardChartData1}
-                opts={cardChartOpts1}
-                value="power"
-                data={this.state.data}
-                history={this.state.history.miniChart}
-              />
-            </div>
-          </Card>
-        </Col>
-
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-success">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card2" className="float-right">
-                <i className="icon-location-pin" />
-              </ButtonGroup>
-              <div className="text-value">{this.state.data.cadence}</div>
-              <div>Cadence</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{height: "60px"}}>
-              <CardChart
-                state={cardChartData2}
-                opts={cardChartOpts2}
-                value="cadence"
-                data={this.state.data}
-                history={this.state.history.miniChart}
-              />
-            </div>
-          </Card>
-        </Col>
-
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-warning">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card3" className="float-right">
-                <i className="icon-settings" />
-              </ButtonGroup>
-              <div className="text-value">{this.state.data.speed}</div>
-              <div>Speed</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{height: "60px"}}>
-              <CardChart
-                state={cardChartData3}
-                opts={cardChartOpts3}
-                value="speed"
-                data={this.state.data}
-                history={this.state.history.miniChart}
-              />
-            </div>
-          </Card>
-        </Col>
-
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-danger">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card4" className="float-right">
-                <i className="icon-settings" />
-              </ButtonGroup>
-              <div className="text-value">{this.state.data.heartrate}</div>
-              <div>Heartrate</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{height: "60px"}}>
-              <CardChart
-                state={cardChartData4}
-                opts={cardChartOpts4}
-                value="heartrate"
-                data={this.state.data}
-                history={this.state.history.miniChart}
-              />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <Card>
-            <CardBody>
-              <div
-                className="chart-wrapper"
-                style={{height: 400 + "px", marginTop: 0 + "px"}}
-              >
-                <MainChart
-                  state={mainChartData}
-                  opts={mainChartOpts}
+        <Row>
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-info">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card1" className="float-right">
+                  <i className="icon-settings" />
+                </ButtonGroup>
+                <div className="text-value">{this.state.data.power}</div>
+                <div>Power</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: "60px" }}>
+                <CardChart
+                  state={cardChartData1}
+                  opts={cardChartOpts1}
+                  value="power"
                   data={this.state.data}
-                  history={this.state.history.chart}
+                  history={this.state.history.miniChart}
                 />
               </div>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+            </Card>
+          </Col>
 
-      <Extra
-        showExtra={this.state.showExtra}
-        gear={this.state.data.gear}
-        distance={this.state.data.distance}
-        time={this.state.data.time}
-      />
-    </div>
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-success">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card2" className="float-right">
+                  <i className="icon-location-pin" />
+                </ButtonGroup>
+                <div className="text-value">{this.state.data.cadence}</div>
+                <div>Cadence</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: "60px" }}>
+                <CardChart
+                  state={cardChartData2}
+                  opts={cardChartOpts2}
+                  value="cadence"
+                  data={this.state.data}
+                  history={this.state.history.miniChart}
+                />
+              </div>
+            </Card>
+          </Col>
+
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-warning">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card3" className="float-right">
+                  <i className="icon-settings" />
+                </ButtonGroup>
+                <div className="text-value">{this.state.data.speed}</div>
+                <div>Speed</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: "60px" }}>
+                <CardChart
+                  state={cardChartData3}
+                  opts={cardChartOpts3}
+                  value="speed"
+                  data={this.state.data}
+                  history={this.state.history.miniChart}
+                />
+              </div>
+            </Card>
+          </Col>
+
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-danger">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card4" className="float-right">
+                  <i className="icon-settings" />
+                </ButtonGroup>
+                <div className="text-value">{this.state.data.heartrate}</div>
+                <div>Heartrate</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: "60px" }}>
+                <CardChart
+                  state={cardChartData4}
+                  opts={cardChartOpts4}
+                  value="heartrate"
+                  data={this.state.data}
+                  history={this.state.history.miniChart}
+                />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Card>
+              <CardBody>
+                <div
+                  className="chart-wrapper"
+                  style={{ height: 400 + "px", marginTop: 0 + "px" }}
+                >
+                  <MainChart
+                    state={mainChartData}
+                    opts={mainChartOpts}
+                    data={this.state.data}
+                    history={this.state.history.chart}
+                  />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+
+        <Extra
+          showExtra={this.state.showExtra}
+          gear={this.state.data.gear}
+          distance={this.state.data.distance}
+          time={this.state.data.time}
+        />
+      </div>
     );
   }
 }
