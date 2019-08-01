@@ -24,7 +24,6 @@ import SocketIoHelper from "../../helpers/socketHelper";
 
 class Bike extends Component {
   _isMounted = false;
-  inputSettings = undefined;
 
   constructor(props) {
     super(props);
@@ -32,15 +31,14 @@ class Bike extends Component {
     this.state = {
       settings: "",
       state: "",
+      video: "",
       visible: false,
     };
-
   }
 
   componentDidMount() {
     this._isMounted = true;
     this.reloadStatus();
-
   }
 
   componentWillUnmount() {
@@ -56,9 +54,7 @@ class Bike extends Component {
     );
   }
 
-  saveSettings = () => {
-    this.inputSettings.update = currentTime()
-    SocketIoHelper.saveSettings(this.inputSettings);
+  newSettings = () => {
     this.showMessage();
     this.reloadStatus();
   };
@@ -81,11 +77,59 @@ class Bike extends Component {
     setTimeout(this.onDismiss, 2500);
   };
 
-  // funzioni per gli input
+  loading = () => (
+    <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  );
+
+  render() {
+    if (this.state.state === "") {
+      return null;
+    }
+    return (
+      <div className="animated fadeIn" >
+        <Row>
+          <Col xs="12" xl="6">
+            <CardState
+              settings={this.state.settings}
+              state={this.state.state}
+              toggleButton={this.toggleButton}
+            />
+
+            <Alert color="warning"
+              isOpen={this.state.visible}
+              toggle={this.onDismiss}>
+              Impostazioni salvate
+            </Alert>
+
+          </Col>
+
+          <Col xs="12" xl="6">
+            <CardSetting
+              settings={this.state.settings}
+              saveSettings={this.newSettings}
+            />
+          </Col>
+        </Row>
+      </div>
+
+    );
+  }
+}
+
+class CardSetting extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      "settings": this.props.settings
+    }
+
+    this.inputSettings = undefined;
+  }
+
   handleSwitch = name => {
     const settings = this.inputSettings;
     const value = !settings[name];
-
     settings[name] = value;
   };
 
@@ -98,150 +142,130 @@ class Bike extends Component {
     }
   };
 
-  loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  );
+  saveSettings = () => {
+    this.inputSettings.update = currentTime()
+    SocketIoHelper.saveSettings(this.inputSettings);
+    this.props.saveSettings();
+  }
 
   render() {
-    if (this.state.state === "") {
-      return null;
-    }
     if (this.inputSettings === undefined) {
       this.inputSettings = JSON.parse(JSON.stringify(this.state.settings));
     }
     return (
-      <div className="animated fadeIn" >
-        <Row>
-          <Col xs="12" xl="6">
-            <CardState
-              settings={this.state.settings}
-              state={this.state.state}
-              toggleButton={this.toggleButton}
-            />
+      <Card>
+        <CardHeader>
+          <strong>Impostazioni</strong>
+        </CardHeader>
+        <CardBody>
+          <Form action="" encType="multipart/form-data" className="form-horizontal">
+            <FormGroup row>
+              <Col md="10">
+                <Label>Log</Label>
+              </Col>
+              <Col md="2">
+                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  onChange={this.handleSwitch.bind(this, 'log')}
+                  defaultChecked={this.state.settings.log} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="10">
+                <Label>Csv</Label>
+              </Col>
+              <Col md="2">
+                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  onChange={this.handleSwitch.bind(this, 'csv')}
+                  checked={this.state.settings.csv} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="10">
+                <Label>Ant</Label>
+              </Col>
+              <Col md="2">
+                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  onChange={this.handleSwitch.bind(this, 'ant')}
+                  defaultChecked={this.state.settings.ant} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="9">
+                <Label>Potenza media</Label>
+              </Col>
+              <Col md="3">
+                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  defaultValue={this.state.settings.potenza}
+                  onChange={this.handleText.bind(this, 'potenza')} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="9">
+                <Label>Led Mode</Label>
+              </Col>
+              <Col md="3">
+                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  defaultValue={this.state.settings.led}
+                  onChange={this.handleText.bind(this, 'led')} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="9">
+                <Label>Circonferenza</Label>
+              </Col>
+              <Col md="3">
+                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  defaultValue={this.state.settings.circonferenza}
+                  onChange={this.handleText.bind(this, 'circonferenza')} />
+              </Col>
+            </FormGroup>
 
-            <Alert color="warning" isOpen={this.state.visible} toggle={this.onDismiss}>
-              Impostazioni salvate
-            </Alert>
-          </Col>
+            <FormGroup row>
+              <Col md="9">
+                <Label>Valore calibrazione</Label>
+              </Col>
+              <Col md="3">
+                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  defaultValue={this.state.settings.calibration_value}
+                  onInput={this.handleText.bind(this, 'calibration_value')} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="9">
+                <Label>Run</Label>
+              </Col>
+              <Col md="3">
+                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  defaultValue={this.state.settings.run}
+                  onInput={this.handleText.bind(this, 'run')} />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="10">
+                <Label>Record video</Label>
+              </Col>
+              <Col md="2">
+                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  onChange={this.handleSwitch.bind(this, 'video_record')}
+                  defaultChecked={this.state.settings.video_record}
+                />
+              </Col>
+            </FormGroup>
+          </Form>
+        </CardBody>
 
-          <Col xs="12" xl="6">
-            <Card>
-              <CardHeader>
-                <strong>Impostazioni</strong>
-              </CardHeader>
-              <CardBody>
-                <Form action="" encType="multipart/form-data" className="form-horizontal">
-                  <FormGroup row>
-                    <Col md="10">
-                      <Label>Log</Label>
-                    </Col>
-                    <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleSwitch.bind(this, 'log')}
-                        defaultChecked={this.state.settings.log} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="10">
-                      <Label>Csv</Label>
-                    </Col>
-                    <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleSwitch.bind(this, 'csv')}
-                        checked={this.state.settings.csv} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="10">
-                      <Label>Ant</Label>
-                    </Col>
-                    <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleSwitch.bind(this, 'ant')}
-                        defaultChecked={this.state.settings.ant} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Potenza media</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        defaultValue={this.state.settings.potenza}
-                        onChange={this.handleText.bind(this, 'potenza')} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Led Mode</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        defaultValue={this.state.settings.led}
-                        onChange={this.handleText.bind(this, 'led')} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Circonferenza</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        defaultValue={this.state.settings.circonferenza}
-                        onChange={this.handleText.bind(this, 'circonferenza')} />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Valore calibrazione</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        defaultValue={this.state.settings.calibration_value}
-                        onInput={this.handleText.bind(this, 'calibration_value')} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="9">
-                      <Label>Run</Label>
-                    </Col>
-                    <Col md="3">
-                      <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                        defaultValue={this.state.settings.run}
-                        onInput={this.handleText.bind(this, 'run')} />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col md="10">
-                      <Label>Record video</Label>
-                    </Col>
-                    <Col md="2">
-                      <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                        onChange={this.handleSwitch.bind(this, 'video_record')}
-                        defaultChecked={this.state.settings.video_record}
-                      />
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </CardBody>
-
-              <CardFooter>
-                <Row>
-                  <Col md="9">
-                    <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
-                    &ensp;
+        <CardFooter>
+          <Row>
+            <Col md="9">
+              <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
+              &ensp;
                   </Col>
-                  <Col md="3">
-                    <div className="text-center">{this.state.settings.update}</div>
-                  </Col>
-                </Row>
-              </CardFooter>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-
+            <Col md="3">
+              <div className="text-center">{this.state.settings.update}</div>
+            </Col>
+          </Row>
+        </CardFooter>
+      </Card>
     );
   }
 }
@@ -308,7 +332,7 @@ class CardState extends Component {
         </CardFooter>
 
       </Card>
-    )
+    );
   }
 }
 
