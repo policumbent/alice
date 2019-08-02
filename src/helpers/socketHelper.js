@@ -60,6 +60,11 @@ var SocketIoHelper = {
 
   saveSettings: function (sett) {
     socket.emit("save_setting", sett);
+  },
+
+  // pacchetto tipo 7
+  sendVideo: function (video) {
+    socket.emit("send_video", video);
   }
 };
 

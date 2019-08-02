@@ -31,8 +31,8 @@ class Bike extends Component {
     this.state = {
       settings: "",
       state: "",
-      video: "",
       visible: false,
+      visible_video: false,
     };
   }
 
@@ -59,20 +59,39 @@ class Bike extends Component {
     this.reloadStatus();
   };
 
+  recordVideo = () => {
+    this.showMessageVideo()
+    this.reloadStatus();
+  }
+
   toggleButton = () => {
     this.reloadStatus();
   }
 
   // funzioni per l'allert a schermo
   onDismiss = () => {
-    this.setState({
-      visible: false
-    });
+    if (this.state.visible) {
+      this.setState({
+        visible: false
+      });
+    }
+    else if (this.state.visible_video) {
+      this.setState({
+        visible_video: false
+      });
+    }
   };
 
   showMessage = () => {
     this.setState({
       visible: true
+    })
+    setTimeout(this.onDismiss, 2500);
+  };
+
+  showMessageVideo = () => {
+    this.setState({
+      visible_video: true
     })
     setTimeout(this.onDismiss, 2500);
   };
@@ -88,7 +107,7 @@ class Bike extends Component {
     return (
       <div className="animated fadeIn" >
         <Row>
-          <Col xs="12" xl="6">
+          <Col xs="12" xl="4">
             <CardState
               settings={this.state.settings}
               state={this.state.state}
@@ -100,10 +119,22 @@ class Bike extends Component {
               toggle={this.onDismiss}>
               Impostazioni salvate
             </Alert>
-
           </Col>
 
-          <Col xs="12" xl="6">
+          <Col xs="12" xl="4">
+            <CardVideo
+              video={this.state.state.video_recording}
+              dest={this.state.state.dest}
+              sendVideo={this.recordVideo}
+            />
+            <Alert color="warning"
+              isOpen={this.state.visible_video}
+              toggle={this.onDismiss}>
+              Pacchetto video mandato
+            </Alert>
+          </Col>
+
+          <Col xs="12" xl="4">
             <CardSetting
               settings={this.state.settings}
               saveSettings={this.newSettings}
@@ -111,7 +142,92 @@ class Bike extends Component {
           </Col>
         </Row>
       </div>
+    );
+  }
+}
 
+class CardVideo extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      "value": this.props.video
+    }
+
+    this.inputVideo = {
+      "dest": this.props.dest,
+      "type": "7",
+      "value": "",
+      "name": ""
+    }
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      value: this.props.video
+    });
+  }
+
+  handleSwitch = () => {
+    this.inputVideo.value = !this.inputVideo.value;
+  };
+
+  handleText = (event) => {
+    const name = event.target.value;
+
+    if (event.target.validity.valid) {
+      this.inputVideo.name = name;
+    }
+  };
+
+  sendVideo = () => {
+    SocketIoHelper.sendVideo(this.inputVideo);
+    this.props.sendVideo();
+  };
+
+  render() {
+    if (this.inputVideo.value === "") {
+      this.inputVideo.value = this.state.value;
+    }
+    return (
+      <Card>
+        <CardHeader>
+          <strong>Video</strong>
+        </CardHeader>
+        <CardBody>
+          <Form action="" encType="multipart/form-data" className="form-horizontal">
+            <FormGroup row>
+              <Col md="10">
+                <Label>Started</Label>
+              </Col>
+              <Col md="2">
+                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  defaultValue={this.state.value}
+                  onChange={this.handleSwitch}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="5">
+                <Label>Name</Label>
+              </Col>
+              <Col md="7">
+                <Input className="text-center" type="text" pattern="*"
+                  placeholder="Inserire nome del file video"
+                  onChange={this.handleText} />
+              </Col>
+            </FormGroup>
+          </Form>
+        </CardBody>
+        <CardFooter>
+          <Row>
+            <Col md="9">
+              <Button type="submit" data-dismiss='alert' size="sl" color="primary" onClick={this.sendVideo}><i className="fa fa-sign-out"></i> Send</Button>
+              &ensp;
+            </Col>
+          </Row>
+        </CardFooter>
+      </Card>
     );
   }
 }
@@ -194,7 +310,7 @@ class CardSetting extends Component {
                 <Label>Potenza media</Label>
               </Col>
               <Col md="3">
-                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                <Input className="text-center" type="number" min="0" pattern=""
                   defaultValue={this.state.settings.potenza}
                   onChange={this.handleText.bind(this, 'potenza')} />
               </Col>
