@@ -21,6 +21,15 @@ import {
 } from '@coreui/react'
 import SocketIoHelper from "../../helpers/socketHelper";
 
+function currentTime() {
+  var today = new Date();
+
+  var date = today.getDate() + '/' + (today.getMonth() + 1);
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = time + '-' + date;
+
+  return dateTime
+}
 
 class Bike extends Component {
   _isMounted = false;
@@ -151,7 +160,8 @@ class CardVideo extends Component {
     super(props);
 
     this.state = {
-      "value": this.props.video
+      value: this.props.video,
+      collapse: false
     }
 
     this.inputVideo = {
@@ -180,6 +190,10 @@ class CardVideo extends Component {
     }
   };
 
+  toggle = () => {
+    this.setState({ collapse: !this.state.collapse });
+  };
+
   sendVideo = () => {
     SocketIoHelper.sendVideo(this.inputVideo);
     this.props.sendVideo();
@@ -192,41 +206,45 @@ class CardVideo extends Component {
     return (
       <Card>
         <CardHeader>
-          <strong>Video</strong>
+          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+            <strong>Video</strong>
+          </Button>
         </CardHeader>
-        <CardBody>
-          <Form action="" encType="multipart/form-data" className="form-horizontal">
-            <FormGroup row>
-              <Col md="10">
-                <Label>Started</Label>
-              </Col>
-              <Col md="2">
-                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                  defaultValue={this.state.value}
-                  onChange={this.handleSwitch}
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="5">
-                <Label>Name</Label>
-              </Col>
-              <Col md="7">
-                <Input className="text-center" type="text" pattern="*"
-                  placeholder="Inserire nome del file video"
-                  onChange={this.handleText} />
-              </Col>
-            </FormGroup>
-          </Form>
-        </CardBody>
-        <CardFooter>
-          <Row>
-            <Col md="9">
-              <Button type="submit" data-dismiss='alert' size="sl" color="primary" onClick={this.sendVideo}><i className="fa fa-sign-out"></i> Send</Button>
-              &ensp;
+        <Collapse isOpen={!this.state.collapse}>
+          <CardBody>
+            <Form action="" encType="multipart/form-data" className="form-horizontal">
+              <FormGroup row>
+                <Col md="10">
+                  <Label>Started</Label>
+                </Col>
+                <Col md="2">
+                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                    defaultValue={this.state.value}
+                    onChange={this.handleSwitch}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="5">
+                  <Label>Name</Label>
+                </Col>
+                <Col md="7">
+                  <Input className="text-center" type="text" pattern="*"
+                    placeholder="Inserire nome del file video"
+                    onChange={this.handleText} />
+                </Col>
+              </FormGroup>
+            </Form>
+          </CardBody>
+          <CardFooter>
+            <Row>
+              <Col md="9">
+                <Button type="submit" data-dismiss='alert' size="sl" color="primary" onClick={this.sendVideo}><i className="fa fa-sign-out"></i> Send</Button>
+                &ensp;
             </Col>
-          </Row>
-        </CardFooter>
+            </Row>
+          </CardFooter>
+        </Collapse>
       </Card>
     );
   }
@@ -237,7 +255,8 @@ class CardSetting extends Component {
     super(props);
 
     this.state = {
-      "settings": this.props.settings
+      settings: this.props.settings,
+      collapse: false
     }
 
     this.inputSettings = undefined;
@@ -258,6 +277,10 @@ class CardSetting extends Component {
     }
   };
 
+  toggle = () => {
+    this.setState({ collapse: !this.state.collapse });
+  };
+
   saveSettings = () => {
     this.inputSettings.update = currentTime()
     SocketIoHelper.saveSettings(this.inputSettings);
@@ -271,116 +294,120 @@ class CardSetting extends Component {
     return (
       <Card>
         <CardHeader>
-          <strong>Impostazioni</strong>
+          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+            <strong>Impostazioni</strong>
+          </Button>
         </CardHeader>
-        <CardBody>
-          <Form action="" encType="multipart/form-data" className="form-horizontal">
-            <FormGroup row>
-              <Col md="10">
-                <Label>Log</Label>
-              </Col>
-              <Col md="2">
-                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                  onChange={this.handleSwitch.bind(this, 'log')}
-                  defaultChecked={this.state.settings.log} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="10">
-                <Label>Csv</Label>
-              </Col>
-              <Col md="2">
-                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                  onChange={this.handleSwitch.bind(this, 'csv')}
-                  checked={this.state.settings.csv} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="10">
-                <Label>Ant</Label>
-              </Col>
-              <Col md="2">
-                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                  onChange={this.handleSwitch.bind(this, 'ant')}
-                  defaultChecked={this.state.settings.ant} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="9">
-                <Label>Potenza media</Label>
-              </Col>
-              <Col md="3">
-                <Input className="text-center" type="number" min="0" pattern=""
-                  defaultValue={this.state.settings.potenza}
-                  onChange={this.handleText.bind(this, 'potenza')} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="9">
-                <Label>Led Mode</Label>
-              </Col>
-              <Col md="3">
-                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                  defaultValue={this.state.settings.led}
-                  onChange={this.handleText.bind(this, 'led')} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="9">
-                <Label>Circonferenza</Label>
-              </Col>
-              <Col md="3">
-                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                  defaultValue={this.state.settings.circonferenza}
-                  onChange={this.handleText.bind(this, 'circonferenza')} />
-              </Col>
-            </FormGroup>
+        <Collapse isOpen={!this.state.collapse}>
+          <CardBody>
+            <Form action="" encType="multipart/form-data" className="form-horizontal">
+              <FormGroup row>
+                <Col md="10">
+                  <Label>Log</Label>
+                </Col>
+                <Col md="2">
+                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                    onChange={this.handleSwitch.bind(this, 'log')}
+                    defaultChecked={this.state.settings.log} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="10">
+                  <Label>Csv</Label>
+                </Col>
+                <Col md="2">
+                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                    onChange={this.handleSwitch.bind(this, 'csv')}
+                    checked={this.state.settings.csv} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="10">
+                  <Label>Ant</Label>
+                </Col>
+                <Col md="2">
+                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                    onChange={this.handleSwitch.bind(this, 'ant')}
+                    defaultChecked={this.state.settings.ant} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="9">
+                  <Label>Potenza media</Label>
+                </Col>
+                <Col md="3">
+                  <Input className="text-center" type="number" min="0" pattern=""
+                    defaultValue={this.state.settings.potenza}
+                    onChange={this.handleText.bind(this, 'potenza')} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="9">
+                  <Label>Led Mode</Label>
+                </Col>
+                <Col md="3">
+                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                    defaultValue={this.state.settings.led}
+                    onChange={this.handleText.bind(this, 'led')} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="9">
+                  <Label>Circonferenza</Label>
+                </Col>
+                <Col md="3">
+                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                    defaultValue={this.state.settings.circonferenza}
+                    onChange={this.handleText.bind(this, 'circonferenza')} />
+                </Col>
+              </FormGroup>
 
-            <FormGroup row>
-              <Col md="9">
-                <Label>Valore calibrazione</Label>
-              </Col>
-              <Col md="3">
-                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                  defaultValue={this.state.settings.calibration_value}
-                  onInput={this.handleText.bind(this, 'calibration_value')} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="9">
-                <Label>Run</Label>
-              </Col>
-              <Col md="3">
-                <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                  defaultValue={this.state.settings.run}
-                  onInput={this.handleText.bind(this, 'run')} />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Col md="10">
-                <Label>Record video</Label>
-              </Col>
-              <Col md="2">
-                <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                  onChange={this.handleSwitch.bind(this, 'video_record')}
-                  defaultChecked={this.state.settings.video_record}
-                />
-              </Col>
-            </FormGroup>
-          </Form>
-        </CardBody>
+              <FormGroup row>
+                <Col md="9">
+                  <Label>Valore calibrazione</Label>
+                </Col>
+                <Col md="3">
+                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                    defaultValue={this.state.settings.calibration_value}
+                    onInput={this.handleText.bind(this, 'calibration_value')} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="9">
+                  <Label>Run</Label>
+                </Col>
+                <Col md="3">
+                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                    defaultValue={this.state.settings.run}
+                    onInput={this.handleText.bind(this, 'run')} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md="10">
+                  <Label>Record video</Label>
+                </Col>
+                <Col md="2">
+                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                    onChange={this.handleSwitch.bind(this, 'video_record')}
+                    defaultChecked={this.state.settings.video_record}
+                  />
+                </Col>
+              </FormGroup>
+            </Form>
+          </CardBody>
 
-        <CardFooter>
-          <Row>
-            <Col md="9">
-              <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
-              &ensp;
+          <CardFooter>
+            <Row>
+              <Col md="9">
+                <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
+                &ensp;
                   </Col>
-            <Col md="3">
-              <div className="text-center">{this.state.settings.update}</div>
-            </Col>
-          </Row>
-        </CardFooter>
+              <Col md="3">
+                <div className="text-center">{this.state.settings.update}</div>
+              </Col>
+            </Row>
+          </CardFooter>
+        </Collapse>
       </Card>
     );
   }
@@ -442,24 +469,13 @@ class CardState extends Component {
               </code>
             </pre>
           </CardBody>
+          <CardFooter>
+            <Button type="submit" size="sl" color="danger" onClick={this.props.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
+          </CardFooter>
         </Collapse>
-        <CardFooter>
-          <Button type="submit" size="sl" color="danger" onClick={this.props.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
-        </CardFooter>
-
       </Card>
     );
   }
-}
-
-function currentTime() {
-  var today = new Date();
-
-  var date = today.getDate() + '/' + (today.getMonth() + 1);
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = time + '-' + date;
-
-  return dateTime
 }
 
 export default Bike;

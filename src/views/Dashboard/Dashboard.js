@@ -7,7 +7,6 @@ import {
   CardBody,
   Col,
   Row,
-  Colors
 } from "reactstrap";
 import {
   mainChartOpts,
