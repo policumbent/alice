@@ -28,6 +28,7 @@ import {
 } from "./Graph";
 import SocketIoHelper from "../../helpers/socketHelper";
 
+
 function Extra(props) {
   if (!props.showExtra) {
     return null;

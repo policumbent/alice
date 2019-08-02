@@ -91,6 +91,7 @@ class Bike extends Component {
     }
   };
 
+  // NOTE: saranno deprecati col pacchetto di notifica
   showMessage = () => {
     this.setState({
       visible: true
@@ -111,7 +112,7 @@ class Bike extends Component {
 
   render() {
     if (this.state.state === "") {
-      return null;
+      return null
     }
     return (
       <div className="animated fadeIn" >
@@ -122,7 +123,6 @@ class Bike extends Component {
               state={this.state.state}
               toggleButton={this.toggleButton}
             />
-
             <Alert color="warning"
               isOpen={this.state.visible}
               toggle={this.onDismiss}>
@@ -139,7 +139,7 @@ class Bike extends Component {
             <Alert color="warning"
               isOpen={this.state.visible_video}
               toggle={this.onDismiss}>
-              Pacchetto video mandato
+              Registrazione video
             </Alert>
           </Col>
 
@@ -215,7 +215,7 @@ class CardVideo extends Component {
             <Form action="" encType="multipart/form-data" className="form-horizontal">
               <FormGroup row>
                 <Col md="10">
-                  <Label>Started</Label>
+                  <Label>Registrazione</Label>
                 </Col>
                 <Col md="2">
                   <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
@@ -479,3 +479,53 @@ class CardState extends Component {
 }
 
 export default Bike;
+
+
+
+// NOTE: Il cambio va bene con l'app bluetooth android
+// class CardGear extends Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.state = {
+//       calibration: "",
+//       collapse: false
+//     }
+
+//     this.inputCalibration = undefined;
+//   }
+
+//   toggle = () => {
+//     this.setState({ collapse: !this.state.collapse });
+//   };
+
+//   sendCalibration = () => {
+//     SocketIoHelper.sendCalibration(this.inputCalibration);
+//     this.props.sendCalibration();
+//   };
+
+//   render() {
+//     return (
+//       <Card>
+//         <CardHeader>
+//           <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+//             <strong>Cambio</strong>
+//           </Button>
+//         </CardHeader>
+//         <Collapse isOpen={!this.state.collapse}>
+//           <CardBody>
+//             robe
+//           </CardBody>
+//           <CardFooter>
+//             <Row>
+//               <Col md="9">
+//                 <Button type="submit" data-dismiss='alert' size="sl" color="primary" onClick={this.sendCalibration}><i className="fa fa-sign-out"></i> Send</Button>
+//                 &ensp;
+//               </Col>
+//             </Row>
+//           </CardFooter>
+//         </Collapse>
+//       </Card>
+//     );
+//   }
+// }

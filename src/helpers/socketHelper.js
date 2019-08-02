@@ -65,7 +65,13 @@ var SocketIoHelper = {
   // pacchetto tipo 7
   sendVideo: function (video) {
     socket.emit("send_video", video);
-  }
+  },
+
+  // NOTE: Il cambio va bene con l'app bluetooth android
+  // pacchetto tipo 8 
+  // sendCalibration: function (calibration) {
+  //   socket.emit("send_calibration", calibration);
+  // }
 };
 
 export default SocketIoHelper;
