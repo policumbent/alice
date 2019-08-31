@@ -39,7 +39,7 @@ function Extra(props) {
       <Col xs="12" sm="6" lg="3">
         <Card className="text-white bg-primary">
           <CardBody className="pb-2">
-            <div>Time</div>
+            <div>Time [s]</div>
             <div className="text-value text-center">{props.time}</div>
           </CardBody>
         </Card>
@@ -57,7 +57,7 @@ function Extra(props) {
       <Col xs="12" sm="6" lg="3">
         <Card className="text-dark bg-secondary">
           <CardBody className="pb-2">
-            <div>Distance</div>
+            <div>Distance [m]</div>
             <div className="text-value text-center">{props.distance}</div>
           </CardBody>
         </Card>
@@ -67,13 +67,17 @@ function Extra(props) {
         <Card className="text-white bg-purple">
           <CardBody className="pb-2">
             <Row>
-              <Col xs="6" sm="6" lg="6">
-                <div className="text-center">Temperature</div>
+              <Col xs="4" sm="4" lg="4">
+                <div className="text-center">Temp [°C]</div>
                 <div className="text-value text-center">{props.weather.temperature}</div>
               </Col>
-              <Col xs="6" sm="6" lg="6">
-                <div className="text-center">Humidity</div>
+              <Col xs="4" sm="4" lg="4">
+                <div className="text-center">Humidity[%]</div>
                 <div className="text-value text-center">{props.weather.humidity}</div>
+              </Col>
+              <Col xs="4" sm="4" lg="4">
+                <div className="text-center">Press [hPa]</div>
+                <div className="text-value text-center">{props.weather.pressure}</div>
               </Col>
             </Row>
           </CardBody>
@@ -194,7 +198,7 @@ class Dashboard extends Component {
                   <i className="icon-settings" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.power}</div>
-                <div>Power</div>
+                <div>Power [W]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: "60px" }}>
                 <CardChart
@@ -212,10 +216,10 @@ class Dashboard extends Component {
             <Card className="text-white bg-success">
               <CardBody className="pb-0">
                 <ButtonGroup id="card2" className="float-right">
-                  <i className="icon-location-pin" />
+                  <i className="icon-settings" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.cadence}</div>
-                <div>Cadence</div>
+                <div>Cadence [rpm]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: "60px" }}>
                 <CardChart
@@ -236,7 +240,7 @@ class Dashboard extends Component {
                   <i className="icon-settings" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.speed}</div>
-                <div>Speed</div>
+                <div>Speed [km/h]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: "60px" }}>
                 <CardChart
@@ -257,7 +261,7 @@ class Dashboard extends Component {
                   <i className="icon-settings" />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.heartrate}</div>
-                <div>Heartrate</div>
+                <div>Heartrate [bpm]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: "60px" }}>
                 <CardChart
