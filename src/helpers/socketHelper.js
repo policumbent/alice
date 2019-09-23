@@ -60,6 +60,11 @@ var SocketIoHelper = {
     socket.emit("save_setting", sett);
   },
 
+  // pacchetto tipo 6
+  sendRasp: function (rasp_value) {
+    socket.emit("send_rasp", rasp_value);
+  },
+
   // pacchetto tipo 7
   sendVideo: function (video) {
     socket.emit("send_video", video);

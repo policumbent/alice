@@ -42,6 +42,7 @@ class Bike extends Component {
       state: "",
       visible: false,
       visible_video: false,
+      visible_rasp: false,
     };
   }
 
@@ -73,6 +74,11 @@ class Bike extends Component {
     this.reloadStatus();
   }
 
+  setRaspberry = () => {
+    this.showMessageRasp();
+    this.reloadStatus();
+  };
+
   toggleButton = () => {
     this.reloadStatus();
   }
@@ -89,6 +95,11 @@ class Bike extends Component {
         visible_video: false
       });
     }
+    else if (this.state.visible_rasp) {
+      this.setState({
+        visible_rasp: false
+      });
+    }
   };
 
   // NOTE: saranno deprecati col pacchetto di notifica
@@ -102,6 +113,13 @@ class Bike extends Component {
   showMessageVideo = () => {
     this.setState({
       visible_video: true
+    })
+    setTimeout(this.onDismiss, 2500);
+  };
+
+  showMessageRasp = () => {
+    this.setState({
+      visible_rasp: true
     })
     setTimeout(this.onDismiss, 2500);
   };
@@ -140,6 +158,16 @@ class Bike extends Component {
               isOpen={this.state.visible_video}
               toggle={this.onDismiss}>
               Registrazione video
+            </Alert>
+
+            <CardRasp
+              dest={this.state.state.dest}
+              sendRasp={this.setRaspberry}
+            />
+            <Alert color="warning"
+              isOpen={this.state.visible_rasp}
+              toggle={this.onDismiss}>
+              Invio al Raspberry
             </Alert>
           </Col>
 
@@ -470,12 +498,67 @@ class CardState extends Component {
             </pre>
           </CardBody>
           <CardFooter>
-            <Button type="submit" size="sl" color="danger" onClick={this.props.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
+            <Button className="text-white bg-cyan" type="submit" size="sl" onClick={this.props.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
           </CardFooter>
         </Collapse>
       </Card>
     );
   }
+}
+
+class CardRasp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      collapse: false
+    };
+  }
+
+  toggle = () => {
+    this.setState({ collapse: !this.state.collapse });
+  };
+
+  sendRasp = value => {
+    // NOTE: ricordare tipo esplicito pacchetto
+    let packet = {
+      dest: this.props.dest,
+      type: '6',
+      value: value
+    }
+    SocketIoHelper.sendRasp(packet);
+    this.props.sendRasp();
+  }
+
+  render() {
+    return (
+      <Card>
+        <CardHeader>
+          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+            <strong>Raspberry</strong>
+          </Button>
+        </CardHeader>
+        <Collapse isOpen={!this.state.collapse}>
+          <CardBody>
+            <Row>
+              <Col md="8" >
+                <Button type="submit" data-dismiss='alert' size="sl" color="danger" onClick={this.sendRasp.bind(this, '0')}>
+                  <i className="fa fa-power-off"></i> Spegni
+              </Button>
+              </Col>
+              <Col md="4">
+                &ensp;&ensp;&ensp;
+                <Button className="text-white" type="submit" data-dismiss='alert' size="sl" color="warning" onClick={this.sendRasp.bind(this, '1')}>
+                  <i className="fa fa-refresh"></i> Riavvia
+              </Button>
+              </Col>
+            </Row>
+          </CardBody>
+        </Collapse>
+      </Card>
+    );
+  }
+
 }
 
 export default Bike;
