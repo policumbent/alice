@@ -3,7 +3,7 @@
   "name": "MARTA frontend",
   "icons": [
     {
-      "src": "./assets/img/favicon.png",
+      "src": "/assets/img/favicon.png",
       "sizes": "100x100",
       "type": "image/png"
     }
