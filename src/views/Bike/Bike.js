@@ -513,6 +513,12 @@ class CardRasp extends Component {
     this.state = {
       collapse: false
     };
+
+    this.inputRasp = {
+      dest: this.props.dest,
+      type: "6",
+      value: ""
+    }
   }
 
   toggle = () => {
@@ -520,13 +526,8 @@ class CardRasp extends Component {
   };
 
   sendRasp = value => {
-    // NOTE: ricordare tipo esplicito pacchetto
-    let packet = {
-      dest: this.props.dest,
-      type: '6',
-      value: value
-    }
-    SocketIoHelper.sendRasp(packet);
+    this.inputRasp.value = value;
+    SocketIoHelper.sendRasp(this.inputRasp);
     this.props.sendRasp();
   }
 
@@ -558,7 +559,6 @@ class CardRasp extends Component {
       </Card>
     );
   }
-
 }
 
 export default Bike;
