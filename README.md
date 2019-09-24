@@ -8,13 +8,13 @@ Entrare nella cartella `frontend` lanciare:
 
     npm start
 
-per avere l'interfaccia di sviluppo in [localhost:3000](localhsot:3000).
+per avere l'interfaccia di sviluppo in [localhost:3000](http://localhost:3000).
 
 Una volta completate le modifiche lanciare la compilazione con:
 
     npm run build
 
-il template production ready sarà in [localhost:5000](localhost:5000)
+il template production ready sarà in [localhost:5000](http://localhost:5000)
 
 ## Credits
 
