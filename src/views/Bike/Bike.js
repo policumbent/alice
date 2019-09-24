@@ -13,7 +13,6 @@ import {
   Input,
   Label,
   Row,
-  Alert,
   Collapse,
 } from "reactstrap";
 import {
@@ -25,10 +24,9 @@ import base from '../../notifications/notification';
 
 function currentTime() {
   var today = new Date();
-
-  var date = today.getDate() + '/' + (today.getMonth() + 1);
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = time + '-' + date;
+  var date = today.getDate() + '-' + ("0" + (today.getMonth() + 1)).slice(-2);
+  var time = ("0" + (today.getHours() + 1)).slice(-2) + ":" + ("0" + (today.getMinutes() + 1)).slice(-2) + ":" + ("0" + (today.getSeconds() + 1)).slice(-2);
+  var dateTime = time + '_' + date;
 
   return dateTime
 }
@@ -59,14 +57,12 @@ class Bike extends Component {
 
   reloadStatus() {
     SocketIoHelper.getSettings(settings => {
-      if (this.state.settings !== settings) {
+      if (JSON.stringify(this.state.settings) !== JSON.stringify(settings)) {
         this.setState({ settings });
       }
     });
     SocketIoHelper.getState(state => {
-      if (this.state.state !== state) {
-        this.setState({ state })
-      }
+      this.setState({ state })
     });
   }
 
@@ -79,7 +75,7 @@ class Bike extends Component {
   );
 
   render() {
-    if (this.state.state === "") {
+    if (this.state.state === "" || this.state.settings === "") {
       return null
     }
     return (
@@ -95,7 +91,7 @@ class Bike extends Component {
 
           <Col xs="12" xl="4">
             <CardVideo
-              video={this.state.state.video_recording}
+              value={this.state.state.video_recording}
               dest={this.state.state.dest}
               reloadStatus={this.updateView}
             />
@@ -122,22 +118,15 @@ class CardVideo extends Component {
     super(props);
 
     this.state = {
-      value: this.props.video,
       collapse: false
     }
 
     this.inputVideo = {
       "dest": this.props.dest,
       "type": "7",
-      "value": "",
+      "value": this.props.value,
       "name": ""
     }
-  }
-
-  UNSAFE_componentWillReceiveProps() {
-    this.setState(props => ({
-      value: props.video
-    }));
   }
 
   handleSwitch = () => {
@@ -166,9 +155,6 @@ class CardVideo extends Component {
   };
 
   render() {
-    if (this.inputVideo.value === "") {
-      this.inputVideo.value = this.state.value;
-    }
     return (
       <Card>
         <CardHeader>
@@ -180,12 +166,12 @@ class CardVideo extends Component {
           <CardBody>
             <Form action="" encType="multipart/form-data" className="form-horizontal">
               <FormGroup row>
-                <Col md="10">
+                <Col md="9">
                   <Label>Registrazione</Label>
                 </Col>
-                <Col md="2">
+                <Col md="3">
                   <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                    defaultValue={this.state.value}
+                    checked={this.props.value}
                     onChange={this.handleSwitch}
                   />
                 </Col>
@@ -221,11 +207,10 @@ class CardSetting extends Component {
     super(props);
 
     this.state = {
-      settings: this.props.settings,
       collapse: false
     }
 
-    this.inputSettings = undefined;
+    this.inputSettings = JSON.parse(JSON.stringify(this.props.settings));;
   }
 
   handleSwitch = name => {
@@ -259,9 +244,6 @@ class CardSetting extends Component {
   }
 
   render() {
-    if (this.inputSettings === undefined) {
-      this.inputSettings = JSON.parse(JSON.stringify(this.state.settings));
-    }
     return (
       <Card>
         <CardHeader>
@@ -273,33 +255,33 @@ class CardSetting extends Component {
           <CardBody>
             <Form action="" encType="multipart/form-data" className="form-horizontal">
               <FormGroup row>
-                <Col md="10">
+                <Col md="9">
                   <Label>Log</Label>
                 </Col>
-                <Col md="2">
+                <Col md="3">
                   <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
                     onChange={this.handleSwitch.bind(this, 'log')}
-                    defaultChecked={this.state.settings.log} />
+                    checked={this.props.settings.log} />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Col md="10">
+                <Col md="9">
                   <Label>Csv</Label>
                 </Col>
-                <Col md="2">
+                <Col md="3">
                   <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
                     onChange={this.handleSwitch.bind(this, 'csv')}
-                    checked={this.state.settings.csv} />
+                    checked={this.props.settings.csv} />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Col md="10">
+                <Col md="9">
                   <Label>Ant</Label>
                 </Col>
-                <Col md="2">
+                <Col md="3">
                   <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
                     onChange={this.handleSwitch.bind(this, 'ant')}
-                    defaultChecked={this.state.settings.ant} />
+                    checked={this.props.settings.ant} />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -308,7 +290,7 @@ class CardSetting extends Component {
                 </Col>
                 <Col md="3">
                   <Input className="text-center" type="number" min="0" pattern=""
-                    defaultValue={this.state.settings.potenza}
+                    defaultValue={this.props.settings.potenza}
                     onChange={this.handleText.bind(this, 'potenza')} />
                 </Col>
               </FormGroup>
@@ -318,7 +300,7 @@ class CardSetting extends Component {
                 </Col>
                 <Col md="3">
                   <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                    defaultValue={this.state.settings.led}
+                    defaultValue={this.props.settings.led}
                     onChange={this.handleText.bind(this, 'led')} />
                 </Col>
               </FormGroup>
@@ -328,7 +310,7 @@ class CardSetting extends Component {
                 </Col>
                 <Col md="3">
                   <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                    defaultValue={this.state.settings.circonferenza}
+                    defaultValue={this.props.settings.circonferenza}
                     onChange={this.handleText.bind(this, 'circonferenza')} />
                 </Col>
               </FormGroup>
@@ -339,7 +321,7 @@ class CardSetting extends Component {
                 </Col>
                 <Col md="3">
                   <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                    defaultValue={this.state.settings.calibration_value}
+                    defaultValue={this.props.settings.calibration_value}
                     onInput={this.handleText.bind(this, 'calibration_value')} />
                 </Col>
               </FormGroup>
@@ -349,19 +331,8 @@ class CardSetting extends Component {
                 </Col>
                 <Col md="3">
                   <Input className="text-center" type="number" min="0" pattern="[0-9]*"
-                    defaultValue={this.state.settings.run}
+                    defaultValue={this.props.settings.run}
                     onInput={this.handleText.bind(this, 'run')} />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Col md="10">
-                  <Label>Record video</Label>
-                </Col>
-                <Col md="2">
-                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
-                    onChange={this.handleSwitch.bind(this, 'video_record')}
-                    defaultChecked={this.state.settings.video_record}
-                  />
                 </Col>
               </FormGroup>
             </Form>
@@ -374,7 +345,7 @@ class CardSetting extends Component {
                 &ensp;
                   </Col>
               <Col md="3">
-                <div className="text-center">{this.state.settings.update}</div>
+                <div className="text-center">{this.props.settings.update.replace("_", "\n")}</div>
               </Col>
             </Row>
           </CardFooter>
