@@ -365,6 +365,7 @@ class CardState extends Component {
     };
   }
 
+  // TODO: issue #22
   UNSAFE_componentWillReceiveProps() {
     this.updateStatus();
   }

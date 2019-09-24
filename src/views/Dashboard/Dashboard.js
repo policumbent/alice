@@ -27,7 +27,9 @@ import {
   MainChart
 } from "./Graph";
 import SocketIoHelper from "../../helpers/socketHelper";
-
+import { FiActivity } from "react-icons/fi";
+import { GiSpeedometer, GiCartwheel } from "react-icons/gi";
+import { FaSpaceShuttle } from "react-icons/fa"
 
 function Extra(props) {
   if (!props.showExtra) {
@@ -36,34 +38,8 @@ function Extra(props) {
 
   return (
     <Row>
-      <Col xs="12" sm="6" lg="3">
-        <Card className="text-white bg-primary">
-          <CardBody className="pb-2">
-            <div>Time [s]</div>
-            <div className="text-value text-center">{props.time}</div>
-          </CardBody>
-        </Card>
-      </Col>
 
-      <Col xs="12" sm="6" lg="3">
-        <Card className="text-white bg-dark">
-          <CardBody className="pb-2">
-            <div>Gear</div>
-            <div className="text-value text-center">{props.gear}</div>
-          </CardBody>
-        </Card>
-      </Col>
-
-      <Col xs="12" sm="6" lg="3">
-        <Card className="text-dark bg-secondary">
-          <CardBody className="pb-2">
-            <div>Distance [m]</div>
-            <div className="text-value text-center">{props.distance}</div>
-          </CardBody>
-        </Card>
-      </Col>
-
-      <Col xs="12" sm="6" lg="3">
+      <Col xs="12" sm="6" lg="4">
         <Card className="text-white bg-purple">
           <CardBody className="pb-2">
             <Row>
@@ -72,7 +48,7 @@ function Extra(props) {
                 <div className="text-value text-center">{props.weather.temperature}</div>
               </Col>
               <Col xs="4" sm="4" lg="4">
-                <div className="text-center">Humidity[%]</div>
+                <div className="text-center">Humidity [%]</div>
                 <div className="text-value text-center">{props.weather.humidity}</div>
               </Col>
               <Col xs="4" sm="4" lg="4">
@@ -80,6 +56,33 @@ function Extra(props) {
                 <div className="text-value text-center">{props.weather.pressure}</div>
               </Col>
             </Row>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col xs="12" sm="6" lg="2">
+        <Card className="text-white bg-dark">
+          <CardBody className="pb-2">
+            <div>Gear</div>
+            <div className="text-value text-center">{props.gear}</div>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col xs="12" sm="6" lg="2">
+        <Card className="text-dark bg-secondary">
+          <CardBody className="pb-2">
+            <div>Distance [m]</div>
+            <div className="text-value text-center">{props.distance}</div>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col xs="12" sm="6" lg="4">
+        <Card className="text-white bg-primary">
+          <CardBody className="pb-2">
+            <div>Time [s]</div>
+            <div className="text-value text-center">{props.time}</div>
           </CardBody>
         </Card>
       </Col>
@@ -195,7 +198,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-info">
               <CardBody className="pb-0">
                 <ButtonGroup id="card1" className="float-right">
-                  <i className="icon-settings" />
+                  <FaSpaceShuttle size={'1.5em'} />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.power}</div>
                 <div>Power [W]</div>
@@ -216,7 +219,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-success">
               <CardBody className="pb-0">
                 <ButtonGroup id="card2" className="float-right">
-                  <i className="icon-settings" />
+                  <GiCartwheel size={'1.5em'} />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.cadence}</div>
                 <div>Cadence [rpm]</div>
@@ -237,7 +240,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-warning">
               <CardBody className="pb-0">
                 <ButtonGroup id="card3" className="float-right">
-                  <i className="icon-settings" />
+                  <GiSpeedometer size={'1.5em'} />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.speed}</div>
                 <div>Speed [km/h]</div>
@@ -258,7 +261,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
                 <ButtonGroup id="card4" className="float-right">
-                  <i className="icon-settings" />
+                  <FiActivity size={'1.5em'} />
                 </ButtonGroup>
                 <div className="text-value">{this.state.data.heartrate}</div>
                 <div>Heartrate [bpm]</div>
