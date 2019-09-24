@@ -2,7 +2,7 @@ import openSocket from "socket.io-client";
 
 let socket;
 
-var SocketIoHelper = {
+const SocketIoHelper = {
   setup: function () {
     let port;
     if (window.location.port === "3000") {

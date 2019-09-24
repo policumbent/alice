@@ -20,6 +20,8 @@ import {
   AppSwitch
 } from '@coreui/react'
 import SocketIoHelper from "../../helpers/socketHelper";
+import { store } from 'react-notifications-component';
+import base from '../../notifications/notification';
 
 function currentTime() {
   var today = new Date();
@@ -56,73 +58,21 @@ class Bike extends Component {
   }
 
   reloadStatus() {
-    SocketIoHelper.getSettings(settings =>
-      this.setState({ settings })
-    )
-    SocketIoHelper.getState(state =>
-      this.setState({ state })
-    );
+    SocketIoHelper.getSettings(settings => {
+      if (this.state.settings !== settings) {
+        this.setState({ settings });
+      }
+    });
+    SocketIoHelper.getState(state => {
+      if (this.state.state !== state) {
+        this.setState({ state })
+      }
+    });
   }
 
-  newSettings = () => {
-    this.showMessage();
-    this.reloadStatus();
-  };
-
-  recordVideo = () => {
-    this.showMessageVideo()
+  updateView = () => {
     this.reloadStatus();
   }
-
-  setRaspberry = () => {
-    this.showMessageRasp();
-    this.reloadStatus();
-  };
-
-  toggleButton = () => {
-    this.reloadStatus();
-  }
-
-  // funzioni per l'allert a schermo
-  onDismiss = () => {
-    if (this.state.visible) {
-      this.setState({
-        visible: false
-      });
-    }
-    else if (this.state.visible_video) {
-      this.setState({
-        visible_video: false
-      });
-    }
-    else if (this.state.visible_rasp) {
-      this.setState({
-        visible_rasp: false
-      });
-    }
-  };
-
-  // NOTE: saranno deprecati col pacchetto di notifica
-  showMessage = () => {
-    this.setState({
-      visible: true
-    })
-    setTimeout(this.onDismiss, 2500);
-  };
-
-  showMessageVideo = () => {
-    this.setState({
-      visible_video: true
-    })
-    setTimeout(this.onDismiss, 2500);
-  };
-
-  showMessageRasp = () => {
-    this.setState({
-      visible_rasp: true
-    })
-    setTimeout(this.onDismiss, 2500);
-  };
 
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
@@ -139,42 +89,26 @@ class Bike extends Component {
             <CardState
               settings={this.state.settings}
               state={this.state.state}
-              toggleButton={this.toggleButton}
+              reloadStatus={this.updateView}
             />
-            <Alert color="warning"
-              isOpen={this.state.visible}
-              toggle={this.onDismiss}>
-              Impostazioni salvate
-            </Alert>
           </Col>
 
           <Col xs="12" xl="4">
             <CardVideo
               video={this.state.state.video_recording}
               dest={this.state.state.dest}
-              sendVideo={this.recordVideo}
+              reloadStatus={this.updateView}
             />
-            <Alert color="warning"
-              isOpen={this.state.visible_video}
-              toggle={this.onDismiss}>
-              Registrazione video
-            </Alert>
-
             <CardRasp
               dest={this.state.state.dest}
-              sendRasp={this.setRaspberry}
+              reloadStatus={this.updateView}
             />
-            <Alert color="warning"
-              isOpen={this.state.visible_rasp}
-              toggle={this.onDismiss}>
-              Invio al Raspberry
-            </Alert>
           </Col>
 
           <Col xs="12" xl="4">
             <CardSetting
               settings={this.state.settings}
-              saveSettings={this.newSettings}
+              reloadStatus={this.updateView}
             />
           </Col>
         </Row>
@@ -201,9 +135,9 @@ class CardVideo extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({
-      value: this.props.video
-    });
+    this.setState(props => ({
+      value: props.video
+    }));
   }
 
   handleSwitch = () => {
@@ -212,7 +146,6 @@ class CardVideo extends Component {
 
   handleText = (event) => {
     const name = event.target.value;
-
     if (event.target.validity.valid) {
       this.inputVideo.name = name;
     }
@@ -223,8 +156,13 @@ class CardVideo extends Component {
   };
 
   sendVideo = () => {
+    store.addNotification({
+      title: "Video",
+      message: "Invio del pacchetto video alla bici",
+      ...base,
+    });
     SocketIoHelper.sendVideo(this.inputVideo);
-    this.props.sendVideo();
+    this.props.reloadStatus();
   };
 
   render() {
@@ -310,9 +248,14 @@ class CardSetting extends Component {
   };
 
   saveSettings = () => {
+    store.addNotification({
+      title: "Settings",
+      message: "Invio del pacchetto settings alla bici",
+      ...base,
+    });
     this.inputSettings.update = currentTime()
     SocketIoHelper.saveSettings(this.inputSettings);
-    this.props.saveSettings();
+    this.props.reloadStatus();
   }
 
   render() {
@@ -463,6 +406,16 @@ class CardState extends Component {
     this.setState({ collapse: !this.state.collapse });
   };
 
+  toggleButton = () => {
+    store.addNotification({
+      ...base,
+      title: "State",
+      message: "Aggiornato lo status",
+      type: "success"
+    });
+    this.props.reloadStatus()
+  };
+
   updateStatus() {
     let jstate = JSON.parse(JSON.stringify(this.props.state));
     let jsettings = JSON.parse(JSON.stringify(this.props.settings));
@@ -498,7 +451,7 @@ class CardState extends Component {
             </pre>
           </CardBody>
           <CardFooter>
-            <Button className="text-white bg-cyan" type="submit" size="sl" onClick={this.props.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
+            <Button className="text-white bg-cyan" type="submit" size="sl" onClick={this.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
           </CardFooter>
         </Collapse>
       </Card>
@@ -526,9 +479,14 @@ class CardRasp extends Component {
   };
 
   sendRasp = value => {
+    store.addNotification({
+      title: "Raspberry",
+      message: "Invio del pacchetto raspberry alla bici",
+      ...base,
+    });
     this.inputRasp.value = value;
     SocketIoHelper.sendRasp(this.inputRasp);
-    this.props.sendRasp();
+    this.props.reloadStatus();
   }
 
   render() {
