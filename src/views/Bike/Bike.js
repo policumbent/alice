@@ -134,7 +134,7 @@ class CardVideo extends Component {
     }
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     this.setState(props => ({
       value: props.video
     }));
@@ -394,7 +394,7 @@ class CardState extends Component {
     };
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     this.updateStatus();
   }
 
