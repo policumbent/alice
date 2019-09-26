@@ -13,7 +13,8 @@ class MainChart extends Component {
     this.history = this.props.history;
     this.state = this.props.state;
 
-    this.manageHistory(this.state, this.history);
+    if (this.history !== undefined)
+      this.manageHistory(this.state, this.history);
   }
 
   manageHistory(data, chart) {
@@ -90,7 +91,7 @@ class MainChart extends Component {
   }
 
   render() {
-    return <Line data={this.state} options={this.props.opts}/>;
+    return <Line data={this.state} options={this.props.opts} />;
   }
 }
 
@@ -146,7 +147,7 @@ class CardChart extends Component {
   }
 
   render() {
-    return <Line data={this.state} options={this.props.opts}/>;
+    return <Line data={this.state} options={this.props.opts} />;
   }
 }
 
