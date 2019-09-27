@@ -1,9 +1,9 @@
-import React, {Component, Suspense} from "react";
-import {Redirect, Route, Switch} from "react-router-dom";
-import {Container} from "reactstrap";
+import React, { Component, Suspense } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { Container } from "reactstrap";
 
 import {
-//  AppAside,
+  //  AppAside,
   AppBreadcrumb,
   AppFooter,
   AppHeader,
@@ -42,7 +42,7 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
+          <AppSidebar minimized fixed display="lg">
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
