@@ -340,11 +340,11 @@ class CardSetting extends Component {
 
           <CardFooter>
             <Row>
-              <Col md="9">
+              <Col xs="6" md="9">
                 <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
                 &ensp;
                   </Col>
-              <Col md="3">
+              <Col xs="6" md="3">
                 <div className="text-center">{this.props.settings.update.replace("_", "\n")}</div>
               </Col>
             </Row>
@@ -472,13 +472,12 @@ class CardRasp extends Component {
         <Collapse isOpen={!this.state.collapse}>
           <CardBody>
             <Row>
-              <Col xs="6" md="8" >
+              <Col xs="6" md="9" xl="9">
                 <Button type="submit" data-dismiss='alert' size="sl" color="danger" onClick={this.sendRasp.bind(this, '0')}>
                   <i className="fa fa-power-off"></i> Spegni
               </Button>
               </Col>
-              <Col xs="6" md="4">
-                &ensp;&ensp;&ensp;
+              <Col xs="6" md="3" xl="3">
                 <Button className="text-white" type="submit" data-dismiss='alert' size="sl" color="warning" onClick={this.sendRasp.bind(this, '1')}>
                   <i className="fa fa-refresh"></i> Riavvia
               </Button>
