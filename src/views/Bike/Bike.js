@@ -472,12 +472,12 @@ class CardRasp extends Component {
         <Collapse isOpen={!this.state.collapse}>
           <CardBody>
             <Row>
-              <Col md="8" >
+              <Col xs="6" md="8" >
                 <Button type="submit" data-dismiss='alert' size="sl" color="danger" onClick={this.sendRasp.bind(this, '0')}>
                   <i className="fa fa-power-off"></i> Spegni
               </Button>
               </Col>
-              <Col md="4">
+              <Col xs="6" md="4">
                 &ensp;&ensp;&ensp;
                 <Button className="text-white" type="submit" data-dismiss='alert' size="sl" color="warning" onClick={this.sendRasp.bind(this, '1')}>
                   <i className="fa fa-refresh"></i> Riavvia
