@@ -178,7 +178,7 @@ class CardVideo extends Component {
               </FormGroup>
               <FormGroup row>
                 <Col md="5">
-                  <Label>Name</Label>
+                  <Label>File</Label>
                 </Col>
                 <Col md="7">
                   <Input className="text-center" type="text" pattern="*"
