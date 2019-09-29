@@ -46,6 +46,7 @@ import {
 import Widgets from './Widgets';
 
 export {
+  Bike,
   Badges,
   Typography,
   Colors,
