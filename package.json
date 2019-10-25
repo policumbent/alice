@@ -39,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
-    "postbuild": "rm -rf ../template/build; cp -r ./build ../template",
+    "postbuild": "rm -rf ../marta/template/build; cp -r ./build ../marta/template",
     "test": "react-scripts test",
     "test:cov": "react-scripts test --coverage",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
