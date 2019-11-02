@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <div className="app-container">
         <ReactNotification />
-        <HashRouter>
+        <HashRouter hashType='noslash'>
           <Switch>
             <Route exact path="/404" name="Page 404" component={Page404} />
             <Route exact path="/500" name="Page 500" component={Page500} />
