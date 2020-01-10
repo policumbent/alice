@@ -1,8 +1,8 @@
 /*
-* required polyfills
-*/
-import "core-js";
-import 'core-js/features/set/map';
+ * required polyfills
+ */
+import 'core-js'
+import 'core-js/features/set/map'
 
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
 // import 'core-js/es6/symbol'
@@ -29,9 +29,8 @@ import 'core-js/features/set/map';
 // import 'core-js/es7/reflect'
 
 // CustomEvent() constructor functionality in IE9, IE10, IE11
-(function () {
-
-  if (typeof window.CustomEvent === "function") return false
+;(function() {
+  if (typeof window.CustomEvent === 'function') return false
 
   function CustomEvent(event, params) {
     params = params || { bubbles: false, cancelable: false, detail: undefined }

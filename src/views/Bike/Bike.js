@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from "react";
+import React, { Component } from 'react'
 import {
   Button,
   Card,
@@ -14,72 +12,75 @@ import {
   Label,
   Row,
   Collapse,
-} from "reactstrap";
-import {
-  AppSwitch
-} from '@coreui/react'
-import SocketIoHelper from "../../helpers/socketHelper";
-import { store } from 'react-notifications-component';
-import base from '../../notifications/notification';
+} from 'reactstrap'
+import { AppSwitch } from '@coreui/react'
+import SocketIoHelper from '../../helpers/socketHelper'
+import { store } from 'react-notifications-component'
+import base from '../../notifications/notification'
 
 function currentTime() {
-  var today = new Date();
-  var date = today.getDate() + '-' + ("0" + (today.getMonth() + 1)).slice(-2);
-  var time = ("0" + (today.getHours() + 1)).slice(-2) + ":" + ("0" + (today.getMinutes() + 1)).slice(-2) + ":" + ("0" + (today.getSeconds() + 1)).slice(-2);
-  var dateTime = time + '_' + date;
+  var today = new Date()
+  var date = today.getDate() + '-' + ('0' + (today.getMonth() + 1)).slice(-2)
+  var time =
+    ('0' + (today.getHours() + 1)).slice(-2) +
+    ':' +
+    ('0' + (today.getMinutes() + 1)).slice(-2) +
+    ':' +
+    ('0' + (today.getSeconds() + 1)).slice(-2)
+  var dateTime = time + '_' + date
 
   return dateTime
 }
 
 class Bike extends Component {
-  _isMounted = false;
+  _isMounted = false
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      settings: "",
-      state: "",
+      settings: '',
+      state: '',
       visible: false,
       visible_video: false,
       visible_rasp: false,
-    };
+    }
   }
 
   componentDidMount() {
-    this._isMounted = true;
-    this.reloadStatus();
+    this._isMounted = true
+    this.reloadStatus()
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._isMounted = false
   }
 
   reloadStatus() {
     SocketIoHelper.getSettings(settings => {
       if (JSON.stringify(this.state.settings) !== JSON.stringify(settings)) {
-        this.setState({ settings });
+        this.setState({ settings })
       }
-    });
+    })
     SocketIoHelper.getState(state => {
       this.setState({ state })
-    });
+    })
   }
 
   updateView = () => {
-    this.reloadStatus();
+    this.reloadStatus()
   }
 
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  );
+  )
 
   render() {
-    if (this.state.state === "" || this.state.settings === "") {
+    if (this.state.state === '' || this.state.settings === '') {
       return null
     }
     return (
-      <div className="animated fadeIn" >
+      <div className="animated fadeIn">
         <Row>
           <Col xs="12" xl="4">
             <CardState
@@ -109,68 +110,83 @@ class Bike extends Component {
           </Col>
         </Row>
       </div>
-    );
+    )
   }
 }
 
 class CardVideo extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      collapse: false
+      collapse: false,
     }
 
     this.inputVideo = {
-      "dest": this.props.dest,
-      "type": "7",
-      "value": this.props.value,
-      "name": ""
+      dest: this.props.dest,
+      type: '7',
+      value: this.props.value,
+      name: '',
     }
   }
 
   handleSwitch = () => {
-    this.inputVideo.value = !this.inputVideo.value;
-  };
+    this.inputVideo.value = !this.inputVideo.value
+  }
 
-  handleText = (event) => {
-    const name = event.target.value;
+  handleText = event => {
+    const name = event.target.value
     if (event.target.validity.valid) {
-      this.inputVideo.name = name;
+      this.inputVideo.name = name
     }
-  };
+  }
 
   toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  };
+    this.setState({ collapse: !this.state.collapse })
+  }
 
   sendVideo = () => {
     store.addNotification({
-      title: "Video",
-      message: "Invio del pacchetto video alla bici",
+      title: 'Video',
+      message: 'Invio del pacchetto video alla bici',
       ...base,
-    });
-    SocketIoHelper.sendVideo(this.inputVideo);
-    this.props.reloadStatus();
-  };
+    })
+    SocketIoHelper.sendVideo(this.inputVideo)
+    this.props.reloadStatus()
+  }
 
   render() {
     return (
       <Card>
         <CardHeader>
-          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+          <Button
+            block
+            color="link"
+            className="text-left m-0 p-0"
+            onClick={this.toggle}
+            aria-expanded={this.state.collapse}
+          >
             <strong>Video</strong>
           </Button>
         </CardHeader>
         <Collapse isOpen={!this.state.collapse}>
           <CardBody>
-            <Form action="" encType="multipart/form-data" className="form-horizontal">
+            <Form
+              action=""
+              encType="multipart/form-data"
+              className="form-horizontal"
+            >
               <FormGroup row>
                 <Col md="9">
                   <Label>Registrazione</Label>
                 </Col>
                 <Col md="3">
-                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  <AppSwitch
+                    className={'mx-1'}
+                    variant={'pill'}
+                    color={'primary'}
+                    outline={'alt'}
+                    label
                     checked={this.props.value}
                     onChange={this.handleSwitch}
                   />
@@ -181,9 +197,13 @@ class CardVideo extends Component {
                   <Label>File</Label>
                 </Col>
                 <Col md="7">
-                  <Input className="text-center" type="text" pattern="*"
+                  <Input
+                    className="text-center"
+                    type="text"
+                    pattern="*"
                     placeholder="Inserire nome del file video"
-                    onChange={this.handleText} />
+                    onChange={this.handleText}
+                  />
                 </Col>
               </FormGroup>
             </Form>
@@ -191,77 +211,101 @@ class CardVideo extends Component {
           <CardFooter>
             <Row>
               <Col md="9">
-                <Button type="submit" data-dismiss='alert' size="sl" color="primary" onClick={this.sendVideo}><i className="fa fa-sign-out"></i> Send</Button>
+                <Button
+                  type="submit"
+                  data-dismiss="alert"
+                  size="sl"
+                  color="primary"
+                  onClick={this.sendVideo}
+                >
+                  <i className="fa fa-sign-out"></i> Send
+                </Button>
                 &ensp;
-            </Col>
+              </Col>
             </Row>
           </CardFooter>
         </Collapse>
       </Card>
-    );
+    )
   }
 }
 
 class CardSetting extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      collapse: false
+      collapse: false,
     }
 
-    this.inputSettings = JSON.parse(JSON.stringify(this.props.settings));;
+    this.inputSettings = JSON.parse(JSON.stringify(this.props.settings))
   }
 
   handleSwitch = name => {
-    const settings = this.inputSettings;
-    const value = !settings[name];
-    settings[name] = value;
-  };
+    const settings = this.inputSettings
+    const value = !settings[name]
+    settings[name] = value
+  }
 
   handleText = (name, event) => {
-    const settings = this.inputSettings;
-    const value = event.target.value;
+    const settings = this.inputSettings
+    const value = event.target.value
 
     if (event.target.validity.valid) {
-      settings[name] = value;
+      settings[name] = value
     }
-  };
+  }
 
   toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  };
+    this.setState({ collapse: !this.state.collapse })
+  }
 
   saveSettings = () => {
     store.addNotification({
-      title: "Settings",
-      message: "Invio del pacchetto settings alla bici",
+      title: 'Settings',
+      message: 'Invio del pacchetto settings alla bici',
       ...base,
-    });
+    })
     this.inputSettings.update = currentTime()
-    SocketIoHelper.saveSettings(this.inputSettings);
-    this.props.reloadStatus();
+    SocketIoHelper.saveSettings(this.inputSettings)
+    this.props.reloadStatus()
   }
 
   render() {
     return (
       <Card>
         <CardHeader>
-          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+          <Button
+            block
+            color="link"
+            className="text-left m-0 p-0"
+            onClick={this.toggle}
+            aria-expanded={this.state.collapse}
+          >
             <strong>Impostazioni</strong>
           </Button>
         </CardHeader>
         <Collapse isOpen={!this.state.collapse}>
           <CardBody>
-            <Form action="" encType="multipart/form-data" className="form-horizontal">
+            <Form
+              action=""
+              encType="multipart/form-data"
+              className="form-horizontal"
+            >
               <FormGroup row>
                 <Col md="9">
                   <Label>Log</Label>
                 </Col>
                 <Col md="3">
-                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  <AppSwitch
+                    className={'mx-1'}
+                    variant={'pill'}
+                    color={'primary'}
+                    outline={'alt'}
+                    label
                     onChange={this.handleSwitch.bind(this, 'log')}
-                    checked={this.props.settings.log} />
+                    checked={this.props.settings.log}
+                  />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -269,9 +313,15 @@ class CardSetting extends Component {
                   <Label>Csv</Label>
                 </Col>
                 <Col md="3">
-                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  <AppSwitch
+                    className={'mx-1'}
+                    variant={'pill'}
+                    color={'primary'}
+                    outline={'alt'}
+                    label
                     onChange={this.handleSwitch.bind(this, 'csv')}
-                    checked={this.props.settings.csv} />
+                    checked={this.props.settings.csv}
+                  />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -279,9 +329,15 @@ class CardSetting extends Component {
                   <Label>Ant</Label>
                 </Col>
                 <Col md="3">
-                  <AppSwitch className={'mx-1'} variant={'pill'} color={'primary'} outline={'alt'} label
+                  <AppSwitch
+                    className={'mx-1'}
+                    variant={'pill'}
+                    color={'primary'}
+                    outline={'alt'}
+                    label
                     onChange={this.handleSwitch.bind(this, 'ant')}
-                    checked={this.props.settings.ant} />
+                    checked={this.props.settings.ant}
+                  />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -289,9 +345,14 @@ class CardSetting extends Component {
                   <Label>Potenza media</Label>
                 </Col>
                 <Col md="3">
-                  <Input className="text-center" type="number" min="0" pattern=""
+                  <Input
+                    className="text-center"
+                    type="number"
+                    min="0"
+                    pattern=""
                     defaultValue={this.props.settings.potenza}
-                    onChange={this.handleText.bind(this, 'potenza')} />
+                    onChange={this.handleText.bind(this, 'potenza')}
+                  />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -299,9 +360,14 @@ class CardSetting extends Component {
                   <Label>Led Mode</Label>
                 </Col>
                 <Col md="3">
-                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  <Input
+                    className="text-center"
+                    type="number"
+                    min="0"
+                    pattern="[0-9]*"
                     defaultValue={this.props.settings.led}
-                    onChange={this.handleText.bind(this, 'led')} />
+                    onChange={this.handleText.bind(this, 'led')}
+                  />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -309,9 +375,14 @@ class CardSetting extends Component {
                   <Label>Circonferenza</Label>
                 </Col>
                 <Col md="3">
-                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  <Input
+                    className="text-center"
+                    type="number"
+                    min="0"
+                    pattern="[0-9]*"
                     defaultValue={this.props.settings.circonferenza}
-                    onChange={this.handleText.bind(this, 'circonferenza')} />
+                    onChange={this.handleText.bind(this, 'circonferenza')}
+                  />
                 </Col>
               </FormGroup>
 
@@ -320,9 +391,14 @@ class CardSetting extends Component {
                   <Label>Valore calibrazione</Label>
                 </Col>
                 <Col md="3">
-                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  <Input
+                    className="text-center"
+                    type="number"
+                    min="0"
+                    pattern="[0-9]*"
                     defaultValue={this.props.settings.calibration_value}
-                    onInput={this.handleText.bind(this, 'calibration_value')} />
+                    onInput={this.handleText.bind(this, 'calibration_value')}
+                  />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -330,9 +406,14 @@ class CardSetting extends Component {
                   <Label>Run</Label>
                 </Col>
                 <Col md="3">
-                  <Input className="text-center" type="number" min="0" pattern="[0-9]*"
+                  <Input
+                    className="text-center"
+                    type="number"
+                    min="0"
+                    pattern="[0-9]*"
                     defaultValue={this.props.settings.run}
-                    onInput={this.handleText.bind(this, 'run')} />
+                    onInput={this.handleText.bind(this, 'run')}
+                  />
                 </Col>
               </FormGroup>
             </Form>
@@ -341,131 +422,160 @@ class CardSetting extends Component {
           <CardFooter>
             <Row>
               <Col xs="6" md="9">
-                <Button type="submit" data-dismiss='alert' size="sl" color="success" onClick={this.saveSettings}><i className="fa fa-download"></i> Save</Button>
+                <Button
+                  type="submit"
+                  data-dismiss="alert"
+                  size="sl"
+                  color="success"
+                  onClick={this.saveSettings}
+                >
+                  <i className="fa fa-download"></i> Save
+                </Button>
                 &ensp;
-                  </Col>
+              </Col>
               <Col xs="6" md="3">
-                <div className="text-center">{this.props.settings.update.replace("_", "\n")}</div>
+                <div className="text-center">
+                  {this.props.settings.update.replace('_', '\n')}
+                </div>
               </Col>
             </Row>
           </CardFooter>
         </Collapse>
       </Card>
-    );
+    )
   }
 }
 
 class CardState extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      status: "",
+      status: '',
       collapse: false,
-    };
+    }
   }
 
   // TODO: issue #22
   UNSAFE_componentWillReceiveProps() {
-    this.updateStatus();
+    this.updateStatus()
   }
 
   componentDidMount() {
-    this.updateStatus();
+    this.updateStatus()
   }
 
   toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  };
+    this.setState({ collapse: !this.state.collapse })
+  }
 
   toggleButton = () => {
     store.addNotification({
       ...base,
-      title: "State",
-      message: "Aggiornato lo status",
-      type: "success"
-    });
+      title: 'State',
+      message: 'Aggiornato lo status',
+      type: 'success',
+    })
     this.props.reloadStatus()
-  };
+  }
 
   updateStatus() {
-    let jstate = JSON.parse(JSON.stringify(this.props.state));
-    let jsettings = JSON.parse(JSON.stringify(this.props.settings));
+    let jstate = JSON.parse(JSON.stringify(this.props.state))
+    let jsettings = JSON.parse(JSON.stringify(this.props.settings))
 
     // rimuovo i campi superflui dall'output
-    delete jstate["dest"];
-    delete jstate["type"];
-    delete jsettings["dest"];
-    delete jsettings["type"];
+    delete jstate['dest']
+    delete jstate['type']
+    delete jsettings['dest']
+    delete jsettings['type']
 
-    let state = JSON.stringify(jstate, null, 1).replace(/\{|\}|"|,|/g, "").replace("\n", "");
-    let settings = JSON.stringify(jsettings, null, 1).replace(/\{|\}|"|,/g, "");
+    let state = JSON.stringify(jstate, null, 1)
+      .replace(/\{|\}|"|,|/g, '')
+      .replace('\n', '')
+    let settings = JSON.stringify(jsettings, null, 1).replace(/\{|\}|"|,/g, '')
 
     this.setState({
-      status: state + settings
-    });
-  };
+      status: state + settings,
+    })
+  }
 
   render() {
     return (
       <Card>
         <CardHeader>
-          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+          <Button
+            block
+            color="link"
+            className="text-left m-0 p-0"
+            onClick={this.toggle}
+            aria-expanded={this.state.collapse}
+          >
             <strong>Status</strong>
           </Button>
         </CardHeader>
         <Collapse isOpen={!this.state.collapse}>
-          <CardBody >
+          <CardBody>
             <pre>
-              <code>
-                {this.state.status}
-              </code>
+              <code>{this.state.status}</code>
             </pre>
           </CardBody>
           <CardFooter>
-            <Button className="text-white bg-cyan" type="submit" size="sl" onClick={this.toggleButton}><i className="fa fa-refresh"></i> Reload</Button>
+            <Button
+              className="text-white bg-cyan"
+              type="submit"
+              size="sl"
+              onClick={this.toggleButton}
+            >
+              <i className="fa fa-refresh"></i> Reload
+            </Button>
           </CardFooter>
         </Collapse>
       </Card>
-    );
+    )
   }
 }
 
 class CardRasp extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      collapse: false
-    };
+      collapse: false,
+    }
 
     this.inputRasp = {
       dest: this.props.dest,
-      type: "6",
-      value: ""
+      type: '6',
+      value: '',
     }
   }
 
   toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  };
+    this.setState({ collapse: !this.state.collapse })
+  }
 
   sendRasp = value => {
     store.addNotification({
-      title: "Raspberry",
-      message: "Invio del pacchetto raspberry alla bici",
+      title: 'Raspberry',
+      message: 'Invio del pacchetto raspberry alla bici',
       ...base,
-    });
-    this.inputRasp.value = value;
-    SocketIoHelper.sendRasp(this.inputRasp);
-    this.props.reloadStatus();
+    })
+    this.inputRasp.value = value
+    SocketIoHelper.sendRasp(this.inputRasp)
+    this.props.reloadStatus()
   }
 
   render() {
     return (
       <Card>
         <CardHeader>
-          <Button block color="link" className="text-left m-0 p-0" onClick={this.toggle} aria-expanded={this.state.collapse} >
+          <Button
+            block
+            color="link"
+            className="text-left m-0 p-0"
+            onClick={this.toggle}
+            aria-expanded={this.state.collapse}
+          >
             <strong>Raspberry</strong>
           </Button>
         </CardHeader>
@@ -473,26 +583,37 @@ class CardRasp extends Component {
           <CardBody>
             <Row>
               <Col xs="7" md="8" xl="9">
-                <Button type="submit" data-dismiss='alert' size="sl" color="danger" onClick={this.sendRasp.bind(this, '0')}>
+                <Button
+                  type="submit"
+                  data-dismiss="alert"
+                  size="sl"
+                  color="danger"
+                  onClick={this.sendRasp.bind(this, '0')}
+                >
                   <i className="fa fa-power-off"></i> Spegni
-              </Button>
+                </Button>
               </Col>
               <Col xs="5" md="4" xl="3">
-                <Button className="text-white" type="submit" data-dismiss='alert' size="sl" color="warning" onClick={this.sendRasp.bind(this, '1')}>
+                <Button
+                  className="text-white"
+                  type="submit"
+                  data-dismiss="alert"
+                  size="sl"
+                  color="warning"
+                  onClick={this.sendRasp.bind(this, '1')}
+                >
                   <i className="fa fa-refresh"></i> Riavvia
-              </Button>
+                </Button>
               </Col>
             </Row>
           </CardBody>
         </Collapse>
       </Card>
-    );
+    )
   }
 }
 
-export default Bike;
-
-
+export default Bike
 
 // NOTE: Il cambio va bene con l'app bluetooth android
 // class CardGear extends Component {

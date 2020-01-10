@@ -16,34 +16,16 @@ import {
   Tables,
   Tabs,
   Tooltips,
-} from './Base';
+} from './Base'
 
-import {
-  ButtonDropdowns,
-  ButtonGroups,
-  Buttons,
-  BrandButtons
-} from './Buttons';
-import Dashboard from './Dashboard';
-import Bike from './Bike';
-import {
-  CoreUIIcons,
-  FontAwesome,
-  SimpleLineIcons
-} from './Icons';
-import {
-  Alerts,
-  Badges,
-  Modals
-} from './Notifications';
-import {
-  Page404,
-  Page500
-} from './Pages';
-import {
-  Colors
-} from './Theme';
-import Widgets from './Widgets';
+import { ButtonDropdowns, ButtonGroups, Buttons, BrandButtons } from './Buttons'
+import Dashboard from './Dashboard'
+import Bike from './Bike'
+import { CoreUIIcons, FontAwesome, SimpleLineIcons } from './Icons'
+import { Alerts, Badges, Modals } from './Notifications'
+import { Page404, Page500 } from './Pages'
+import { Colors } from './Theme'
+import Widgets from './Widgets'
 
 export {
   Bike,
@@ -80,4 +62,4 @@ export {
   Cards,
   Breadcrumbs,
   Paginations,
-};
+}
