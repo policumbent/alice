@@ -1,1 +1,8 @@
 // Here you can add other styles
+
+a,
+button {
+  &:focus {
+    outline: none;
+  }
+}
