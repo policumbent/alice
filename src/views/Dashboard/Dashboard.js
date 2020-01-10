@@ -13,19 +13,16 @@ import {
   cardChartOpts4,
   numCardElement,
   numElement,
-} from './costant'
-import { CardChart, MainChart } from './Graph'
-import SocketIoHelper from '../../helpers/socketHelper'
+  CardChart,
+  MainChart,
+} from './Graph'
+import SocketIoHelper from 'socketio'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
 
-function Extra(props) {
-  if (!props.showExtra) {
-    return null
-  }
-
-  return (
+const Extra = props => {
+  return !props.showExtra ? null : (
     <Row>
       <Col xs="12" sm="6" lg="4">
         <Card className="text-white bg-primary">

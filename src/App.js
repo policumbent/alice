@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 // import { renderRoutes } from 'react-router-config';
 import Loadable from 'react-loadable'
 import './App.scss'
-import SocketIoHelper from './helpers/socketHelper'
+import SocketIoHelper from './socketio'
 import ReactNotification from 'react-notifications-component'
 
 const loading = () => (
