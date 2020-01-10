@@ -14,7 +14,6 @@
     "core-js": "^3.1.4",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint-plugin-react": "^7.13.0",
     "flag-icon-css": "^3.2.1",
     "font-awesome": "^4.7.0",
     "node-sass": "^4.11.0",
@@ -34,15 +33,22 @@
     "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-react-app": "^5.1.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "prettier": "^1.19.1",
     "react-scripts": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
     "postbuild": "rm -rf ../marta/marta/ui/build; cp -r ./build ../marta/marta/ui",
-    "test": "react-scripts test",
-    "test:cov": "react-scripts test --coverage",
-    "test:debug": "react-scripts --inspect-brk test --runInBand",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,yml,scss}\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
