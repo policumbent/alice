@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component, Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { Container } from 'reactstrap'
@@ -41,7 +43,7 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar minimized fixed display="lg">
+          {/* <AppSidebar minimized fixed display="lg">
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
@@ -49,7 +51,7 @@ class DefaultLayout extends Component {
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
-          </AppSidebar>
+          </AppSidebar> */}
           <main className="main">
             <div style={{ marginBottom: `1.5rem` }} />
             <Container fluid>
