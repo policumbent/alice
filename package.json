@@ -1,6 +1,6 @@
 {
   "name": "marta",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "dependencies": {
     "@coreui/coreui": "^2.1.11",
