@@ -1,20 +1,13 @@
 import React, { Component } from 'react'
 import { ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap'
 import {
-  mainChartOpts,
-  mainChartData,
-  cardChartData1,
-  cardChartData2,
-  cardChartData3,
-  cardChartData4,
-  cardChartOpts1,
-  cardChartOpts2,
-  cardChartOpts3,
-  cardChartOpts4,
+  MainChart,
+  CadenceCard,
+  PowerCard,
+  SpeedCard,
+  HRCard,
   numCardElement,
   numElement,
-  CardChart,
-  MainChart,
 } from './Graph'
 import SocketIoHelper from 'socketio'
 import { FiActivity } from 'react-icons/fi'
@@ -180,7 +173,7 @@ class Dashboard extends Component {
       return null
     }
     return (
-      <div className="animated fadeIn">
+      <article>
         <Row>
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-info">
@@ -192,10 +185,7 @@ class Dashboard extends Component {
                 <div>Power [W]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <CardChart
-                  state={cardChartData1}
-                  opts={cardChartOpts1}
-                  value="power"
+                <PowerCard
                   data={this.state.data}
                   history={this.state.history.miniChart}
                 />
@@ -213,10 +203,7 @@ class Dashboard extends Component {
                 <div>Cadence [rpm]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <CardChart
-                  state={cardChartData2}
-                  opts={cardChartOpts2}
-                  value="cadence"
+                <CadenceCard
                   data={this.state.data}
                   history={this.state.history.miniChart}
                 />
@@ -234,10 +221,7 @@ class Dashboard extends Component {
                 <div>Speed [km/h]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <CardChart
-                  state={cardChartData3}
-                  opts={cardChartOpts3}
-                  value="speed"
+                <SpeedCard
                   data={this.state.data}
                   history={this.state.history.miniChart}
                 />
@@ -255,10 +239,7 @@ class Dashboard extends Component {
                 <div>Heartrate [bpm]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <CardChart
-                  state={cardChartData4}
-                  opts={cardChartOpts4}
-                  value="heartrate"
+                <HRCard
                   data={this.state.data}
                   history={this.state.history.miniChart}
                 />
@@ -276,8 +257,6 @@ class Dashboard extends Component {
                   style={{ height: `370px`, marginTop: 0 }}
                 >
                   <MainChart
-                    state={mainChartData}
-                    opts={mainChartOpts}
                     data={this.state.data}
                     history={this.state.history.chart}
                   />
@@ -294,7 +273,7 @@ class Dashboard extends Component {
           time={this.state.data.time}
           weather={this.state.weather}
         />
-      </div>
+      </article>
     )
   }
 }

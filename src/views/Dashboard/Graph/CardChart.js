@@ -1,6 +1,17 @@
 import React, { Component } from 'react'
 import { Line } from 'react-chartjs-2'
 
+import {
+  cardChartData1,
+  cardChartData2,
+  cardChartData3,
+  cardChartData4,
+  cardChartOpts1,
+  cardChartOpts2,
+  cardChartOpts3,
+  cardChartOpts4,
+} from './costants'
+
 class CardChart extends Component {
   constructor(props) {
     super(props)
@@ -58,4 +69,52 @@ class CardChart extends Component {
   }
 }
 
-export default CardChart
+const PowerCard = ({ data, history }) => {
+  return (
+    <CardChart
+      state={cardChartData1}
+      opts={cardChartOpts1}
+      value="power"
+      data={data}
+      history={history}
+    />
+  )
+}
+
+const CadenceCard = ({ data, history }) => {
+  return (
+    <CardChart
+      state={cardChartData2}
+      opts={cardChartOpts2}
+      value="cadence"
+      data={data}
+      history={history}
+    />
+  )
+}
+
+const SpeedCard = ({ data, history }) => {
+  return (
+    <CardChart
+      state={cardChartData3}
+      opts={cardChartOpts3}
+      value="speed"
+      data={data}
+      history={history}
+    />
+  )
+}
+
+const HRCard = ({ data, history }) => {
+  return (
+    <CardChart
+      state={cardChartData4}
+      opts={cardChartOpts4}
+      value="heartrate"
+      data={data}
+      history={history}
+    />
+  )
+}
+
+export { CardChart, CadenceCard, PowerCard, SpeedCard, HRCard }

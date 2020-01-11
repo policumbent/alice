@@ -42,6 +42,7 @@ class Bike extends Component {
     this.reloadStatus()
   }
 
+  // NOTE: probabilmente da deprecare
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
   )
@@ -51,7 +52,7 @@ class Bike extends Component {
       return null
     }
     return (
-      <div className="animated fadeIn">
+      <article>
         <Row>
           <Col xs="12" xl="4">
             <CardState
@@ -80,7 +81,7 @@ class Bike extends Component {
             />
           </Col>
         </Row>
-      </div>
+      </article>
     )
   }
 }

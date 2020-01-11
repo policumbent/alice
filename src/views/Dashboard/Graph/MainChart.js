@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { Line } from 'react-chartjs-2'
 
+import { mainChartData, mainChartOpts } from './costants'
+
 class MainChart extends Component {
   constructor(props) {
     super(props)
 
     this.data = this.props.data
     this.history = this.props.history
-    this.state = this.props.state
+
+    this.state = mainChartData
 
     if (this.history !== undefined) this.manageHistory(this.state, this.history)
   }
@@ -91,7 +94,7 @@ class MainChart extends Component {
   }
 
   render() {
-    return <Line data={this.state} options={this.props.opts} />
+    return <Line data={this.state} options={mainChartOpts} />
   }
 }
 
