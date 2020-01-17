@@ -86,7 +86,7 @@ class Dashboard extends Component {
     })
 
     if (this._isMounted) {
-      setTimeout(function () {
+      setTimeout(function() {
         SocketIoHelper.requestData()
       }, 300)
     }

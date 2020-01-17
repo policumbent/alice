@@ -43,15 +43,11 @@ const Extra = ({ time, gear, distance, showExtra, weather }) => {
               </Col>
               <Col xs="4" sm="4" lg="4">
                 <div className="text-center">Altitude [m]</div>
-                <div className="text-value text-center">
-                  {weather.altitude}
-                </div>
+                <div className="text-value text-center">{weather.altitude}</div>
               </Col>
               <Col xs="4" sm="4" lg="4">
                 <div className="text-center">Press [hPa]</div>
-                <div className="text-value text-center">
-                  {weather.pressure}
-                </div>
+                <div className="text-value text-center">{weather.pressure}</div>
               </Col>
             </Row>
           </CardBody>
