@@ -16,33 +16,47 @@ class MainChart extends Component {
   }
 
   manageHistory(data, chart) {
-    data.datasets[0].data = chart.power
-    data.datasets[1].data = chart.cadence
-    data.datasets[2].data = chart.speed
-    data.datasets[3].data = chart.heartrate
+    for (let x = 1; x < this.state.labels.length; x++) {
+      let value1 = chart.power[x]
+      let value2 = chart.cadence[x]
+      let value3 = chart.speed[x]
+      let value4 = chart.heartrate[x]
+
+      if (value1 !== undefined) {
+        data.datasets[0].data.push(value1)
+        data.datasets[1].data.push(value2)
+        data.datasets[2].data.push(value3)
+        data.datasets[3].data.push(value4)
+      } else {
+        data.datasets[0].data.unshift(value1)
+        data.datasets[1].data.unshift(value2)
+        data.datasets[2].data.unshift(value3)
+        data.datasets[3].data.unshift(value4)
+      }
+    }
   }
 
   componentDidUpdate() {
     if (this.data !== this.props.data) {
       this.data = this.props.data
-      var _this = this
+      let _this = this
 
-      var oldDataSet1 = _this.state.datasets[0]
-      var oldDataSet2 = _this.state.datasets[1]
-      var oldDataSet3 = _this.state.datasets[2]
-      var oldDataSet4 = _this.state.datasets[3]
+      let oldDataSet1 = _this.state.datasets[0]
+      let oldDataSet2 = _this.state.datasets[1]
+      let oldDataSet3 = _this.state.datasets[2]
+      let oldDataSet4 = _this.state.datasets[3]
 
-      var labels = _this.state.labels
-      /*var time = Math.round(_this.data.Minutes * 100 * 60) / 100;
-      var minutes = Math.floor(time / 60);
-      var seconds = time % 60;*/
+      let labels = _this.state.labels
+      /*let time = Math.round(_this.data.Minutes * 100 * 60) / 100;
+      let minutes = Math.floor(time / 60);
+      let seconds = time % 60;*/
 
-      var newData1 = []
-      var newData2 = []
-      var newData3 = []
-      var newData4 = []
+      let newData1 = []
+      let newData2 = []
+      let newData3 = []
+      let newData4 = []
 
-      for (var x = 1; x < _this.state.labels.length; x++) {
+      for (let x = 1; x < labels.length; x++) {
         let value1 = oldDataSet1.data[x]
         let value2 = oldDataSet2.data[x]
         let value3 = oldDataSet3.data[x]

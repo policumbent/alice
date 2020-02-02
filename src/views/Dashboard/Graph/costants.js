@@ -12,9 +12,9 @@ const numCardElement = 50
 
 // Main Chart
 
-var label = []
+let label = []
 
-for (var i = 0; i < numElement; i++) {
+for (let i = 0; i < numElement; i++) {
   label.push('')
 }
 
@@ -117,10 +117,10 @@ const mainChartData = {
 
 // Card Charts
 
-var miniLabel = []
+let miniLabel = []
 
 // lascio per caricare lo storico
-for (i = 0; i < numCardElement; i++) {
+for (let i = 0; i < numCardElement; i++) {
   miniLabel.push('')
 }
 

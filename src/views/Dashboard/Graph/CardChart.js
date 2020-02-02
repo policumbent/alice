@@ -16,29 +16,39 @@ class CardChart extends Component {
   constructor(props) {
     super(props)
 
-    this.state = this.props.state
     this.data = this.props.data
     this.value = this.props.value
     this.history = this.props.history
+
+    this.state = this.props.state
 
     if (this.history !== undefined) this.manageHistory(this.state, this.history)
   }
 
   manageHistory(data, chart) {
-    data.datasets[0].data = chart[this.value]
+    for (let x = 1; x < this.state.labels.length; x++) {
+      let value = chart[this.value][x]
+
+      if (value !== undefined) {
+        data.datasets[0].data.push(value)
+      } else {
+        data.datasets[0].data.unshift(value)
+      }
+    }
   }
 
   componentDidUpdate() {
     if (this.data !== this.props.data) {
       this.data = this.props.data
-      var _this = this
+      let _this = this
 
-      var oldDataSet = _this.state.datasets[0]
-      var labels = _this.state.labels
-      var newData = []
+      let oldDataSet = _this.state.datasets[0]
+      let labels = _this.state.labels
+      let newData = []
 
-      for (var x = 1; x < _this.state.labels.length; x++) {
+      for (let x = 1; x < labels.length; x++) {
         let value = oldDataSet.data[x]
+
         if (value !== undefined) {
           newData.push(value)
         } else {
@@ -49,7 +59,7 @@ class CardChart extends Component {
       labels.shift()
       labels.push('')
 
-      var value = _this.data[_this.value]
+      let value = _this.data[_this.value]
       newData.push(value)
 
       _this.setState({
