@@ -16,16 +16,16 @@ import {
   Tables,
   Tabs,
   Tooltips,
-} from './Base'
+} from './example/Base'
 
-import { ButtonDropdowns, ButtonGroups, Buttons, BrandButtons } from './Buttons'
+import { ButtonDropdowns, ButtonGroups, Buttons, BrandButtons } from './example/Buttons'
 import Dashboard from './Dashboard'
 import Bike from './Bike'
-import { CoreUIIcons, FontAwesome, SimpleLineIcons } from './Icons'
-import { Alerts, Badges, Modals } from './Notifications'
-import { Page404, Page500 } from './Pages'
-import { Colors } from './Theme'
-import Widgets from './Widgets'
+import { CoreUIIcons, FontAwesome, SimpleLineIcons } from './example/Icons'
+import { Alerts, Badges, Modals } from './example/Notifications'
+import { Page404, Page500 } from './example/Pages'
+import { Colors } from './example/Theme'
+import Widgets from './example/Widgets'
 
 export {
   Bike,

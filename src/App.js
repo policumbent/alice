@@ -18,12 +18,12 @@ const DefaultLayout = Loadable({
 
 // Pages
 const Page404 = Loadable({
-  loader: () => import('./views/Pages/Page404'),
+  loader: () => import('./views/example/Pages/Page404'),
   loading,
 })
 
 const Page500 = Loadable({
-  loader: () => import('./views/Pages/Page500'),
+  loader: () => import('./views/example/Pages/Page500'),
   loading,
 })
 
