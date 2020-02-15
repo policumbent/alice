@@ -4,13 +4,7 @@ let socket
 
 const SocketIoHelper = {
   setup: function() {
-    let port
-    if (window.location.port === '3000') {
-      port = '5000'
-    } else {
-      port = window.location.port
-    }
-    socket = openSocket('http://' + document.domain + ':' + port)
+    socket = openSocket(window.location.origin)
 
     // connessione
     socket.on('connection', () => {
