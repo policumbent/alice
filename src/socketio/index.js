@@ -1,6 +1,7 @@
-import openSocket from 'socket.io-client'
+// import openSocket from 'socket.io-client'
 
 // let socket
+// let history = [{"heartrate": 10, "power": 100}, {"heartrate": 100, "power": 120}];
 
 const SocketIoHelper = {
   setup: function() {
@@ -17,8 +18,17 @@ const SocketIoHelper = {
   },
 
   getHistory: function(cb) {
-    // socket.emit('history_request')
-    // socket.on('history_response', history => cb(history))
+    let base64 = require('base-64');
+    let url = 'https://poliserver.duckdns.org/live/private?bike=' + "taurus";
+    let username = 'ste';
+    let password = 'ciaociao';
+    let headers = new Headers();
+    headers.set('Authorization', 'Basic ' + base64.encode(username + ":" + password));
+
+    // todo: ajax request /live
+    fetch(url, {method:'GET', headers: headers, })
+      .then(r =>  r.json().then(data => cb([data, data])))
+      .catch(error => console.log(error))
   },
 
   getWeather: function(cb) {
@@ -46,7 +56,7 @@ const SocketIoHelper = {
 
     // todo: ajax request /live
     fetch(url, {method:'GET', headers: headers, })
-      .then(r =>  r.json().then(data => cb(data)))
+      .then(r =>  r.json().then(data => console.log(data)))
       .catch(error => console.log(error))
   },
 

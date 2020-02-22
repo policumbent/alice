@@ -32,9 +32,11 @@ class Dashboard extends Component {
     SocketIoHelper.getHistory(list => {
       this.history(list)
     })
-    SocketIoHelper.requestData(data => {
-      this.updateData(data)
-    }, "taurusx", "ste", "ciaociao")
+    setInterval( v => SocketIoHelper.requestData(data => {
+        this.updateData(data)
+      }, "taurusx", "ste", "ciaociao")
+    , 500)
+    // setInterval(v => alert("Ciao"), 1000)
   }
 
   loading = () => (
@@ -86,17 +88,16 @@ class Dashboard extends Component {
     this.setState({
       data,
     })
-  }
 
+    //
     // if (this._isMounted) {
     //   setTimeout(function() {
     //     SocketIoHelper.requestData(data => {
     //       this.updateData(data)
-    //     }, "taurusx")
-    //     SocketIoHelper.requestData()
+    //     }, "taurusx", "ste", "ciaociao")
     //   }, 300)
     // }
-  // }
+  }
 
   componentDidMount() {
     this._isMounted = true
