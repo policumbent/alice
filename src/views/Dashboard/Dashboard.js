@@ -32,8 +32,9 @@ class Dashboard extends Component {
     SocketIoHelper.getHistory(list => {
       this.history(list)
     })
-
-    SocketIoHelper.requestData()
+    SocketIoHelper.requestData(data => {
+      this.updateData(data)
+    }, "taurusx", "ste", "ciaociao")
   }
 
   loading = () => (
@@ -81,16 +82,21 @@ class Dashboard extends Component {
   }
 
   updateData(data) {
+    console.log(data)
     this.setState({
       data,
     })
-
-    if (this._isMounted) {
-      setTimeout(function() {
-        SocketIoHelper.requestData()
-      }, 300)
-    }
   }
+
+    // if (this._isMounted) {
+    //   setTimeout(function() {
+    //     SocketIoHelper.requestData(data => {
+    //       this.updateData(data)
+    //     }, "taurusx")
+    //     SocketIoHelper.requestData()
+    //   }, 300)
+    // }
+  // }
 
   componentDidMount() {
     this._isMounted = true
@@ -99,10 +105,10 @@ class Dashboard extends Component {
     SocketIoHelper.getHistory(list => {
       this.history(list)
     })
-    SocketIoHelper.getData(data => {
-      //TODO: if per taurus o taurusx
-      this.updateData(data)
-    })
+    // SocketIoHelper.getData(data => {
+    //   //TODO: if per taurus o taurusx
+    //   this.updateData(data)
+    // })
     SocketIoHelper.getWeather(weather => this.setState({ weather }))
   }
 
