@@ -61,25 +61,27 @@ class MyMap extends Component {
       visible_video: false,
       visible_rasp: false,
     }
-    setTimeout(this.new_pos(), 1000)
   }
 
   new_pos() {
     console.log("QUAAA")
 
       let pos = this.state.bike_position
-      pos[0] += 0.00001
-      pos[1] += 0.00001
+      pos[0] += 0.001
+      pos[1] += 0.001
       let newState = {
         ...this.state,
         bike_position: [pos[0], pos[1]],
       }
       this.setState(newState)
+
+    this.render()
   }
 
   componentDidMount() {
     this._isMounted = true
     // this.reloadStatus()
+    setTimeout(this.new_pos(), 1000)
   }
 
   componentWillUnmount() {
