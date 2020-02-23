@@ -12,12 +12,15 @@ import {
 import Extra from './Extra'
 
 import SocketIoHelper from 'socketio'
+import MyMap from 'map'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
 
 class Dashboard extends Component {
   _isMounted = false
+
+  pos_name = "bm"
 
   constructor(props) {
     super(props)
@@ -206,6 +209,15 @@ class Dashboard extends Component {
                     data={this.state.data}
                     history={this.state.history.chart}
                   />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+              <CardBody>
+                <div className="Map">
+                  <MyMap position_name={this.pos_name}/>
                 </div>
               </CardBody>
             </Card>
