@@ -33,20 +33,8 @@ function name_pos(name){
       return v;
   }
 }
-//
-//
 
-
-// updateMarker = ({new_pos}) => {
-//     //update
-//     this.setState(prevState => {
-//         const markerData = [...prevState.markerData];
-//         markerData[markerIndex] = new_pos;
-//         return { markerData: markerData };
-//     });
-// };
-
-
+export let bike_pos = [40.433212, -117.053714];
 
 class MyMap extends Component {
   _isMounted = false
@@ -61,47 +49,38 @@ class MyMap extends Component {
       visible_video: false,
       visible_rasp: false,
     }
+
+    this.startTimer()
   }
 
-  new_pos() {
-    console.log("QUAAA")
+  startTimer() {
+    setInterval(this.moveMarker, 1000);
+  };
 
-      let pos = this.state.bike_position
-      pos[0] += 0.001
-      pos[1] += 0.001
-      let newState = {
-        ...this.state,
-        bike_position: [pos[0], pos[1]],
-      }
+  moveMarker() {
+    console.log("Mountend: " + this._isMounted)
+    bike_pos[0] += 0.01
+    bike_pos[1] += 0.01
+    let newState = {
+      ...this.state,
+      bike_position: [bike_pos[0], bike_pos[1]],
+    }
+    if (this._isMounted) {
       this.setState(newState)
-
-    this.render()
-  }
+    }
+  };
 
   componentDidMount() {
     this._isMounted = true
+    console.log("Mountend: " + this._isMounted)
+    console.log("mounted")
     // this.reloadStatus()
-    setTimeout(this.new_pos(), 1000)
   }
 
   componentWillUnmount() {
     this._isMounted = false
+    console.log("unmountend")
   }
-
-  reloadStatus() {
-    // SocketIoHelper.getSettings(settings => {
-    //   if (JSON.stringify(this.state.settings) !== JSON.stringify(settings)) {
-    //     this.setState({ settings })
-    //   }
-    // })
-    // SocketIoHelper.getState(state => {
-    //   this.setState({ state })
-    // })
-  }
-
-  // updateView = () => {
-  //   this.reloadStatus()
-  // }
 
   render() {
     let v = name_pos(this.state.position_name);
