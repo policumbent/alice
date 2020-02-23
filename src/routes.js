@@ -2,7 +2,7 @@ import React from 'react'
 import DefaultLayout from './containers/DefaultLayout'
 
 const Dashboard = React.lazy(() => import('./views/Dashboard'))
-const Bike = React.lazy(() => import('./views/Bike'))
+// const Bike = React.lazy(() => import('./views/Bike'))
 
 // const Breadcrumbs = React.lazy(() => import('./views/example/Base/Breadcrumbs'))
 // const Cards = React.lazy(() => import('./views/example/Base/Cards'))
@@ -50,11 +50,11 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard,
   },
-  {
-    path: '/bike',
-    name: 'Bike',
-    component: Bike,
-  },
+  // {
+  //   path: '/bike',
+  //   name: 'Bike',
+  //   component: Bike,
+  // },
   // {
   //   path: '/theme',
   //   exact: true,

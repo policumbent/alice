@@ -57,7 +57,7 @@ const SocketIoHelper = {
 
     // todo: ajax request /live
     fetch(url, {method:'GET', headers: headers, })
-      .then(r =>  r.json().then(data => console.log(data)))
+      .then(r =>  r.json().then(data => cb(data)))
       .catch(error => console.log(error))
   },
 
