@@ -38,8 +38,8 @@ class App extends Component {
         <ReactNotification />
         <HashRouter hashType="noslash">
           <Switch>
-            <Route exact path="/404" name="Page 404" component={Page404} />
-            <Route exact path="/500" name="Page 500" component={Page500} />
+            <Route path="/404" name="Page 404" component={Page404} />
+            <Route path="/500" name="Page 500" component={Page500} />
             <Route path="/" name="Home" component={DefaultLayout} />
           </Switch>
         </HashRouter>

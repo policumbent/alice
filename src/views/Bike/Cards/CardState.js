@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   Button,
   Card,
@@ -10,42 +10,33 @@ import {
 import { store } from 'react-notifications-component'
 import base from 'notifications'
 
-class CardState extends Component {
-  constructor(props) {
-    super(props)
+const CardState = ({ state, settings, reloadStatus }) => {
+  const [collapse, setCollapse] = useState(false)
+  const [status, setStatus] = useState()
 
-    this.state = {
-      status: '',
-      collapse: false,
-    }
-  }
+  const toggleCollapse = useCallback(() => {
+    setCollapse(!collapse)
+  }, [collapse])
 
-  // TODO: issue #22
-  UNSAFE_componentWillReceiveProps() {
-    this.updateStatus()
-  }
+  useEffect(() => {
+    updateStatus()
+    // eslint-disable-next-line
+  }, [state, settings])
 
-  componentDidMount() {
-    this.updateStatus()
-  }
-
-  toggle = () => {
-    this.setState({ collapse: !this.state.collapse })
-  }
-
-  toggleButton = () => {
+  const toggleButton = useCallback(() => {
     store.addNotification({
       ...base,
       title: 'State',
       message: 'Aggiornato lo status',
       type: 'success',
     })
-    this.props.reloadStatus()
-  }
+    reloadStatus()
+    // eslint-disable-next-line
+  }, [])
 
-  updateStatus() {
-    let jstate = JSON.parse(JSON.stringify(this.props.state))
-    let jsettings = JSON.parse(JSON.stringify(this.props.settings))
+  const updateStatus = useCallback(() => {
+    let jstate = { ...state }
+    let jsettings = { ...settings }
 
     // rimuovo i campi superflui dall'output
     delete jstate['dest']
@@ -53,50 +44,46 @@ class CardState extends Component {
     delete jsettings['dest']
     delete jsettings['type']
 
-    let state = JSON.stringify(jstate, null, 1)
+    let bstate = JSON.stringify(jstate, null, 1)
       .replace(/\{|\}|"|,|/g, '')
       .replace('\n', '')
-    let settings = JSON.stringify(jsettings, null, 1).replace(/\{|\}|"|,/g, '')
+    let bsettings = JSON.stringify(jsettings, null, 1).replace(/\{|\}|"|,/g, '')
 
-    this.setState({
-      status: state + settings,
-    })
-  }
+    setStatus(`${bstate}${bsettings}`)
+  }, [state, settings])
 
-  render() {
-    return (
-      <Card>
-        <CardHeader>
+  return (
+    <Card>
+      <CardHeader>
+        <Button
+          block
+          color="link"
+          className="text-left m-0 p-0"
+          onClick={toggleCollapse}
+          aria-expanded={collapse}
+        >
+          <strong>Status</strong>
+        </Button>
+      </CardHeader>
+      <Collapse isOpen={!collapse}>
+        <CardBody>
+          <pre>
+            <code>{status}</code>
+          </pre>
+        </CardBody>
+        <CardFooter>
           <Button
-            block
-            color="link"
-            className="text-left m-0 p-0"
-            onClick={this.toggle}
-            aria-expanded={this.state.collapse}
+            className="text-white bg-cyan"
+            type="submit"
+            size="sl"
+            onClick={toggleButton}
           >
-            <strong>Status</strong>
+            <i className="fa fa-refresh"></i> Reload
           </Button>
-        </CardHeader>
-        <Collapse isOpen={!this.state.collapse}>
-          <CardBody>
-            <pre>
-              <code>{this.state.status}</code>
-            </pre>
-          </CardBody>
-          <CardFooter>
-            <Button
-              className="text-white bg-cyan"
-              type="submit"
-              size="sl"
-              onClick={this.toggleButton}
-            >
-              <i className="fa fa-refresh"></i> Reload
-            </Button>
-          </CardFooter>
-        </Collapse>
-      </Card>
-    )
-  }
+        </CardFooter>
+      </Collapse>
+    </Card>
+  )
 }
 
 export default CardState

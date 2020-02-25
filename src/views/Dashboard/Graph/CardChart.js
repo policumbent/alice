@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Line } from 'react-chartjs-2'
 
 import {
@@ -12,71 +12,58 @@ import {
   cardChartOpts4,
 } from './costants'
 
-class CardChart extends Component {
-  constructor(props) {
-    super(props)
+const CardChart = ({ state, type, data, history, opts }) => {
+  const [line, setLine] = useState(state)
 
-    this.data = this.props.data
-    this.value = this.props.value
-    this.history = this.props.history
+  const updateHistory = useCallback(() => {
+    let newLine = { ...line }
+    newLine.datasets[0].data.push(...history[type])
+    setLine(newLine)
+  }, [line, history, type])
 
-    this.state = this.props.state
+  const updateLine = useCallback(() => {
+    let oldDataSet = { ...line.datasets[0] }
+    let labels = [...line.labels]
+    let newData = []
 
-    if (this.history !== undefined) this.manageHistory(this.state, this.history)
-  }
-
-  manageHistory(data, chart) {
-    for (let x = 1; x < this.state.labels.length; x++) {
-      let value = chart[this.value][x]
+    for (let x = 1; x < labels.length; x++) {
+      let value = oldDataSet.data[x]
 
       if (value !== undefined) {
-        data.datasets[0].data.push(value)
+        newData.push(value)
       } else {
-        data.datasets[0].data.unshift(value)
+        newData.unshift(value)
       }
     }
-  }
 
-  componentDidUpdate() {
-    if (this.data !== this.props.data) {
-      this.data = this.props.data
-      let _this = this
+    labels.shift()
+    labels.push('')
 
-      let oldDataSet = _this.state.datasets[0]
-      let labels = _this.state.labels
-      let newData = []
+    let value = data[type]
+    newData.push(value)
 
-      for (let x = 1; x < labels.length; x++) {
-        let value = oldDataSet.data[x]
+    setLine({
+      ...line,
+      datasets: [
+        {
+          ...oldDataSet,
+          data: newData,
+        },
+      ],
+    })
+  }, [line, type, data])
 
-        if (value !== undefined) {
-          newData.push(value)
-        } else {
-          newData.unshift(value)
-        }
-      }
+  useEffect(() => {
+    updateHistory()
+    // eslint-disable-next-line
+  }, [history])
 
-      labels.shift()
-      labels.push('')
+  useEffect(() => {
+    updateLine()
+    // eslint-disable-next-line
+  }, [data])
 
-      let value = _this.data[_this.value]
-      newData.push(value)
-
-      _this.setState({
-        ..._this.state,
-        datasets: [
-          {
-            ...oldDataSet,
-            data: newData,
-          },
-        ],
-      })
-    }
-  }
-
-  render() {
-    return <Line data={this.state} options={this.props.opts} />
-  }
+  return <Line data={line} options={opts} />
 }
 
 const PowerCard = ({ data, history }) => {
@@ -84,7 +71,7 @@ const PowerCard = ({ data, history }) => {
     <CardChart
       state={cardChartData1}
       opts={cardChartOpts1}
-      value="power"
+      type="power"
       data={data}
       history={history}
     />
@@ -96,7 +83,7 @@ const CadenceCard = ({ data, history }) => {
     <CardChart
       state={cardChartData2}
       opts={cardChartOpts2}
-      value="cadence"
+      type="cadence"
       data={data}
       history={history}
     />
@@ -108,7 +95,7 @@ const SpeedCard = ({ data, history }) => {
     <CardChart
       state={cardChartData3}
       opts={cardChartOpts3}
-      value="speed"
+      type="speed"
       data={data}
       history={history}
     />
@@ -120,7 +107,7 @@ const HRCard = ({ data, history }) => {
     <CardChart
       state={cardChartData4}
       opts={cardChartOpts4}
-      value="heartrate"
+      type="heartrate"
       data={data}
       history={history}
     />

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import {
   Button,
   Card,
@@ -19,120 +19,116 @@ import SocketIoHelper from 'socketio'
 import { store } from 'react-notifications-component'
 import base from 'notifications'
 
-class CardVideo extends Component {
-  constructor(props) {
-    super(props)
+const CardVideo = ({ dest, value, reloadStatus }) => {
+  const [collapse, setCollapse] = useState(false)
+  const inputVideo = useRef({ dest: dest, type: '7', value: value, name: '' })
 
-    this.state = {
-      collapse: false,
-    }
+  // TODO: risolvere bug grafico dello switch
+  // useEffect(() => {
+  //   inputVideo.current.value = value
+  // }, [value])
 
-    this.inputVideo = {
-      dest: this.props.dest,
-      type: '7',
-      value: this.props.value,
-      name: '',
-    }
-  }
+  const toggleCollapse = useCallback(() => {
+    setCollapse(!collapse)
+  }, [collapse])
 
-  handleSwitch = () => {
-    this.inputVideo.value = !this.inputVideo.value
-  }
+  const handleSwitch = useCallback(() => {
+    inputVideo.current.value = !inputVideo.current.value
+  }, [inputVideo])
 
-  handleText = event => {
-    const name = event.target.value
-    if (event.target.validity.valid) {
-      this.inputVideo.name = name
-    }
-  }
+  const handleText = useCallback(
+    event => {
+      let name = event.target.value
+      if (event.target.validity.valid) {
+        inputVideo.current.name = name
+      }
+    },
+    [inputVideo]
+  )
 
-  toggle = () => {
-    this.setState({ collapse: !this.state.collapse })
-  }
-
-  sendVideo = () => {
+  const sendVideo = useCallback(() => {
+    SocketIoHelper.sendVideo(inputVideo.current)
     store.addNotification({
       title: 'Video',
       message: 'Invio del pacchetto video alla bici',
       ...base,
     })
-    SocketIoHelper.sendVideo(this.inputVideo)
-    this.props.reloadStatus()
-  }
 
-  render() {
-    return (
-      <Card>
-        <CardHeader>
-          <Button
-            block
-            color="link"
-            className="text-left m-0 p-0"
-            onClick={this.toggle}
-            aria-expanded={this.state.collapse}
+    reloadStatus()
+    // eslint-disable-next-line
+  }, [inputVideo])
+
+  return (
+    <Card>
+      <CardHeader>
+        <Button
+          block
+          color="link"
+          className="text-left m-0 p-0"
+          onClick={toggleCollapse}
+          aria-expanded={collapse}
+        >
+          <strong>Video</strong>
+        </Button>
+      </CardHeader>
+      <Collapse isOpen={!collapse}>
+        <CardBody>
+          <Form
+            action=""
+            encType="multipart/form-data"
+            className="form-horizontal"
           >
-            <strong>Video</strong>
-          </Button>
-        </CardHeader>
-        <Collapse isOpen={!this.state.collapse}>
-          <CardBody>
-            <Form
-              action=""
-              encType="multipart/form-data"
-              className="form-horizontal"
-            >
-              <FormGroup row>
-                <Col md="9">
-                  <Label>Registrazione</Label>
-                </Col>
-                <Col md="3">
-                  <AppSwitch
-                    className={'mx-1'}
-                    variant={'pill'}
-                    color={'primary'}
-                    outline={'alt'}
-                    label
-                    checked={this.props.value}
-                    onChange={this.handleSwitch}
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Col md="5">
-                  <Label>File</Label>
-                </Col>
-                <Col md="7">
-                  <Input
-                    className="text-center"
-                    type="text"
-                    pattern="*"
-                    placeholder="Inserire nome del file video"
-                    onChange={this.handleText}
-                  />
-                </Col>
-              </FormGroup>
-            </Form>
-          </CardBody>
-          <CardFooter>
-            <Row>
+            <FormGroup row>
               <Col md="9">
-                <Button
-                  type="submit"
-                  data-dismiss="alert"
-                  size="sl"
-                  color="primary"
-                  onClick={this.sendVideo}
-                >
-                  <i className="fa fa-sign-out"></i> Send
-                </Button>
-                &ensp;
+                <Label>Registrazione</Label>
               </Col>
-            </Row>
-          </CardFooter>
-        </Collapse>
-      </Card>
-    )
-  }
+              <Col md="3">
+                <AppSwitch
+                  className={'mx-1'}
+                  variant={'pill'}
+                  color={'primary'}
+                  outline={'alt'}
+                  label
+                  checked={value}
+                  onChange={handleSwitch.bind(this)}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Col md="5">
+                <Label>File</Label>
+              </Col>
+              <Col md="7">
+                <Input
+                  className="text-center"
+                  type="text"
+                  pattern="*"
+                  placeholder="Inserire nome del file video"
+                  onChange={handleText}
+                />
+              </Col>
+            </FormGroup>
+          </Form>
+        </CardBody>
+        <CardFooter>
+          <Row>
+            <Col md="9">
+              <Button
+                type="submit"
+                data-dismiss="alert"
+                size="sl"
+                color="primary"
+                onClick={sendVideo}
+              >
+                <i className="fa fa-sign-out"></i> Send
+              </Button>
+              &ensp;
+            </Col>
+          </Row>
+        </CardFooter>
+      </Collapse>
+    </Card>
+  )
 }
 
 export default CardVideo

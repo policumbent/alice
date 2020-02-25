@@ -18,7 +18,12 @@ import {
   Tooltips,
 } from './example/Base'
 
-import { ButtonDropdowns, ButtonGroups, Buttons, BrandButtons } from './example/Buttons'
+import {
+  ButtonDropdowns,
+  ButtonGroups,
+  Buttons,
+  BrandButtons,
+} from './example/Buttons'
 import Dashboard from './Dashboard'
 import Bike from './Bike'
 import { CoreUIIcons, FontAwesome, SimpleLineIcons } from './example/Icons'
