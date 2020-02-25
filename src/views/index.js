@@ -25,7 +25,7 @@ import {
   BrandButtons,
 } from './example/Buttons'
 import Dashboard from './Dashboard'
-import Bike from './Bike'
+// import Bike from './Bike'
 import { CoreUIIcons, FontAwesome, SimpleLineIcons } from './example/Icons'
 import { Alerts, Badges, Modals } from './example/Notifications'
 import { Page404, Page500 } from './example/Pages'

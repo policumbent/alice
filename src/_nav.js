@@ -185,11 +185,11 @@ export default {
       url: '/dashboard',
       icon: 'icon-speedometer',
     },
-    {
-      name: 'Bike',
-      url: '/bike',
-      icon: 'icon-rocket', // oppure cambiarlo con bicycle
-    },
+    // {
+    //   name: 'Bike',
+    //   url: '/bike',
+    //   icon: 'icon-rocket', // oppure cambiarlo con bicycle
+    // },
     // ...coreuiExample
   ],
 }
