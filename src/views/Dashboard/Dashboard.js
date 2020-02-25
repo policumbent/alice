@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap'
 import {
   MainChart,
@@ -10,43 +10,35 @@ import {
   numElement,
 } from './Graph'
 import Extra from './Extra'
+import { LeafletMap, options } from './Map'
 
 import SocketIoHelper from 'socketio'
-import MyMap from 'map'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
 
-class Dashboard extends Component {
-  _isMounted = false
+const useIsMounted = () => {
+  const isMounted = useRef(false)
 
-  pos_name = "bm"
+  useEffect(() => {
+    isMounted.current = true
+    return () => (isMounted.current = false)
+  }, [])
 
-  constructor(props) {
-    super(props)
+  return isMounted
+}
 
-    this.state = {
-      data: '',
-      history: '',
-      weather: '',
-      showExtra: true,
-    }
+const Dashboard = () => {
+  const isMounted = useIsMounted()
+  const [data, setData] = useState({
+    heartrate: "94", power: '141', cadence: '62', distance: '0.03365', speed: '22.9104', time: '0.0167', gear: '0'
+  })
+  const [history, setHistory] = useState()
+  const [weather, setWeather] = useState()
+  const loading = data === undefined || history === undefined
+  // data === undefined || weather === undefined || history === undefined
 
-    SocketIoHelper.getHistory(list => {
-      this.history(list)
-    })
-    setInterval( v => SocketIoHelper.requestData(data => {
-        this.updateData(data)
-      }, "taurusx", "ste", "ciaociao")
-    , 500)
-    // setInterval(v => alert("Ciao"), 1000)
-  }
-
-  loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  )
-
-  history(history) {
+  const updateHistory = useCallback(history => {
     let param = ['heartrate', 'cadence', 'power', 'speed']
     let chart = {
       heartrate: [],
@@ -76,52 +68,42 @@ class Dashboard extends Component {
       }
     }
 
-    let newState = {
-      ...this.state,
-      history: {
-        chart: chart,
-        miniChart: miniChart,
-      },
+    let newHistory = {
+      chart: chart,
+      miniChart: miniChart,
     }
-    this.setState(newState)
-  }
 
-  updateData(data) {
-    // console.log(data)
-    this.setState({
-      data,
-    })
+    setHistory(newHistory)
+  }, [])
 
-    //
-    // if (this._isMounted) {
-    //   setTimeout(function() {
-    //     SocketIoHelper.requestData(data => {
-    //       this.updateData(data)
-    //     }, "taurusx", "ste", "ciaociao")
-    //   }, 300)
-    // }
-  }
+  const updateData = useCallback(
+    data => {
+      setData(data)
 
-  componentDidMount() {
-    this._isMounted = true
+      // if (isMounted.current) {
+      //   setTimeout(() => {
+      //     SocketIoHelper.requestData()
+      //   }, 300)
+      // }
+    },
+    [isMounted]
+  )
 
-    // per quando si cambiano tab della pagina
-    SocketIoHelper.getHistory(list => {
-      this.history(list)
-    })
-    // SocketIoHelper.getData(data => {
-    //   //TODO: if per taurus o taurusx
-    //   this.updateData(data)
-    // })
-    SocketIoHelper.getWeather(weather => this.setState({ weather }))
-  }
+  useEffect(() => {
+    updateHistory(["{\"dest\": \"0\", \"type\": \"0\", \"heartrate\": \"154\", \"power\": \"166\", \"cadence\": \"86\", \"distance\": \"1.25023\", \"speed\": \"64.8648\", \"time\": \"1.5333\", \"gear\": \"0\"}"])
+    // setInterval(v => SocketIoHelper.requestData(data => {
+    //   updateData(data)
+    // }, "taurusx", "ste", "ciaociao")
+    //   , 500)
+  }, [])
 
-  componentWillUnmount() {
-    this._isMounted = false
-  }
+  const Loading = () => (
+    <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  )
 
-  render() {
-    return this.state.history === '' ? null : (
+  return loading ? (
+    Loading
+  ) : (
       <article>
         <Row>
           <Col xs="12" sm="6" lg="3">
@@ -130,14 +112,11 @@ class Dashboard extends Component {
                 <ButtonGroup id="card1" className="float-right">
                   <FaSpaceShuttle size={'1.5em'} />
                 </ButtonGroup>
-                <div className="text-value">{this.state.data.power}</div>
+                <div className="text-value">{data.power}</div>
                 <div>Power [W]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <PowerCard
-                  data={this.state.data}
-                  history={this.state.history.miniChart}
-                />
+                <PowerCard data={data} history={history.miniChart} />
               </div>
             </Card>
           </Col>
@@ -148,14 +127,11 @@ class Dashboard extends Component {
                 <ButtonGroup id="card2" className="float-right">
                   <GiCartwheel size={'1.5em'} />
                 </ButtonGroup>
-                <div className="text-value">{this.state.data.cadence}</div>
+                <div className="text-value">{data.cadence}</div>
                 <div>Cadence [rpm]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <CadenceCard
-                  data={this.state.data}
-                  history={this.state.history.miniChart}
-                />
+                <CadenceCard data={data} history={history.miniChart} />
               </div>
             </Card>
           </Col>
@@ -166,14 +142,11 @@ class Dashboard extends Component {
                 <ButtonGroup id="card3" className="float-right">
                   <GiSpeedometer size={'1.5em'} />
                 </ButtonGroup>
-                <div className="text-value">{this.state.data.speed}</div>
+                <div className="text-value">{data.speed}</div>
                 <div>Speed [km/h]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <SpeedCard
-                  data={this.state.data}
-                  history={this.state.history.miniChart}
-                />
+                <SpeedCard data={data} history={history.miniChart} />
               </div>
             </Card>
           </Col>
@@ -184,14 +157,11 @@ class Dashboard extends Component {
                 <ButtonGroup id="card4" className="float-right">
                   <FiActivity size={'1.5em'} />
                 </ButtonGroup>
-                <div className="text-value">{this.state.data.heartrate}</div>
+                <div className="text-value">{data.heartrate}</div>
                 <div>Heartrate [bpm]</div>
               </CardBody>
               <div className="chart-wrapper" style={{ height: '60px' }}>
-                <HRCard
-                  data={this.state.data}
-                  history={this.state.history.miniChart}
-                />
+                <HRCard data={data} history={history.miniChart} />
               </div>
             </Card>
           </Col>
@@ -203,12 +173,9 @@ class Dashboard extends Component {
               <CardBody>
                 <div
                   className="chart-wrapper"
-                  style={{ height: `370px`, marginTop: 0 }}
+                  style={{ height: `50vh`, marginTop: 0 }}
                 >
-                  <MainChart
-                    data={this.state.data}
-                    history={this.state.history.chart}
-                  />
+                  <MainChart data={data} history={history.chart} />
                 </div>
               </CardBody>
             </Card>
@@ -217,23 +184,23 @@ class Dashboard extends Component {
             <Card>
               <CardBody>
                 <div className="Map">
-                  <MyMap position_name={this.pos_name}/>
+                  <LeafletMap position={options.view.position} options={options} />
                 </div>
               </CardBody>
             </Card>
           </Col>
         </Row>
 
+        {/*
         <Extra
-          showExtra={this.state.showExtra}
-          gear={this.state.data.gear}
-          distance={this.state.data.distance}
-          time={this.state.data.time}
-          weather={this.state.weather}
-        />
+          showExtra={true}
+          gear={data.gear}
+          distance={data.distance}
+          time={data.time}
+          weather={weather}
+        /> */}
       </article>
     )
-  }
 }
 
 export default Dashboard
