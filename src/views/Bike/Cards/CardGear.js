@@ -13,7 +13,7 @@ import {
   Row,
   Collapse,
 } from 'reactstrap'
-import SocketIoHelper from 'socketio'
+import APIfetcher from 'api'
 
 class CardGear extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class CardGear extends Component {
   }
 
   sendCalibration = () => {
-    SocketIoHelper.sendCalibration(this.inputCalibration)
+    APIfetcher.sendCalibration(this.inputCalibration)
     this.props.sendCalibration()
   }
 

@@ -27,17 +27,25 @@ const LeafletMap = ({ position, options }) => {
         maxNativeZoom={17}
         maxZoom={17}
       />
-      <Circle center={start} radius={radius} color={"yellow"}>
-        <Popup><b>Start zone</b></Popup>
+      <Circle center={start} radius={radius} color={'yellow'}>
+        <Popup>
+          <b>Start zone</b>
+        </Popup>
       </Circle>
-      <Circle center={end} radius={radius} color={"red"}>
-        <Popup><b>End zone</b></Popup>
+      <Circle center={end} radius={radius} color={'red'}>
+        <Popup>
+          <b>End zone</b>
+        </Popup>
       </Circle>
-      <Circle center={catching} radius={radius} color={"blue"}>
-        <Popup><b>Catching zone</b></Popup>
+      <Circle center={catching} radius={radius} color={'blue'}>
+        <Popup>
+          <b>Catching zone</b>
+        </Popup>
       </Circle>
       <Marker key="taurusX" position={markerPosition} icon={options.icon}>
-        <Popup><b>TaurusX</b></Popup>
+        <Popup>
+          <b>TaurusX</b>
+        </Popup>
       </Marker>
     </Map>
   )

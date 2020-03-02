@@ -15,7 +15,7 @@ import {
 } from 'reactstrap'
 import { AppSwitch } from '@coreui/react'
 
-import SocketIoHelper from 'socketio'
+import APIfetcher from 'api'
 import { store } from 'react-notifications-component'
 import base from 'notifications'
 
@@ -68,7 +68,7 @@ const CardSettings = ({ settings, reloadStatus }) => {
     let settings = inputSettings.current
 
     settings.update = currentTime()
-    SocketIoHelper.saveSettings(settings)
+    APIfetcher.saveSettings(settings)
 
     store.addNotification({
       title: 'Settings',

@@ -8,7 +8,7 @@ import {
   Row,
   Collapse,
 } from 'reactstrap'
-import SocketIoHelper from 'socketio'
+import APIfetcher from 'api'
 import { store } from 'react-notifications-component'
 import base from 'notifications'
 
@@ -23,7 +23,7 @@ const CardRasp = ({ dest, reloadStatus }) => {
   const sendRasp = useCallback(
     value => {
       inputRasp.current.value = value
-      SocketIoHelper.sendRasp(inputRasp.current)
+      APIfetcher.sendRasp(inputRasp.current)
 
       store.addNotification({
         title: 'Raspberry',

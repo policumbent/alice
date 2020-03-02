@@ -6,3 +6,13 @@ button {
     outline: none;
   }
 }
+
+.Marquee {
+  display: block;
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+.MarqueeContent {
+  display: inline-block;
+}

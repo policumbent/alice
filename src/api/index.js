@@ -3,7 +3,7 @@
 // let socket
 // let history = [{"heartrate": 10, "power": 100}, {"heartrate": 100, "power": 120}];
 
-const SocketIoHelper = {
+const APIfetcher = {
   setup: function() {
     // socket = openSocket(window.location.origin)
     //
@@ -47,16 +47,20 @@ const SocketIoHelper = {
   //   // socket.on('data_response', data => cb(JSON.parse(data)))
   // },
 
-  requestData: function(cb, bike, username, password) {
-    let base64 = require('base-64');
-    let url = 'https://poliserver.duckdns.org/live/private?bike=' + bike;
+  getData: function(cb, bike) {
     // let username = 'ste';
     // let password = 'ciaociao';
-    let headers = new Headers();
-    headers.set('Authorization', 'Basic ' + base64.encode(username + ":" + password));
+    let base64 = require('base-64')
+    let url = 'https://poliserver.duckdns.org/live?bike=' + bike
+    // let headers = new Headers()
+    // headers.set(
+    //   'Authorization',
+    //   'Basic ' + base64.encode(username + ':' + password)
+    // )
 
     // todo: ajax request /live
-    fetch(url, { method: 'GET', headers: headers, })
+    // fetch(url, { method: 'GET', headers: headers })
+    fetch(url, { method: 'GET' })
       .then(r => r.json().then(data => cb(data)))
       .catch(error => console.log(error))
   },
@@ -94,4 +98,4 @@ const SocketIoHelper = {
   // }
 }
 
-export default SocketIoHelper
+export default APIfetcher

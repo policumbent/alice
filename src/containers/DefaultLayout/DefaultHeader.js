@@ -36,11 +36,11 @@ class DefaultHeader extends Component {
               Dashboard
             </Link>
           </NavItem>
-          <NavItem className="px-3">
+          {/* <NavItem className="px-3">
             <Link to="/bike" className="nav-link">
               Bike
             </Link>
-          </NavItem>
+          </NavItem> */}
         </Nav>
         {/* <AppSidebarToggler className="d-lg-none" display="md" mobile /> */}
         <AppNavbarBrand

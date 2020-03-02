@@ -12,7 +12,7 @@ import {
 import Extra from './Extra'
 import { LeafletMap, options } from './Map'
 
-import SocketIoHelper from 'socketio'
+import APIfetcher from 'api'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
@@ -31,7 +31,13 @@ const useIsMounted = () => {
 const Dashboard = () => {
   const isMounted = useIsMounted()
   const [data, setData] = useState({
-    heartrate: "94", power: '141', cadence: '62', distance: '0.03365', speed: '22.9104', time: '0.0167', gear: '0'
+    heartrate: '94',
+    power: '141',
+    cadence: '62',
+    distance: '0.03365',
+    speed: '22.9104',
+    time: '0.0167',
+    gear: '0',
   })
   const [history, setHistory] = useState()
   const [weather, setWeather] = useState()
@@ -78,11 +84,14 @@ const Dashboard = () => {
 
   const updateData = useCallback(
     data => {
-      setData(data)
+      if (isMounted.current) {
 
+      }
+
+      // setData(data)
       // if (isMounted.current) {
       //   setTimeout(() => {
-      //     SocketIoHelper.requestData()
+      //     APIfetcher.requestData()
       //   }, 300)
       // }
     },
@@ -90,8 +99,10 @@ const Dashboard = () => {
   )
 
   useEffect(() => {
-    updateHistory(["{\"dest\": \"0\", \"type\": \"0\", \"heartrate\": \"154\", \"power\": \"166\", \"cadence\": \"86\", \"distance\": \"1.25023\", \"speed\": \"64.8648\", \"time\": \"1.5333\", \"gear\": \"0\"}"])
-    // setInterval(v => SocketIoHelper.requestData(data => {
+    updateHistory([
+      '{"dest": "0", "type": "0", "heartrate": "154", "power": "166", "cadence": "86", "distance": "1.25023", "speed": "64.8648", "time": "1.5333", "gear": "0"}',
+    ])
+    // setInterval(v => APIfetcher.requestData(data => {
     //   updateData(data)
     // }, "taurusx", "ste", "ciaociao")
     //   , 500)
@@ -184,7 +195,10 @@ const Dashboard = () => {
             <Card>
               <CardBody>
                 <div className="Map">
-                  <LeafletMap position={options.view.position} options={options} />
+                  <LeafletMap
+                    position={options.view.position}
+                    options={options}
+                  />
                 </div>
               </CardBody>
             </Card>

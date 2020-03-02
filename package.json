@@ -31,6 +31,7 @@
     "react-notifications-component": "^2.3.0",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
+    "react-smooth-marquee": "^1.0.0",
     "react-test-renderer": "^16.8.2",
     "reactstrap": "^8.4.1",
     "simple-line-icons": "^2.4.1",

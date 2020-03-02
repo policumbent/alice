@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import Marquee from "react-smooth-marquee"
+
 const propTypes = {
   children: PropTypes.node,
 }
@@ -44,13 +46,14 @@ class DefaultFooter extends Component {
   render() {
     return (
       <React.Fragment>
-        <span
+        {/* <span
           style={{ cursor: 'pointer', MozUserSelect: 'none' }}
           onClick={this.getFrase}
           className="ml-auto mr-auto noselect"
         >
           {this.state.frase}
-        </span>
+        </span> */}
+        <Marquee velocity={0.08}>Content goes here </Marquee>
       </React.Fragment>
     )
   }

@@ -14,7 +14,7 @@ import {
   Collapse,
 } from 'reactstrap'
 import { AppSwitch } from '@coreui/react'
-import SocketIoHelper from 'socketio'
+import APIfetcher from 'api'
 
 import { store } from 'react-notifications-component'
 import base from 'notifications'
@@ -47,7 +47,7 @@ const CardVideo = ({ dest, value, reloadStatus }) => {
   )
 
   const sendVideo = useCallback(() => {
-    SocketIoHelper.sendVideo(inputVideo.current)
+    APIfetcher.sendVideo(inputVideo.current)
     store.addNotification({
       title: 'Video',
       message: 'Invio del pacchetto video alla bici',
