@@ -7,12 +7,11 @@ button {
   }
 }
 
-.Marquee {
-  display: block;
-  overflow-x: hidden;
-  width: 100vw;
-}
-
-.MarqueeContent {
-  display: inline-block;
+.app-footer-custom {
+  flex: 0 0 50px;
+  padding: 1rem 1rem;
+  color: #23282c;
+  background: #f0f3f5;
+  border-top: 1px solid #c8ced3;
+  white-space: nowrap;
 }

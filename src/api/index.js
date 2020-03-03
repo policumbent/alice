@@ -46,7 +46,15 @@ const APIfetcher = {
   //   // cb(JSON.parse(data))
   //   // socket.on('data_response', data => cb(JSON.parse(data)))
   // },
+  getComments: cb => {
+    // const url = 'https://poliserver.duckdns.org/comments'
+    const url = 'https://poliserver.duckdns.org:9002/comments'
 
+    fetch(url)
+      .then(comments => comments.json())
+      .then(data => cb(data))
+      .catch(error => console.log(error))
+  },
   getData: function(cb, bike) {
     // let username = 'ste';
     // let password = 'ciaociao';

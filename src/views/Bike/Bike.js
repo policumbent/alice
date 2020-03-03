@@ -35,31 +35,31 @@ const Bike = () => {
   return loading ? (
     Loading
   ) : (
-      <article>
-        <Row>
-          <Col xs="12" xl="4">
-            <CardState
-              settings={settings}
-              state={state}
-              reloadStatus={updateView}
-            />
-          </Col>
+    <article>
+      <Row>
+        <Col xs="12" xl="4">
+          <CardState
+            settings={settings}
+            state={state}
+            reloadStatus={updateView}
+          />
+        </Col>
 
-          <Col xs="12" xl="4">
-            <CardVideo
-              value={state.video_recording}
-              dest={state.dest}
-              reloadStatus={updateView}
-            />
-            <CardRasp dest={state.dest} reloadStatus={updateView} />
-          </Col>
+        <Col xs="12" xl="4">
+          <CardVideo
+            value={state.video_recording}
+            dest={state.dest}
+            reloadStatus={updateView}
+          />
+          <CardRasp dest={state.dest} reloadStatus={updateView} />
+        </Col>
 
-          <Col xs="12" xl="4">
-            <CardSettings settings={settings} reloadStatus={updateView} />
-          </Col>
-        </Row>
-      </article>
-    )
+        <Col xs="12" xl="4">
+          <CardSettings settings={settings} reloadStatus={updateView} />
+        </Col>
+      </Row>
+    </article>
+  )
 }
 
 export default Bike

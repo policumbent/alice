@@ -31,14 +31,15 @@
     "react-notifications-component": "^2.3.0",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
-    "react-smooth-marquee": "^1.0.0",
     "react-test-renderer": "^16.8.2",
+    "react-ticker": "^1.2.2",
     "reactstrap": "^8.4.1",
     "simple-line-icons": "^2.4.1",
-    "socket.io-client": "^2.2.0"
+    "react-scripts": "^3.3.1",
+    "react-leaflet": "^2.6.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
+    "babel-eslint": "10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-config-react-app": "^5.2.0",
@@ -46,9 +47,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.2",
     "eslint-plugin-react-hooks": "^2.3.0",
-    "prettier": "^1.19.1",
-    "react-leaflet": "^2.6.1",
-    "react-scripts": "^3.3.1"
+    "prettier": "^1.19.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,62 +1,75 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-import Marquee from "react-smooth-marquee"
+import APIfetcher from 'api'
+import Ticker from 'react-ticker'
 
 const propTypes = {
   children: PropTypes.node,
 }
-
 const defaultProps = {}
 
-// @TODO: aggiungere frasi motivazionali
-const raccolta = [
-  'I record esistono per essere battuti - M. Schumacher',
-  'La bici non va avanti a watt e ignoranza? - Sid',
-  'frase 3',
-  'cose a caso',
-  'frase 4',
-]
+const DefaultFooter = () => {
+  const [comments, setComments] = useState()
+  const [move, setMove] = useState(true)
 
-class DefaultFooter extends Component {
-  constructor(props) {
-    super(props)
+  const getFrase = rawData => {
+    let result = []
 
-    this.state = {}
-  }
-
-  getFrase = () => {
-    let precFrase = this.state.frase
-    let frase = precFrase
-
-    while (frase === precFrase) {
-      let pos = Math.floor(Math.random() * raccolta.length)
-      frase = raccolta[pos]
-    }
-
-    this.setState({
-      frase: frase,
+    rawData.forEach(comment => {
+      let separator = rawData[rawData.length - 1] === comment ? '' : '| '
+      result.push(`${comment.time} ${comment.text} ${separator}`)
     })
+
+    setComments(result)
   }
 
-  componentDidMount() {
-    this.getFrase()
-  }
+  const moveOption = useCallback(
+    event => {
+      switch (event) {
+        case 'over':
+          setMove(false)
+          break
+        case 'leave':
+          setMove(true)
+          break
+        case 'touch':
+          setMove(!move)
+          break
+        default:
+          break
+      }
+    },
+    [move]
+  )
 
-  render() {
-    return (
-      <React.Fragment>
-        {/* <span
-          style={{ cursor: 'pointer', MozUserSelect: 'none' }}
-          onClick={this.getFrase}
-          className="ml-auto mr-auto noselect"
-        >
-          {this.state.frase}
-        </span> */}
-        <Marquee velocity={0.08}>Content goes here </Marquee>
-      </React.Fragment>
+  useEffect(() => {
+    // inizializza comments
+    APIfetcher.getComments(data => getFrase(data))
+
+    // controlla gli aggiornamenti ogni 2 minuti (2*60*1000ms)
+    setInterval(
+      () => APIfetcher.getComments(data => getFrase(data)),
+      2 * 60 * 1000
     )
-  }
+  }, [])
+
+  return (
+    <>
+      {comments === undefined ? null : (
+        <div
+          className="ml-auto mr-auto noselect"
+          onMouseOver={() => moveOption('over')}
+          onMouseLeave={() => moveOption('leave')}
+          onTouchStart={() => moveOption('touch')}
+        >
+          <Ticker offset="run-in" mode="await" move={move} speed={5}>
+            {() => <span>{comments}</span>}
+          </Ticker>
+        </div>
+      )}
+    </>
+  )
 }
 
 DefaultFooter.propTypes = propTypes
