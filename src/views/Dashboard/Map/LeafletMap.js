@@ -34,7 +34,7 @@ const LeafletMap = ({ position, options }) => {
       </Circle>
       <Circle center={end} radius={radius} color={'red'}>
         <Popup>
-          <b>End zone</b>
+          <b>Timing zone</b>
         </Popup>
       </Circle>
       <Circle center={catching} radius={radius} color={'blue'}>

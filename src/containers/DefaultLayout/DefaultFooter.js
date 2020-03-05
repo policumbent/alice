@@ -17,10 +17,10 @@ const DefaultFooter = () => {
     let result = []
 
     rawData.forEach(comment => {
-      let separator = rawData[rawData.length - 1] === comment ? '' : '| '
+      let separator = rawData[rawData.length - 1] === comment ? '' : ' |  '
       result.push(`${comment.time} ${comment.text} ${separator}`)
     })
-
+    result.push('                          ')
     setComments(result)
   }
 
@@ -50,7 +50,7 @@ const DefaultFooter = () => {
     // controlla gli aggiornamenti ogni 2 minuti (2*60*1000ms)
     setInterval(
       () => APIfetcher.getComments(data => getFrase(data)),
-      2 * 60 * 1000
+      20 * 1000
     )
   }, [])
 
@@ -63,7 +63,7 @@ const DefaultFooter = () => {
           onMouseLeave={() => moveOption('leave')}
           onTouchStart={() => moveOption('touch')}
         >
-          <Ticker offset="run-in" mode="await" move={move} speed={5}>
+          <Ticker mode="chain" move={move} speed={7}>
             {() => <span>{comments}</span>}
           </Ticker>
         </div>
