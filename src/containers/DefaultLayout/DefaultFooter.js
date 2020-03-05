@@ -15,12 +15,22 @@ const DefaultFooter = () => {
 
   const getFrase = rawData => {
     let result = []
+    // questo è il carattere ASCII 255:
+    // https://theasciicode.com.ar/extended-ascii-code/non-breaking-space-no-break-space-ascii-code-255.html
+    const whiteSpace = ' '
+    const betweenSeparator = `${whiteSpace.repeat(2)}|${whiteSpace.repeat(2)}`
 
     rawData.forEach(comment => {
-      let separator = rawData[rawData.length - 1] === comment ? '' : ' |  '
-      result.push(`${comment.time} ${comment.text} ${separator}`)
+      // lista in ordine cronologico
+      let separator = rawData[rawData.length - 1] === comment ? '' : betweenSeparator
+      result.push(`${comment.time} ${comment.text}${separator}`)
+
+      // lista in ordine cronologico inverso (prima la più recente)
+      // let separator = rawData[0] === comment ? '' : betweenSeparator
+      // result.unshift(`${comment.time} ${comment.text}${separator}`)
     })
-    result.push('                          ')
+    result.push(whiteSpace.repeat(50))
+
     setComments(result)
   }
 
@@ -47,10 +57,10 @@ const DefaultFooter = () => {
     // inizializza comments
     APIfetcher.getComments(data => getFrase(data))
 
-    // controlla gli aggiornamenti ogni 2 minuti (2*60*1000ms)
+    // controlla gli aggiornamenti ogni 30 secondi (30*1000ms)
     setInterval(
       () => APIfetcher.getComments(data => getFrase(data)),
-      20 * 1000
+      30 * 1000
     )
   }, [])
 
@@ -63,7 +73,7 @@ const DefaultFooter = () => {
           onMouseLeave={() => moveOption('leave')}
           onTouchStart={() => moveOption('touch')}
         >
-          <Ticker mode="chain" move={move} speed={7}>
+          <Ticker offset={'run-in'} move={move} speed={7}>
             {() => <span>{comments}</span>}
           </Ticker>
         </div>
