@@ -73,7 +73,7 @@ const DefaultFooter = () => {
           onMouseLeave={() => moveOption('leave')}
           onTouchStart={() => moveOption('touch')}
         >
-          <Ticker offset={'run-in'} move={move} speed={7}>
+          <Ticker mode="smooth" offset={'run-in'} move={move} speed={7}>
             {() => <span>{comments}</span>}
           </Ticker>
         </div>

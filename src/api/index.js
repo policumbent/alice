@@ -47,8 +47,8 @@ const APIfetcher = {
   //   // socket.on('data_response', data => cb(JSON.parse(data)))
   // },
   getComments: cb => {
-    // const url = 'https://poliserver.duckdns.org/comments'
-    const url = 'https://poliserver.duckdns.org:9002/comments'
+    // const url = 'https://poliserver.duckdns.org/alice/comments/'
+    const url = 'https://poliserver.duckdns.org:9002/alice/comments/'
 
     fetch(url)
       .then(comments => comments.json())
