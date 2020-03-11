@@ -2,6 +2,7 @@
   "name": "marta",
   "version": "0.8.2",
   "private": true,
+  "homepage": "./",
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@coreui/coreui": "^2.1.11",
@@ -52,7 +53,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
-    "postbuild": "rm -rf ../marta/marta/ui/build; cp -r ./build ../marta/marta/ui",
     "format": "prettier --write \"**/*.{js,jsx,json,md,yml,scss}\"",
     "eject": "react-scripts eject"
   },
