@@ -36,11 +36,6 @@ class DefaultHeader extends Component {
               Dashboard
             </Link>
           </NavItem>
-          {/* <NavItem className="px-3">
-            <Link to="/bike" className="nav-link">
-              Bike
-            </Link>
-          </NavItem> */}
         </Nav>
         {/* <AppSidebarToggler className="d-lg-none" display="md" mobile /> */}
         <AppNavbarBrand
@@ -48,6 +43,13 @@ class DefaultHeader extends Component {
           full={brandFull}
           minimized={brandMinimized}
         />
+        <Nav className="ml-auto" navbar>
+          <NavItem className="px-3">
+            <Link to="/credits" className="nav-link">
+              Credits
+            </Link>
+          </NavItem>
+        </Nav>
         {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
       </React.Fragment>
     )

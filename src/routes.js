@@ -2,6 +2,7 @@ import React from 'react'
 import DefaultLayout from './containers/DefaultLayout'
 
 const Dashboard = React.lazy(() => import('./views/Dashboard'))
+const Credits = React.lazy(() => import('./views/Credits'))
 // const Bike = React.lazy(() => import('./views/Bike'))
 
 // const Breadcrumbs = React.lazy(() => import('./views/example/Base/Breadcrumbs'))
@@ -49,6 +50,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/credits',
+    name: 'Credits',
+    component: Credits,
   },
   // {
   //   path: '/bike',

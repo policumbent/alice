@@ -24,8 +24,11 @@ import {
   Buttons,
   BrandButtons,
 } from './example/Buttons'
+
 import Dashboard from './Dashboard'
+import Credits from './Credits'
 // import Bike from './Bike'
+
 import { CoreUIIcons, FontAwesome, SimpleLineIcons } from './example/Icons'
 import { Alerts, Badges, Modals } from './example/Notifications'
 import { Page404, Page500 } from './example/Pages'
@@ -35,6 +38,7 @@ import Widgets from './example/Widgets'
 export {
   Bike,
   Badges,
+  Credits,
   Typography,
   Colors,
   CoreUIIcons,

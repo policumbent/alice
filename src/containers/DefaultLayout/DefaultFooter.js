@@ -22,7 +22,8 @@ const DefaultFooter = () => {
 
     rawData.forEach(comment => {
       // lista in ordine cronologico
-      let separator = rawData[rawData.length - 1] === comment ? '' : betweenSeparator
+      let separator =
+        rawData[rawData.length - 1] === comment ? '' : betweenSeparator
       result.push(`${comment.time} ${comment.text}${separator}`)
 
       // lista in ordine cronologico inverso (prima la più recente)
@@ -58,10 +59,7 @@ const DefaultFooter = () => {
     APIfetcher.getComments(data => getFrase(data))
 
     // controlla gli aggiornamenti ogni 30 secondi (30*1000ms)
-    setInterval(
-      () => APIfetcher.getComments(data => getFrase(data)),
-      30 * 1000
-    )
+    setInterval(() => APIfetcher.getComments(data => getFrase(data)), 30 * 1000)
   }, [])
 
   return (

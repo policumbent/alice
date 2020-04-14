@@ -1,7 +1,4 @@
-// import openSocket from 'socket.io-client'
-
-// let socket
-// let history = [{"heartrate": 10, "power": 100}, {"heartrate": 100, "power": 120}];
+const poliserver = 'https://poliserver.duckdns.org:9002'
 
 const APIfetcher = {
   setup: function() {
@@ -47,8 +44,7 @@ const APIfetcher = {
   //   // socket.on('data_response', data => cb(JSON.parse(data)))
   // },
   getComments: cb => {
-    // const url = 'https://poliserver.duckdns.org/alice/comments/'
-    const url = 'https://poliserver.duckdns.org:9002/alice/comments/'
+    const url = poliserver + '/alice/comments'
 
     fetch(url)
       .then(comments => comments.json())
@@ -58,8 +54,10 @@ const APIfetcher = {
   getData: function(cb, bike) {
     // let username = 'ste';
     // let password = 'ciaociao';
-    let base64 = require('base-64')
-    let url = 'https://poliserver.duckdns.org/live?bike=' + bike
+
+    let url = poliserver + '?bike=' + bike
+
+    // let base64 = require('base-64')
     // let headers = new Headers()
     // headers.set(
     //   'Authorization',
