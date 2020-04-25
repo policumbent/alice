@@ -1,4 +1,6 @@
 const poliserver = 'https://poliserver.duckdns.org:9002'
+const username = process.env.REACT_APP_USER
+const password = process.env.REACT_APP_PASS
 
 const APIfetcher = {
   setup: function() {
@@ -15,18 +17,18 @@ const APIfetcher = {
   },
 
   getHistory: function(cb) {
-    cb([])
-    // let base64 = require('base-64');
-    // let url = 'https://poliserver.duckdns.org/live/private?bike=' + "taurus";
-    // let username = 'ste';
-    // let password = 'ciaociao';
-    // let headers = new Headers();
-    // headers.set('Authorization', 'Basic ' + base64.encode(username + ":" + password));
-    //
-    // // todo: ajax request /live
-    // fetch(url, {method:'GET', headers: headers, })
-    //   .then(r =>  r.json().then(data => cb([data, data])))
-    //   .catch(error => console.log(error))
+    // TODO: aggiungere delle api per la history
+
+    const bike = "taurusx"
+    const url = poliserver + '/live/?values=10&bike=' + bike
+
+    let headers = new Headers()
+    headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
+
+    fetch(url, { method: 'GET', headers: headers })
+      .then(r => r.json())
+      .then(data => cb(data))
+      .catch(error => console.log(error))
   },
 
   getWeather: function(cb) {
@@ -52,22 +54,17 @@ const APIfetcher = {
       .catch(error => console.log(error))
   },
   getData: function(cb, bike) {
-    // let username = 'ste';
-    // let password = 'ciaociao';
+    // TODO: rimuovere la selezione random
 
-    let url = poliserver + '?bike=' + bike
+    const url = poliserver + '/live/?values=30&bike=' + bike
+    const rand = Math.floor((Math.random() * 30))
 
-    // let base64 = require('base-64')
-    // let headers = new Headers()
-    // headers.set(
-    //   'Authorization',
-    //   'Basic ' + base64.encode(username + ':' + password)
-    // )
+    let headers = new Headers()
+    headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
 
-    // todo: ajax request /live
-    // fetch(url, { method: 'GET', headers: headers })
-    fetch(url, { method: 'GET' })
-      .then(r => r.json().then(data => cb(data)))
+    fetch(url, { method: 'GET', headers: headers })
+      .then(r => r.json())
+      .then(data => cb(data[rand]))
       .catch(error => console.log(error))
   },
 

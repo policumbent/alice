@@ -30,15 +30,7 @@ const useIsMounted = () => {
 
 const Dashboard = () => {
   const isMounted = useIsMounted()
-  const [data, setData] = useState({
-    heartrate: '94',
-    power: '141',
-    cadence: '62',
-    distance: '0.03365',
-    speed: '22.9104',
-    time: '0.0167',
-    gear: '0',
-  })
+  const [data, setData] = useState()
   const [history, setHistory] = useState()
   const [weather, setWeather] = useState()
   const loading = data === undefined || history === undefined
@@ -67,9 +59,9 @@ const Dashboard = () => {
 
     for (let i = 0; i < list.length && i < numElement; i++) {
       for (let j = 0; j < param.length; j++) {
-        chart[param[j]].push(JSON.parse(list[i])[param[j]])
+        chart[param[j]].push(list[i][param[j]])
         if (i < numCardElement) {
-          miniChart[param[j]].push(JSON.parse(miniList[i])[param[j]])
+          miniChart[param[j]].push(miniList[i][param[j]])
         }
       }
     }
@@ -85,6 +77,7 @@ const Dashboard = () => {
   const updateData = useCallback(
     data => {
       if (isMounted.current) {
+        setData(data)
       }
 
       // setData(data)
@@ -98,13 +91,12 @@ const Dashboard = () => {
   )
 
   useEffect(() => {
-    updateHistory([
-      '{"dest": "0", "type": "0", "heartrate": "154", "power": "166", "cadence": "86", "distance": "1.25023", "speed": "64.8648", "time": "1.5333", "gear": "0"}',
-    ])
-    // setInterval(v => APIfetcher.requestData(data => {
-    //   updateData(data)
-    // }, "taurusx", "ste", "ciaociao")
-    //   , 500)
+    APIfetcher.getHistory(data => updateHistory(data))
+
+    setInterval(
+      v => APIfetcher.getData(data => updateData(data), 'taurusx'),
+      500
+    )
   }, [])
 
   const Loading = () => (
@@ -114,97 +106,97 @@ const Dashboard = () => {
   return loading ? (
     Loading
   ) : (
-    <article>
-      <Row>
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-info">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card1" className="float-right">
-                <FaSpaceShuttle size={'1.5em'} />
-              </ButtonGroup>
-              <div className="text-value">{data.power}</div>
-              <div>Power [W]</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
-              <PowerCard data={data} history={history.miniChart} />
-            </div>
-          </Card>
-        </Col>
-
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-success">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card2" className="float-right">
-                <GiCartwheel size={'1.5em'} />
-              </ButtonGroup>
-              <div className="text-value">{data.cadence}</div>
-              <div>Cadence [rpm]</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
-              <CadenceCard data={data} history={history.miniChart} />
-            </div>
-          </Card>
-        </Col>
-
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-warning">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card3" className="float-right">
-                <GiSpeedometer size={'1.5em'} />
-              </ButtonGroup>
-              <div className="text-value">{data.speed}</div>
-              <div>Speed [km/h]</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
-              <SpeedCard data={data} history={history.miniChart} />
-            </div>
-          </Card>
-        </Col>
-
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-danger">
-            <CardBody className="pb-0">
-              <ButtonGroup id="card4" className="float-right">
-                <FiActivity size={'1.5em'} />
-              </ButtonGroup>
-              <div className="text-value">{data.heartrate}</div>
-              <div>Heartrate [bpm]</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
-              <HRCard data={data} history={history.miniChart} />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <Card>
-            <CardBody>
-              <div
-                className="chart-wrapper"
-                style={{ height: `50vh`, marginTop: 0 }}
-              >
-                <MainChart data={data} history={history.chart} />
+      <article>
+        <Row>
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-info">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card1" className="float-right">
+                  <FaSpaceShuttle size={'1.5em'} />
+                </ButtonGroup>
+                <div className="text-value">{data.power}</div>
+                <div>Power [W]</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: '60px' }}>
+                <PowerCard data={data} history={history.miniChart} />
               </div>
-            </CardBody>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-            <CardBody>
-              <div className="Map">
-                <LeafletMap
-                  position={options.view.position}
-                  options={options}
-                />
-              </div>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+            </Card>
+          </Col>
 
-      {/*
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-success">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card2" className="float-right">
+                  <GiCartwheel size={'1.5em'} />
+                </ButtonGroup>
+                <div className="text-value">{data.cadence}</div>
+                <div>Cadence [rpm]</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: '60px' }}>
+                <CadenceCard data={data} history={history.miniChart} />
+              </div>
+            </Card>
+          </Col>
+
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-warning">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card3" className="float-right">
+                  <GiSpeedometer size={'1.5em'} />
+                </ButtonGroup>
+                <div className="text-value">{data.speed}</div>
+                <div>Speed [km/h]</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: '60px' }}>
+                <SpeedCard data={data} history={history.miniChart} />
+              </div>
+            </Card>
+          </Col>
+
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-danger">
+              <CardBody className="pb-0">
+                <ButtonGroup id="card4" className="float-right">
+                  <FiActivity size={'1.5em'} />
+                </ButtonGroup>
+                <div className="text-value">{data.heartrate}</div>
+                <div>Heartrate [bpm]</div>
+              </CardBody>
+              <div className="chart-wrapper" style={{ height: '60px' }}>
+                <HRCard data={data} history={history.miniChart} />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Card>
+              <CardBody>
+                <div
+                  className="chart-wrapper"
+                  style={{ height: `50vh`, marginTop: 0 }}
+                >
+                  <MainChart data={data} history={history.chart} />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+              <CardBody>
+                <div className="Map">
+                  <LeafletMap
+                    position={options.view.position}
+                    options={options}
+                  />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+
+        {/*
         <Extra
           showExtra={true}
           gear={data.gear}
@@ -212,8 +204,8 @@ const Dashboard = () => {
           time={data.time}
           weather={weather}
         /> */}
-    </article>
-  )
+      </article>
+    )
 }
 
 export default Dashboard
