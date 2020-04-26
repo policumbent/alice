@@ -33,8 +33,8 @@ const Dashboard = () => {
   const [data, setData] = useState()
   const [history, setHistory] = useState()
   const [weather, setWeather] = useState()
-  const loading = data === undefined || history === undefined
-  // data === undefined || weather === undefined || history === undefined
+  const [position, setPosition] = useState(options.view.position)
+  const loading = data === undefined || history === undefined  // || weather === undefined
 
   const updateHistory = useCallback(history => {
     let param = ['heartrate', 'cadence', 'power', 'speed']
@@ -78,14 +78,8 @@ const Dashboard = () => {
     data => {
       if (isMounted.current) {
         setData(data)
+        setPosition([parseFloat(data.latitude), parseFloat(data.longitude)])
       }
-
-      // setData(data)
-      // if (isMounted.current) {
-      //   setTimeout(() => {
-      //     APIfetcher.requestData()
-      //   }, 300)
-      // }
     },
     [isMounted]
   )
@@ -106,7 +100,7 @@ const Dashboard = () => {
   return loading ? (
     Loading
   ) : (
-      <article>
+      <>
         <Row>
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-info">
@@ -187,7 +181,7 @@ const Dashboard = () => {
               <CardBody>
                 <div className="Map">
                   <LeafletMap
-                    position={options.view.position}
+                    position={position}
                     options={options}
                   />
                 </div>
@@ -204,7 +198,7 @@ const Dashboard = () => {
           time={data.time}
           weather={weather}
         /> */}
-      </article>
+      </>
     )
 }
 

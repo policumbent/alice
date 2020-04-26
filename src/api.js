@@ -1,4 +1,4 @@
-const poliserver = 'https://poliserver.duckdns.org:9002'
+const poliserver = 'https://poliserverbeta.duckdns.org:9002'
 const username = process.env.REACT_APP_USER
 const password = process.env.REACT_APP_PASS
 
@@ -20,7 +20,7 @@ const APIfetcher = {
     // TODO: aggiungere delle api per la history
 
     const bike = "taurusx"
-    const url = poliserver + '/live/?values=10&bike=' + bike
+    const url = poliserver + '/live/?values=60&bike=' + bike
 
     let headers = new Headers()
     headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
@@ -54,17 +54,14 @@ const APIfetcher = {
       .catch(error => console.log(error))
   },
   getData: function(cb, bike) {
-    // TODO: rimuovere la selezione random
-
-    const url = poliserver + '/live/?values=30&bike=' + bike
-    const rand = Math.floor((Math.random() * 30))
+    const url = poliserver + '/live/?bike=' + bike
 
     let headers = new Headers()
     headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
 
     fetch(url, { method: 'GET', headers: headers })
       .then(r => r.json())
-      .then(data => cb(data[rand]))
+      .then(data => cb(data))
       .catch(error => console.log(error))
   },
 
