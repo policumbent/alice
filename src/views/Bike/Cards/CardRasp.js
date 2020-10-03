@@ -8,7 +8,7 @@ import {
   Row,
   Collapse,
 } from 'reactstrap'
-import APIfetcher from 'api'
+import dataService from 'api'
 import { store } from 'react-notifications-component'
 import base from 'notifications'
 
@@ -23,7 +23,7 @@ const CardRasp = ({ dest, reloadStatus }) => {
   const sendRasp = useCallback(
     value => {
       inputRasp.current.value = value
-      APIfetcher.sendRasp(inputRasp.current)
+      dataService.sendRasp(inputRasp.current)
 
       store.addNotification({
         title: 'Raspberry',

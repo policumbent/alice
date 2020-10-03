@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { Col, Row } from 'reactstrap'
-import APIfetcher from 'api'
+import dataService from 'api'
 import { CardState, CardVideo, CardRasp, CardSettings } from './Cards'
 
 const Bike = () => {
@@ -14,12 +14,12 @@ const Bike = () => {
   }, [])
 
   const reloadStatus = useCallback(() => {
-    APIfetcher.getSettings(newSettings => {
+    dataService.getSettings(newSettings => {
       if (JSON.stringify(newSettings) !== JSON.stringify(settings)) {
         setSettings(newSettings)
       }
     })
-    APIfetcher.getState(state => setState(state))
+    dataService.getState(state => setState(state))
     // eslint-disable-next-line
   }, [])
 

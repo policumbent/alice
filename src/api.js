@@ -1,8 +1,9 @@
-const poliserver = 'https://poliserverbeta.duckdns.org:9002'
+const poliServer = 'https://poliserverbeta.duckdns.org:9002'
+const url = 'http://localhost:8080'
 const username = process.env.REACT_APP_USER
 const password = process.env.REACT_APP_PASS
 
-const APIfetcher = {
+const dataService = {
   setup: function() {
     // socket = openSocket(window.location.origin)
     //
@@ -16,11 +17,61 @@ const APIfetcher = {
     // socket.emit('give_json', data)
   },
 
+  isLogged: function(): boolean{
+    const jwt = localStorage.getItem('jwt');
+    if (jwt == null){
+      return false;
+    }
+    const d = new Date();
+    const jwtParse = JSON.parse(atob(jwt.split('.')[1]));
+    if (d.getTime() / 1000 > jwtParse.exp){
+      localStorage.removeItem('jwt');
+      return false;
+    }
+    return true;
+  },
+
+  getRole: function(): boolean{
+    if (!this.isLogged()) {
+      return '';
+    }
+    const jwt = localStorage.getItem('jwt');
+    const jwtParse = JSON.parse(atob(jwt.split('.')[1]));
+    return jwtParse.roles[0];
+  },
+
+  getJwt: function(): string{
+    return localStorage.getItem('jwt');
+  },
+
+
+  setJwt: function(token: string): void{
+    localStorage.setItem('jwt', token);
+  },
+
+  removeJwt: function(): void{
+    localStorage.removeItem('jwt');
+  },
+
+  login: function(username: string, password: string): void{
+    const v = { username, password};
+    fetch(url + '/authenticate',{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(v)
+    })
+      .then(data => console.log(data))
+      .catch(err => console.log(err))
+  },
+
   getHistory: function(cb) {
     // TODO: aggiungere delle api per la history
 
     const bike = "taurusx"
-    const url = poliserver + '/live/?values=60&bike=' + bike
+    const url = poliServer + '/live/?values=60&bike=' + bike
 
     let headers = new Headers()
     headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
@@ -46,7 +97,7 @@ const APIfetcher = {
   //   // socket.on('data_response', data => cb(JSON.parse(data)))
   // },
   getComments: cb => {
-    const url = poliserver + '/alice/comments'
+    const url = poliServer + '/alice/comments'
 
     fetch(url)
       .then(comments => comments.json())
@@ -54,7 +105,7 @@ const APIfetcher = {
       .catch(error => console.log(error))
   },
   getData: function(cb, bike) {
-    const url = poliserver + '/live/?bike=' + bike
+    const url = poliServer + '/live/?bike=' + bike
 
     let headers = new Headers()
     headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
@@ -98,4 +149,4 @@ const APIfetcher = {
   // }
 }
 
-export default APIfetcher
+export default dataService

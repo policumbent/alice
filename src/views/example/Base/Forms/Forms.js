@@ -865,7 +865,7 @@ class Forms extends Component {
               </CardBody>
               <CardFooter>
                 <Button type="submit" size="sm" color="primary">
-                  <i className="fa fa-user"></i> Login
+                  <i className="fa fa-user"></i> Logout
                 </Button>
                 <Button type="reset" size="sm" color="danger">
                   <i className="fa fa-ban"></i> Reset

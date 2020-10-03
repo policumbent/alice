@@ -13,7 +13,7 @@ import {
   Row,
   Collapse,
 } from 'reactstrap'
-import APIfetcher from 'api'
+import dataService from 'api'
 
 class CardGear extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class CardGear extends Component {
   }
 
   sendCalibration = () => {
-    APIfetcher.sendCalibration(this.inputCalibration)
+    dataService.sendCalibration(this.inputCalibration)
     this.props.sendCalibration()
   }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-import APIfetcher from 'api'
+import dataService from 'api'
 import Ticker from 'react-ticker'
 
 const propTypes = {
@@ -56,10 +56,10 @@ const DefaultFooter = () => {
 
   useEffect(() => {
     // inizializza comments
-    APIfetcher.getComments(data => getFrase(data))
+    dataService.getComments(data => getFrase(data))
 
     // controlla gli aggiornamenti ogni 30 secondi (30*1000ms)
-    setInterval(() => APIfetcher.getComments(data => getFrase(data)), 30 * 1000)
+    setInterval(() => dataService.getComments(data => getFrase(data)), 30 * 1000)
   }, [])
 
   return (

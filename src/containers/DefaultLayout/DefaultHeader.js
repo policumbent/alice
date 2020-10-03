@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
-
+import dataService from "../../api";
 const propTypes = {
   children: PropTypes.node,
 }
@@ -47,6 +47,11 @@ class DefaultHeader extends Component {
           <NavItem className="px-3">
             <Link to="/credits" className="nav-link">
               Credits
+            </Link>
+          </NavItem>
+          <NavItem className="px-3">
+            <Link to={dataService.isLogged() ? '/logout' : '/login'} className="nav-link">
+              {dataService.isLogged() ? 'Logout' : 'Login'}
             </Link>
           </NavItem>
         </Nav>
