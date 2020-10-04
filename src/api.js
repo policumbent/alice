@@ -1,5 +1,5 @@
-const poliServer = 'https://poliserverbeta.duckdns.org:9002'
-const url = 'http://localhost:8080'
+// const poliServer = 'https://poliserverbeta.duckdns.org:9002'
+const host = 'http://localhost:8080'
 const username = process.env.REACT_APP_USER
 const password = process.env.REACT_APP_PASS
 
@@ -55,7 +55,7 @@ const dataService = {
 
   login: function(username: string, password: string): void{
     const v = { username, password};
-    fetch(url + '/authenticate',{
+    fetch(host + '/authenticate',{
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -67,23 +67,48 @@ const dataService = {
       .catch(err => console.log(err))
   },
 
-  getHistory: function(cb) {
-    // TODO: aggiungere delle api per la history
-
-    const bike = "taurusx"
-    const url = poliServer + '/live/?values=60&bike=' + bike
-
+  getHeaders: function(): Headers{
     let headers = new Headers()
-    headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
+    if (dataService.isLogged())
+      headers.set('Authorization', 'Bearer ' + dataService.getJwt())
+    return headers;
+  },
 
-    fetch(url, { method: 'GET', headers: headers })
+  getHistory: function(cb, bike: string) {
+    const url = `${host}/v3/activities/last/${bike}?n=60`;
+
+    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+      .then(r => r.json())
+      .then(data => cb(data))
+      .catch(error => console.log(error))
+  },
+  getConfig: function(cb) {
+    const url = `${host}/v3/alice/config`;
+
+    fetch(url)
       .then(r => r.json())
       .then(data => cb(data))
       .catch(error => console.log(error))
   },
 
+  // ritorna una lista con l'ultimo dato meteo di ogni stazione
   getWeather: function(cb) {
     // socket.on('weather_response', weather => cb(JSON.parse(weather)))
+    const url = `${host}/v3/weather/last`;
+    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+      .then(r => r.json())
+      .then(data => cb(data))
+      .catch(error => console.log(error))
+  },  // ritorna una lista con l'ultimo dato meteo di ogni stazione
+
+  // ritorna l'ultimo dato meteo di una specifica stazione
+  getWeatherSingleStation: function(cb, id: number) {
+    // socket.on('weather_response', weather => cb(JSON.parse(weather)))
+    const url = `${host}/v3/weather/last/${id}`;
+    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+      .then(r => r.json())
+      .then(data => cb(data))
+      .catch(error => console.log(error))
   },
 
   // pacchetti tipo 0
@@ -97,20 +122,16 @@ const dataService = {
   //   // socket.on('data_response', data => cb(JSON.parse(data)))
   // },
   getComments: cb => {
-    const url = poliServer + '/alice/comments'
-
-    fetch(url)
-      .then(comments => comments.json())
-      .then(data => cb(data))
-      .catch(error => console.log(error))
+    // // todo: da fare lato server
+    // const url = poliServer + '/alice/comments'
+    // fetch(url)
+    //   .then(comments => comments.json())
+    //   .then(data => cb(data))
+    //   .catch(error => console.log(error))
   },
   getData: function(cb, bike) {
-    const url = poliServer + '/live/?bike=' + bike
-
-    let headers = new Headers()
-    headers.set('Authorization', 'Basic ' + btoa(username + ':' + password))
-
-    fetch(url, { method: 'GET', headers: headers })
+    const url = `${host}/v3/activities/last/${bike}`;
+    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
       .then(r => r.json())
       .then(data => cb(data))
       .catch(error => console.log(error))

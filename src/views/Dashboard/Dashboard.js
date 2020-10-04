@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
-import { ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap'
+import Countdown from 'react-countdown';
+import { Modal, ModalHeader, ModalBody, ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap'
 import {
   MainChart,
   CadenceCard,
@@ -12,7 +13,7 @@ import {
 import Extra from './Extra'
 import { LeafletMap, options } from './Map'
 
-import APIFetcher from 'api'
+import dataService from 'api'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
@@ -31,6 +32,9 @@ const useIsMounted = () => {
 const Dashboard = () => {
   const isMounted = useIsMounted()
   const [data, setData] = useState([])
+  const [config, setConfig] = useState({bikeName: 'taurusx', trackName: 'bm'})
+  const [startTime, setStartTime] = useState(0);
+  const [modalOpen, setModalOpen] = useState(startTime>Date.now());
   const [history, setHistory] = useState({chart: {heartrate: [], power: [], cadence: [], speed: []}, miniChart: {heartrate: [], power: [], cadence: [], speed: []}})
   const [weather, setWeather] = useState([])
   const [position, setPosition] = useState(options.view.position)
@@ -82,14 +86,33 @@ const Dashboard = () => {
     },
     [isMounted]
   )
+  function parseDate(date: string, time: string) {
+    date = date.split('-');
+    time = time.split(':');
+    return Date.UTC(date[0], date[1]-1, date[2], time[0], time[1], time[2]);
+  }
+
+  const updateConfig = useCallback(
+    data => {
+      if (isMounted.current) {
+        setConfig(data);
+        const start = parseDate(data.date, data.startTime);
+        setStartTime(start);
+        setModalOpen(start>Date.now());
+      }
+      console.log(data);
+    },
+    [isMounted]
+  )
 
   useEffect(() => {
-    APIFetcher.getHistory(data => updateHistory(data))
+    dataService.getHistory(data => updateHistory(data), 'taurusx')
+    dataService.getConfig(data => updateConfig(data))
 
-    setInterval(
-      v => APIFetcher.getData(data => updateData(data), 'taurusx'),
-      500
-    )
+  //   setInterval(
+  //     v => dataService.getData(data => updateData(data), 'taurusx'),
+  //     500
+  //   )
   }, [])
 
   const Loading = () => (
@@ -100,6 +123,14 @@ const Dashboard = () => {
     Loading
   ) : (
     <>
+      <Modal isOpen={modalOpen} className={'modal-info'}>
+        <ModalHeader>La diretta live inizierà tra:</ModalHeader>
+        <ModalBody>
+          <Countdown date={startTime} onComplete={()=>setModalOpen(false)}>
+            <p>The bike is starting.</p>
+          </Countdown>
+        </ModalBody>
+      </Modal>
       <Row>
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-info">
