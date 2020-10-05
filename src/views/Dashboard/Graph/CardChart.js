@@ -39,9 +39,8 @@ const CardChart = ({ state, type, data, history, opts }) => {
     labels.shift()
     labels.push('')
 
-    let value = data[type]
+    let value = data[type] === -1 ? 0 : data[type];
     newData.push(value)
-
     setLine({
       ...line,
       datasets: [
@@ -62,7 +61,6 @@ const CardChart = ({ state, type, data, history, opts }) => {
     updateLine()
     // eslint-disable-next-line
   }, [data])
-
   return <Line data={line} options={opts} />
 }
 

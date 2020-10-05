@@ -110,7 +110,7 @@ const dataService = {
     const url = `${host}/v3/activities/last/${bike}`
     fetch(url, { method: 'GET', headers: dataService.getHeaders() })
       .then(r => r.json())
-      .then(data => cb(data))
+      .then(data => cb(data[0]))
       .catch(error => console.log(error))
   },
 
