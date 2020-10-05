@@ -1,11 +1,6 @@
-Interfaccia utente di [MARTA](https://github.com/policumbent/marta), per la telemetria del team [Policumbent](http://www.policumbent.it/)
+App pubblica per seguire le run di [Policumbent](https://www.policumbent.it/)
 
-**Live demo: [here](https://policumbent.github.io/marta-ui/)**
+:rocket: [Qui](https://www.policumbent.it/alice)
 
 ## License
-
 MIT
-
-## Logout
-
-Made with [CoreUI](https://github.com/coreui/coreui-react) and [Socket.io](https://github.com/socketio/socket.io-client)
