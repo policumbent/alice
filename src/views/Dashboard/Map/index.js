@@ -2,10 +2,12 @@ import LeafletMap from './LeafletMap'
 import marker from './assets/taurus_icon.png'
 import L from 'leaflet'
 
-const posName = 'bm'
 
 const options = {
-  view: setupView(posName),
+  view: {
+    position: [40.433212, -117.053714],
+    zoom: 12,
+  },
   style: { height: '50vh' },
   tile: {
     url:
@@ -29,31 +31,6 @@ const options = {
     // shadowAnchor: [4, 62],  // the same for the shadow
     popupAnchor: [0, -7], // point from which the popup should open relative to the iconAnchor
   }),
-}
-
-function setupView(position) {
-  let view = {
-    position: null,
-    zoom: null,
-  }
-  switch (position) {
-    case 'bm':
-      view.position = [40.433212, -117.053714]
-      view.zoom = 12
-      break
-    case 'orbassano':
-      view.position = [45.009978, 7.560453]
-      view.zoom = 16
-      break
-    case 'balocco':
-      view.position = [45.478673, 8.300212]
-      view.zoom = 14
-      break
-    default:
-      view.position = [40.433212, -117.053714]
-      view.zoom = 12
-  }
-  return view
 }
 
 export { LeafletMap, options }

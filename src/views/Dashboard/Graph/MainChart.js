@@ -56,10 +56,10 @@ const MainChart = ({ data, history }) => {
     labels.shift()
     labels.push('')
 
-    newData1.push(data.power)
+    newData1.push(data.power === -1 ? 0 : data.power)
     newData2.push(data.cadence)
     newData3.push(data.speed)
-    newData4.push(data.heartrate)
+    newData4.push(data.heartrate === -1 ? 0 : data.heartrate)
 
     setState({
       ...state,

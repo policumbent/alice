@@ -40,7 +40,7 @@ const useIsMounted = () => {
 
 const Dashboard = () => {
   const isMounted = useIsMounted()
-  const [data, setData] = useState({power: 0, speed: 0, cadence: 0, heartrate: 0})
+  const [data, setData] = useState({power: 0, speed: 0, cadence: 0, heartrate: 0, time: 0, distance: 0, gear: 0})
   const [config, setConfig] = useState({ bikeName: 'taurusx', trackName: 'bm' })
   const [startTime, setStartTime] = useState(0)
   const [modalOpen, setModalOpen] = useState(startTime > Date.now())
@@ -114,26 +114,38 @@ const Dashboard = () => {
         const start = parseDate(data.date, data.startTime)
         setStartTime(start)
         setModalOpen(start > Date.now())
+        dataService.getHistory(data => updateHistory(data), data.bikeName);
+        dataService.getData(data => updateData(data), data.bikeName);
       }
       console.log(data)
     },
     [isMounted]
   )
+  const updateWeather = useCallback(
+    data => {
+      console.log(data);
+
+      if (isMounted.current)
+        setWeather(data)
+    },
+    [isMounted]
+  )
 
   useEffect(() => {
-    dataService.getHistory(data => updateHistory(data), 'taurusx');
     dataService.getConfig(data => updateConfig(data))
 
-      setInterval(
-      v => dataService.getData(data => updateData(data), 'taurusx'),
-      // v => dataService.getWeatherSingleStation(data => updateData(data), 1),
+    setInterval(
+      () => {
+        dataService.getData(data => updateData(data), config.bikeName);
+        dataService.getWeatherSingleStation(data => updateWeather(data), 1008);
+      },
       1000
-      )
+    )
   }, [])
 
   const Loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  )
+)
 
   return loading ? (
     Loading
@@ -228,7 +240,7 @@ const Dashboard = () => {
           <Card>
             <CardBody>
               <div className="Map">
-                <LeafletMap position={position} options={options} />
+                <LeafletMap position={position} options={options} track={config.trackName}/>
               </div>
             </CardBody>
           </Card>
@@ -241,6 +253,7 @@ const Dashboard = () => {
           gear={data.gear}
           distance={data.distance}
           time={data.time}
+          altitude={data.altitude}
           weather={weather}
         />}
     </>

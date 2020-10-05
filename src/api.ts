@@ -64,6 +64,11 @@ const dataService = {
     const url = `${host}/v3/activities/last/${bike}?n=60`
 
     fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+      .then(r => {if(r.status === 200)
+          return r;
+        throw new Error('Network response was not ok');
+        }
+      )
       .then(r => r.json())
       .then(data => cb(data))
       .catch(error => console.log(error))
@@ -72,6 +77,11 @@ const dataService = {
     const url = `${host}/v3/alice/config`
 
     fetch(url)
+      .then(r => {if(r.status === 200)
+          return r;
+          throw new Error('Network response was not ok');
+        }
+      )
       .then(r => r.json())
       .then(data => cb(data))
       .catch(error => console.log(error))
@@ -92,6 +102,11 @@ const dataService = {
     // socket.on('weather_response', weather => cb(JSON.parse(weather)))
     const url = `${host}/v3/weather/last/${id}`
     fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+      .then(r => {if(r.status === 200)
+          return r;
+          throw new Error('Network response was not ok');
+        }
+      )
       .then(r => r.json())
       .then(data => cb(data))
       .catch(error => console.log(error))
@@ -109,6 +124,11 @@ const dataService = {
   getData: function (cb: any, bike: string) {
     const url = `${host}/v3/activities/last/${bike}`
     fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+      .then(r => {if(r.status === 200)
+          return r;
+          throw new Error('Network response was not ok');
+        }
+      )
       .then(r => r.json())
       .then(data => cb(data[0]))
       .catch(error => console.log(error))

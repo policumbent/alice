@@ -1,10 +1,10 @@
 import React from 'react'
 import { Card, CardBody, Col, Row } from 'reactstrap'
 
-const Extra = ({ time, gear, distance, showExtra, weather }) => {
+const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
   return !showExtra ? null : (
     <Row>
-      <Col xs="12" sm="6" lg="4">
+      <Col xs="12" sm="6" lg="2">
         <Card className="text-white bg-primary">
           <CardBody className="pb-2">
             <div>Time [s]</div>
@@ -31,23 +31,45 @@ const Extra = ({ time, gear, distance, showExtra, weather }) => {
         </Card>
       </Col>
 
-      <Col xs="12" sm="6" lg="4">
+      <Col xs="12" sm="6" lg="2">
+        <Card className="text-dark bg-yellow">
+          <CardBody className="pb-2">
+            <div>Altitude [m]</div>
+            <div className="text-value text-center">{altitude}</div>
+          </CardBody>
+        </Card>
+      </Col>
+
+      <Col xs="12" sm="6" lg="2">
         <Card className="text-white bg-purple">
           <CardBody className="pb-2">
             <Row>
-              <Col xs="4" sm="4" lg="4">
+              <Col xs="6" sm="6" lg="6">
                 <div className="text-center">Temp [°C]</div>
                 <div className="text-value text-center">
                   {weather.temperature}
                 </div>
               </Col>
-              <Col xs="4" sm="4" lg="4">
-                <div className="text-center">Altitude [m]</div>
-                <div className="text-value text-center">{weather.altitude}</div>
-              </Col>
-              <Col xs="4" sm="4" lg="4">
+              <Col xs="6" sm="6" lg="6">
                 <div className="text-center">Press [hPa]</div>
                 <div className="text-value text-center">{weather.pressure}</div>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </Col> <Col xs="12" sm="6" lg="2">
+        <Card className="text-white bg-behance">
+          <CardBody className="pb-2">
+            <Row>
+              <Col xs="6" sm="6" lg="6">
+                <div className="text-center">Wind [m/s]</div>
+                <div className="text-value text-center">
+                  {weather.windSpeed}
+                </div>
+              </Col>
+              <Col xs="6" sm="6" lg="6">
+                <div className="text-center">Direction [°]</div>
+                <div className="text-value text-center">{weather.windDirection}</div>
               </Col>
             </Row>
           </CardBody>
