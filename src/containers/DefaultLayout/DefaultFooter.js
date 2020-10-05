@@ -59,7 +59,10 @@ const DefaultFooter = () => {
     dataService.getComments(data => getFrase(data))
 
     // controlla gli aggiornamenti ogni 30 secondi (30*1000ms)
-    setInterval(() => dataService.getComments(data => getFrase(data)), 30 * 1000)
+    setInterval(
+      () => dataService.getComments(data => getFrase(data)),
+      30 * 1000
+    )
   }, [])
 
   return (

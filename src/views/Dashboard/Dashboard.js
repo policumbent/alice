@@ -1,6 +1,15 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
-import Countdown from 'react-countdown';
-import { Modal, ModalHeader, ModalBody, ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap'
+import Countdown from 'react-countdown'
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ButtonGroup,
+  Card,
+  CardBody,
+  Col,
+  Row,
+} from 'reactstrap'
 import {
   MainChart,
   CadenceCard,
@@ -10,7 +19,6 @@ import {
   numCardElement,
   numElement,
 } from './Graph'
-import Extra from './Extra'
 import { LeafletMap, options } from './Map'
 
 import dataService from 'api'
@@ -32,13 +40,16 @@ const useIsMounted = () => {
 const Dashboard = () => {
   const isMounted = useIsMounted()
   const [data, setData] = useState([])
-  const [config, setConfig] = useState({bikeName: 'taurusx', trackName: 'bm'})
-  const [startTime, setStartTime] = useState(0);
-  const [modalOpen, setModalOpen] = useState(startTime>Date.now());
-  const [history, setHistory] = useState({chart: {heartrate: [], power: [], cadence: [], speed: []}, miniChart: {heartrate: [], power: [], cadence: [], speed: []}})
+  const [config, setConfig] = useState({ bikeName: 'taurusx', trackName: 'bm' })
+  const [startTime, setStartTime] = useState(0)
+  const [modalOpen, setModalOpen] = useState(startTime > Date.now())
+  const [history, setHistory] = useState({
+    chart: { heartrate: [], power: [], cadence: [], speed: [] },
+    miniChart: { heartrate: [], power: [], cadence: [], speed: [] },
+  })
   const [weather, setWeather] = useState([])
   const [position, setPosition] = useState(options.view.position)
-  const loading = data === undefined || history === undefined  // || weather === undefined
+  const loading = data === undefined || history === undefined // || weather === undefined
   const updateHistory = useCallback(history => {
     let param = ['heartrate', 'cadence', 'power', 'speed']
     let chart = {
@@ -86,21 +97,21 @@ const Dashboard = () => {
     },
     [isMounted]
   )
-  function parseDate(date: string, time: string) {
-    date = date.split('-');
-    time = time.split(':');
-    return Date.UTC(date[0], date[1]-1, date[2], time[0], time[1], time[2]);
+  function parseDate(date, time) {
+    date = date.split('-')
+    time = time.split(':')
+    return Date.UTC(date[0], date[1] - 1, date[2], time[0], time[1], time[2])
   }
 
   const updateConfig = useCallback(
     data => {
       if (isMounted.current) {
-        setConfig(data);
-        const start = parseDate(data.date, data.startTime);
-        setStartTime(start);
-        setModalOpen(start>Date.now());
+        setConfig(data)
+        const start = parseDate(data.date, data.startTime)
+        setStartTime(start)
+        setModalOpen(start > Date.now())
       }
-      console.log(data);
+      console.log(data)
     },
     [isMounted]
   )
@@ -109,10 +120,10 @@ const Dashboard = () => {
     dataService.getHistory(data => updateHistory(data), 'taurusx')
     dataService.getConfig(data => updateConfig(data))
 
-  //   setInterval(
-  //     v => dataService.getData(data => updateData(data), 'taurusx'),
-  //     500
-  //   )
+    //   setInterval(
+    //     v => dataService.getData(data => updateData(data), 'taurusx'),
+    //     500
+    //   )
   }, [])
 
   const Loading = () => (
@@ -124,9 +135,11 @@ const Dashboard = () => {
   ) : (
     <>
       <Modal isOpen={modalOpen} className={'modal-info'}>
-        <ModalHeader>La diretta live inizierà tra:</ModalHeader>
+        <ModalHeader className="text-dark bg-yellow">
+          La diretta live inizierà tra:
+        </ModalHeader>
         <ModalBody>
-          <Countdown date={startTime} onComplete={()=>setModalOpen(false)}>
+          <Countdown date={startTime} onComplete={() => setModalOpen(false)}>
             <p>The bike is starting.</p>
           </Countdown>
         </ModalBody>
@@ -199,7 +212,8 @@ const Dashboard = () => {
             <CardBody>
               <div
                 className="chart-wrapper"
-                style={{ height: `50vh`, marginTop: 0 }}>
+                style={{ height: `50vh`, marginTop: 0 }}
+              >
                 <MainChart data={data} history={history.chart} />
               </div>
             </CardBody>
@@ -209,10 +223,7 @@ const Dashboard = () => {
           <Card>
             <CardBody>
               <div className="Map">
-                <LeafletMap
-                  position={position}
-                  options={options}
-                />
+                <LeafletMap position={position} options={options} />
               </div>
             </CardBody>
           </Card>

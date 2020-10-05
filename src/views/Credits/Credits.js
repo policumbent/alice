@@ -7,7 +7,7 @@ const Credits = () => {
   return (
     <article>
       <Row>
-        <Col className="mx-auto" xs="4" xl="4">
+        <Col className="mx-auto" xs="7" xl="4">
           <Card>
             <CardHeader>
               <h2 className="text-center">
@@ -20,6 +20,7 @@ const Credits = () => {
                 <a
                   className="text-center"
                   target="_blank"
+                  rel="noopener noreferrer"
                   href="https://github.com/gabelluardo"
                 >
                   <FaGithub />
@@ -30,6 +31,7 @@ const Credits = () => {
                 <a
                   className="text-center"
                   target="_blank"
+                  rel="noopener noreferrer"
                   href="https://github.com/stelosca96"
                 >
                   <FaGithub />

@@ -3,7 +3,6 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 // import { renderRoutes } from 'react-router-config';
 import Loadable from 'react-loadable'
 import './App.scss'
-import dataService from './api'
 import ReactNotification from 'react-notifications-component'
 
 const loading = () => (
@@ -28,10 +27,6 @@ const Page500 = Loadable({
 })
 
 class App extends Component {
-  componentDidMount() {
-    dataService.setup()
-  }
-
   render() {
     return (
       <div className="app-container">

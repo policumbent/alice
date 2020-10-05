@@ -32,7 +32,7 @@ const routes = [
     path: '/logout',
     name: 'Logout',
     component: Logout,
-  }
+  },
 ]
 
 export default routes
