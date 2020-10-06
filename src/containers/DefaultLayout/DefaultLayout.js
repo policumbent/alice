@@ -74,7 +74,8 @@ class DefaultLayout extends Component {
             </Container>
           </main>
         </div>
-        <div className="app-footer-custom">
+        <div className="margin-top-footer"/>
+        <div className="app-footer-custom fixed">
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>

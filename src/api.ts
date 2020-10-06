@@ -113,12 +113,11 @@ const dataService = {
   },
 
   getComments: function (cb: any) {
-    // // todo: da fare lato server
-    // const url = poliServer + '/alice/comments'
-    // fetch(url)
-    //   .then(comments => comments.json())
-    //   .then(data => cb(data))
-    //   .catch(error => console.log(error))
+    const url = `${host}/v3/alice/comments`
+    fetch(url)
+      .then(comments => comments.json())
+      .then(data => cb(data))
+      .catch(error => console.log(error))
   },
 
   getData: function (cb: any, bike: string) {

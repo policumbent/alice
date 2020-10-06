@@ -5,7 +5,7 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
   return !showExtra ? null : (
     <Row>
       <Col xs="12" sm="6" lg="2">
-        <Card className="text-white bg-primary">
+        <Card className="text-white bg-pink">
           <CardBody className="pb-2">
             <div>Time [s]</div>
             <div className="text-value text-center">{time}</div>

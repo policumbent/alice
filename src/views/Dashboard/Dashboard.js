@@ -40,7 +40,7 @@ const useIsMounted = () => {
 
 const Dashboard = () => {
   const isMounted = useIsMounted()
-  const [data, setData] = useState({power: 0, speed: 0, cadence: 0, heartrate: 0, time: 0, distance: 0, gear: 0})
+  const [data, setData] = useState({power: 0, speed: 0, cadence: 0, heartrate: 0, time: 0, distance: 0, gear: 0, altitude: 0})
   const [config, setConfig] = useState({ bikeName: 'taurusx', trackName: 'bm' })
   const [startTime, setStartTime] = useState(0)
   const [modalOpen, setModalOpen] = useState(startTime > Date.now())
@@ -48,11 +48,11 @@ const Dashboard = () => {
     chart: { heartrate: [], power: [], cadence: [], speed: [] },
     miniChart: { heartrate: [], power: [], cadence: [], speed: [] },
   })
-  const [weather, setWeather] = useState([])
+  const [weather, setWeather] = useState({windSpeed: 0, windDirection: 0, temperature: 0, pressure: 0})
   const [position, setPosition] = useState(options.view.position)
   const loading = data === undefined || history === undefined // || weather === undefined
   const updateHistory = useCallback(history => {
-    console.log(history);
+    // console.log(history);
     let param = ['heartrate', 'cadence', 'power', 'speed']
     let chart = {
       heartrate: [],
@@ -92,7 +92,7 @@ const Dashboard = () => {
 
   const updateData = useCallback(
     data => {
-      console.log(data);
+      // console.log(data);
 
       if (isMounted.current) {
         setData(data)
@@ -123,7 +123,7 @@ const Dashboard = () => {
   )
   const updateWeather = useCallback(
     data => {
-      console.log(data);
+      // console.log(data);
 
       if (isMounted.current)
         setWeather(data)
