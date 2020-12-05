@@ -1,5 +1,5 @@
 // const poliServer = 'https://poliserverbeta.duckdns.org:9002'
-const host = 'http://localhost:8080'
+const host = 'https://poliserver.duckdns.org:9002'
 const username = process.env.REACT_APP_USER
 const password = process.env.REACT_APP_PASS
 
