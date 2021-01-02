@@ -60,7 +60,7 @@ const Login = () => {
                       type="password"
                       pattern="*"
                       placeholder="Password"
-                    // onChange={handleText}
+                      // onChange={handleText}
                     />
                   </Col>
                 </FormGroup>

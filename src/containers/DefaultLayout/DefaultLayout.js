@@ -37,7 +37,7 @@ class DefaultLayout extends Component {
   render() {
     return (
       <div className="app">
-        <AppHeader fixed>
+        <AppHeader>
           <Suspense fallback={this.loading()}>
             <DefaultHeader onLogout={e => this.signOut(e)} />
           </Suspense>
@@ -74,8 +74,7 @@ class DefaultLayout extends Component {
             </Container>
           </main>
         </div>
-        <div className="margin-top-footer"/>
-        <div className="app-footer-custom fixed">
+        <div className="app-footer-custom fixed-footer-custom">
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>

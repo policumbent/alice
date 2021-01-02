@@ -2,7 +2,6 @@ import LeafletMap from './LeafletMap'
 import marker from './assets/taurus_icon.png'
 import L from 'leaflet'
 
-
 const options = {
   view: {
     position: [40.433212, -117.053714],

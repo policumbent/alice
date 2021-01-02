@@ -25,7 +25,7 @@ import dataService from 'api'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
-import Extra from "./Extra";
+import Extra from './Extra'
 
 const useIsMounted = () => {
   const isMounted = useRef(false)
@@ -40,7 +40,16 @@ const useIsMounted = () => {
 
 const Dashboard = () => {
   const isMounted = useIsMounted()
-  const [data, setData] = useState({power: 0, speed: 0, cadence: 0, heartrate: 0, time: 0, distance: 0, gear: 0, altitude: 0})
+  const [data, setData] = useState({
+    power: 0,
+    speed: 0,
+    cadence: 0,
+    heartrate: 0,
+    time: 0,
+    distance: 0,
+    gear: 0,
+    altitude: 0,
+  })
   const [config, setConfig] = useState({ bikeName: 'taurusx', trackName: 'bm' })
   const [startTime, setStartTime] = useState(0)
   const [modalOpen, setModalOpen] = useState(startTime > Date.now())
@@ -48,9 +57,15 @@ const Dashboard = () => {
     chart: { heartrate: [], power: [], cadence: [], speed: [] },
     miniChart: { heartrate: [], power: [], cadence: [], speed: [] },
   })
-  const [weather, setWeather] = useState({windSpeed: 0, windDirection: 0, temperature: 0, pressure: 0})
+  const [weather, setWeather] = useState({
+    windSpeed: 0,
+    windDirection: 0,
+    temperature: 0,
+    pressure: 0,
+  })
   const [position, setPosition] = useState(options.view.position)
   const loading = data === undefined || history === undefined // || weather === undefined
+
   const updateHistory = useCallback(history => {
     // console.log(history);
     let param = ['heartrate', 'cadence', 'power', 'speed']
@@ -101,6 +116,7 @@ const Dashboard = () => {
     },
     [isMounted]
   )
+
   function parseDate(date, time) {
     date = date.split('-')
     time = time.split(':')
@@ -114,8 +130,8 @@ const Dashboard = () => {
         const start = parseDate(data.date, data.startTime)
         setStartTime(start)
         setModalOpen(start > Date.now())
-        dataService.getHistory(data => updateHistory(data), data.bikeName);
-        dataService.getData(data => updateData(data), data.bikeName);
+        dataService.getHistory(data => updateHistory(data), data.bikeName)
+        dataService.getData(data => updateData(data), data.bikeName)
       }
       console.log(data)
     },
@@ -125,8 +141,7 @@ const Dashboard = () => {
     data => {
       // console.log(data);
 
-      if (isMounted.current)
-        setWeather(data)
+      if (isMounted.current) setWeather(data)
     },
     [isMounted]
   )
@@ -134,18 +149,15 @@ const Dashboard = () => {
   useEffect(() => {
     dataService.getConfig(data => updateConfig(data))
 
-    setInterval(
-      () => {
-        dataService.getData(data => updateData(data), config.bikeName);
-        dataService.getWeatherSingleStation(data => updateWeather(data), 1008);
-      },
-      1000
-    )
+    setInterval(() => {
+      dataService.getData(data => updateData(data), config.bikeName)
+      dataService.getWeatherSingleStation(data => updateWeather(data), 1008)
+    }, 1000)
   }, [])
 
   const Loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
-)
+  )
 
   return loading ? (
     Loading
@@ -168,7 +180,9 @@ const Dashboard = () => {
               <ButtonGroup id="card1" className="float-right">
                 <FaSpaceShuttle size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{data.power === -1 ? 'Reserved': data.power}</div>
+              <div className="text-value">
+                {data.power === -1 ? 'Reserved' : data.power}
+              </div>
               <div>Power [W]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -198,7 +212,9 @@ const Dashboard = () => {
               <ButtonGroup id="card3" className="float-right">
                 <GiSpeedometer size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{Math.round(data.speed*100)/100}</div>
+              <div className="text-value">
+                {Math.round(data.speed * 100) / 100}
+              </div>
               <div>Speed [km/h]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -213,7 +229,9 @@ const Dashboard = () => {
               <ButtonGroup id="card4" className="float-right">
                 <FiActivity size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{data.heartrate === -1 ? 'Reserved': data.heartrate}</div>
+              <div className="text-value">
+                {data.heartrate === -1 ? 'Reserved' : data.heartrate}
+              </div>
               <div>Heartrate [bpm]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -240,7 +258,11 @@ const Dashboard = () => {
           <Card>
             <CardBody>
               <div className="Map">
-                <LeafletMap position={position} options={options} track={config.trackName}/>
+                <LeafletMap
+                  position={position}
+                  options={options}
+                  track={config.trackName}
+                />
               </div>
             </CardBody>
           </Card>
@@ -255,7 +277,8 @@ const Dashboard = () => {
           time={data.time}
           altitude={data.altitude}
           weather={weather}
-        />}
+        />
+      }
     </>
   )
 }

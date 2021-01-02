@@ -14,7 +14,16 @@ const DefaultFooter = () => {
   const [move, setMove] = useState(true)
   function parseDateTime(dateTime) {
     dateTime = dateTime.split(/[-: ]+/)
-    return new Date(Date.UTC(dateTime[0], dateTime[1] - 1, dateTime[2], dateTime[3], dateTime[4], dateTime[5]))
+    return new Date(
+      Date.UTC(
+        dateTime[0],
+        dateTime[1] - 1,
+        dateTime[2],
+        dateTime[3],
+        dateTime[4],
+        dateTime[5]
+      )
+    )
   }
   const getPhrase = rawData => {
     console.log(rawData)
@@ -29,7 +38,11 @@ const DefaultFooter = () => {
       // lista in ordine cronologico
       let separator =
         rawData[rawData.length - 1] === comment ? '' : betweenSeparator
-      result.push(`${timestamp.getHours()}:${timestamp.getMinutes()} ${comment.message}${separator}`)
+      result.push(
+        `${timestamp.getHours()}:${timestamp.getMinutes()} ${
+          comment.message
+        }${separator}`
+      )
 
       // lista in ordine cronologico inverso (prima la più recente)
       // let separator = rawData[0] === comment ? '' : betweenSeparator

@@ -12,7 +12,6 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
           </CardBody>
         </Card>
       </Col>
-
       <Col xs="12" sm="6" lg="2">
         <Card className="text-white bg-dark">
           <CardBody className="pb-2">
@@ -21,7 +20,6 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
           </CardBody>
         </Card>
       </Col>
-
       <Col xs="12" sm="6" lg="2">
         <Card className="text-dark bg-secondary">
           <CardBody className="pb-2">
@@ -30,7 +28,6 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
           </CardBody>
         </Card>
       </Col>
-
       <Col xs="12" sm="6" lg="2">
         <Card className="text-dark bg-yellow">
           <CardBody className="pb-2">
@@ -39,7 +36,6 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
           </CardBody>
         </Card>
       </Col>
-
       <Col xs="12" sm="6" lg="2">
         <Card className="text-white bg-purple">
           <CardBody className="pb-2">
@@ -57,7 +53,8 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
             </Row>
           </CardBody>
         </Card>
-      </Col> <Col xs="12" sm="6" lg="2">
+      </Col>{' '}
+      <Col xs="12" sm="6" lg="2">
         <Card className="text-white bg-behance">
           <CardBody className="pb-2">
             <Row>
@@ -69,7 +66,9 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
               </Col>
               <Col xs="6" sm="6" lg="6">
                 <div className="text-center">Direction [°]</div>
-                <div className="text-value text-center">{weather.windDirection}</div>
+                <div className="text-value text-center">
+                  {weather.windDirection}
+                </div>
               </Col>
             </Row>
           </CardBody>

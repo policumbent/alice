@@ -39,7 +39,7 @@ const CardChart = ({ state, type, data, history, opts }) => {
     labels.shift()
     labels.push('')
 
-    let value = data[type] === -1 ? 0 : data[type];
+    let value = data[type] === -1 ? 0 : data[type]
     newData.push(value)
     setLine({
       ...line,

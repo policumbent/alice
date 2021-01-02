@@ -10,14 +10,13 @@
 // Import Main styles for this application
 @import './scss/style.scss';
 
-.fixed {
+.fixed-footer-custom {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   z-index: 99999;
-}
-
-.margin-top-footer{
-  padding-top: 40px;
+  height: 55px;
+  line-height: 1;
+  font-size: 1.05em;
 }
