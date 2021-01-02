@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Countdown from 'react-countdown'
 import {
   Modal,
@@ -20,29 +20,14 @@ import {
   numElement,
 } from './Graph'
 import { LeafletMap, options } from './Map'
+import Extra from './Extra'
 
-import { default as api } from 'api'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
-import Extra from './Extra'
 
-const useIsMounted = () => {
-  const isMounted = useRef(false)
-
-  useEffect(() => {
-    isMounted.current = true
-    return () => (isMounted.current = false)
-  }, [])
-
-  return isMounted
-}
-
-const parseDate = (date, time) => {
-  date = date.split('-')
-  time = time.split(':')
-  return Date.UTC(date[0], date[1] - 1, date[2], time[0], time[1], time[2])
-}
+import { default as api } from 'api'
+import { parseDate, useIsMounted } from 'utils'
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' }
 const defaultData = {

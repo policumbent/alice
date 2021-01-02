@@ -20,3 +20,34 @@
   line-height: 1;
   font-size: 1.05em;
 }
+
+.logo {
+  position: absolute;
+  left: 50%;
+  margin-left: -77.5px;
+
+  @media only screen and (max-width: 350px) {
+    img {
+      display: none;
+    }
+  }
+}
+
+.blink {
+  animation: blinker 2.5s linear infinite;
+
+  color: red;
+  font-weight: bold;
+  font-size: 1.1em;
+  // right: 50%;
+
+  @media only screen and (max-width: 760px) {
+    display: none;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
