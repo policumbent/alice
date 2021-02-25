@@ -28,7 +28,7 @@
     "react-notifications-component": "^2.3.0",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.1",
+    "react-scripts": "3.4.3",
     "react-ticker": "^1.2.2",
     "reactstrap": "^8.4.1",
     "simple-line-icons": "^2.4.1"
@@ -58,7 +58,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build ",
-    "format": "prettier --write \"**/*.{js,jsx,json,md,yml,scss}\"",
+    "format": "prettier --write \"**/*.{js,ts,jsx,tsx,json,md,yml,scss}\"",
     "eject": "craco eject"
   },
   "eslintConfig": {
