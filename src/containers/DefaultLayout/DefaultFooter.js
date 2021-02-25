@@ -12,6 +12,7 @@ const defaultProps = {}
 const DefaultFooter = () => {
   const [comments, setComments] = useState('')
   const [move, setMove] = useState(true)
+
   function parseDateTime(dateTime) {
     dateTime = dateTime.split(/[-: ]+/)
     return new Date(
@@ -25,8 +26,8 @@ const DefaultFooter = () => {
       )
     )
   }
+
   const getPhrase = rawData => {
-    console.log(rawData)
     let result = []
     // questo è il carattere ASCII 255:
     // https://theasciicode.com.ar/extended-ascii-code/non-breaking-space-no-break-space-ascii-code-255.html

@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
+
 import { HashRouter, Route, Switch } from 'react-router-dom'
-// import { renderRoutes } from 'react-router-config';
 import Loadable from 'react-loadable'
+import Notifications from 'notifications'
+
 import './App.scss'
-import ReactNotification from 'react-notifications-component'
 
 const loading = () => (
   <div className="animated fadeIn pt-3 text-center">Loading...</div>
@@ -26,21 +27,19 @@ const Page500 = Loadable({
   loading,
 })
 
-class App extends Component {
-  render() {
-    return (
-      <div className="app-container">
-        <ReactNotification />
-        <HashRouter hashType="noslash">
-          <Switch>
-            <Route path="/404" name="Page 404" component={Page404} />
-            <Route path="/500" name="Page 500" component={Page500} />
-            <Route path="/" name="Home" component={DefaultLayout} />
-          </Switch>
-        </HashRouter>
-      </div>
-    )
-  }
+const App = () => {
+  return (
+    <div className="app-container">
+      <Notifications />
+      <HashRouter hashType="noslash">
+        <Switch>
+          <Route path="/404" name="Page 404" component={Page404} />
+          <Route path="/500" name="Page 500" component={Page500} />
+          <Route path="/" name="Home" component={DefaultLayout} />
+        </Switch>
+      </HashRouter>
+    </div>
+  )
 }
 
 export default App

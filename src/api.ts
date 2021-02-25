@@ -1,7 +1,7 @@
 // const poliServer = 'https://poliserverbeta.duckdns.org:9002'
 const host = 'https://poliserver.duckdns.org:9002'
-const username = process.env.REACT_APP_USER
-const password = process.env.REACT_APP_PASS
+// const username = process.env.REACT_APP_USER
+// const password = process.env.REACT_APP_PASS
 
 const dataService = {
   isLogged: function(): boolean {
@@ -114,15 +114,15 @@ const dataService = {
   // ritorna l'ultimo dato meteo di una specifica stazione
   getWeatherSingleStation: function(cb: any, id: number) {
     // socket.on('weather_response', weather => cb(JSON.parse(weather)))
-    const url = `${host}/v3/weather/last/${id}`
-    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
-      .then(r => {
-        if (r.status === 200) return r
-        throw new Error('Network response was not ok')
-      })
-      .then(r => r.json())
-      .then(data => cb(data))
-      .catch(error => console.log(error))
+    // const url = `${host}/v3/weather/last/${id}`
+    // fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+    //   .then(r => {
+    //     if (r.status === 200) return r
+    //     throw new Error('Network response was not ok')
+    //   })
+    //   .then(r => r.json())
+    //   .then(data => cb(data))
+    //   .catch(error => console.log(error))
   },
 
   getComments: function(cb: any) {
@@ -142,6 +142,22 @@ const dataService = {
       })
       .then(r => r.json())
       .then(data => cb(data[0]))
+      .catch(error => console.log(error))
+  },
+
+  getNotifications: function(counter: number) {
+    const url = `${host}/v3/alice/notifications`
+
+    return fetch(url, {
+      method: 'GET',
+      headers: dataService.getHeaders(),
+    })
+      .then(r => {
+        if (r.status === 200) return r
+        throw new Error('Network response was not ok')
+      })
+      .then(r => r.json())
+      .then(data => data.filter((n: any) => n.id >= counter))
       .catch(error => console.log(error))
   },
 }
