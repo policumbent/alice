@@ -10,12 +10,21 @@ const dataService = {
       return false
     }
     const d = new Date()
-    const jwtParse = JSON.parse(atob(jwt.split('.')[1]))
-    if (d.getTime() / 1000 > jwtParse.exp) {
+
+    try {
+      const jwtParse = JSON.parse(atob(jwt.split('.')[1]))
+
+      if (d.getTime() / 1000 > jwtParse.exp) {
+        localStorage.removeItem('jwt')
+        return false
+      }
+      return true
+    } catch (error) {
+      console.log(error)
+
       localStorage.removeItem('jwt')
       return false
     }
-    return true
   },
 
   getRole: function(): boolean {
@@ -41,6 +50,8 @@ const dataService = {
 
   login: function(username: string, password: string): void {
     const v = { username, password }
+    // console.log(v)
+
     fetch(host + '/authenticate', {
       method: 'POST',
       headers: {
@@ -49,7 +60,8 @@ const dataService = {
       },
       body: JSON.stringify(v),
     })
-      .then(data => console.log(data))
+      .then(data => data.json())
+      .then(data => this.setJwt(data.token))
       .catch(err => console.log(err))
   },
 
@@ -109,7 +121,7 @@ const dataService = {
       .then(r => r.json())
       .then(data => cb(data))
       .catch(error => console.log(error))
-  }, // ritorna una lista con l'ultimo dato meteo di ogni stazione
+  },
 
   // ritorna l'ultimo dato meteo di una specifica stazione
   getWeatherSingleStation: function(cb: any, id: number) {
