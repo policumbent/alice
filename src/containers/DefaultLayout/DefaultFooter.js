@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import dataService from 'api'
 import Ticker from 'react-ticker'
+import { parseDateTime } from 'utils'
 
 const propTypes = {
   children: PropTypes.node,
@@ -12,20 +13,6 @@ const defaultProps = {}
 const DefaultFooter = () => {
   const [comments, setComments] = useState('')
   const [move, setMove] = useState(true)
-
-  function parseDateTime(dateTime) {
-    dateTime = dateTime.split(/[-: ]+/)
-    return new Date(
-      Date.UTC(
-        dateTime[0],
-        dateTime[1] - 1,
-        dateTime[2],
-        dateTime[3],
-        dateTime[4],
-        dateTime[5]
-      )
-    )
-  }
 
   const getPhrase = rawData => {
     let result = []
@@ -73,15 +60,19 @@ const DefaultFooter = () => {
     [move]
   )
 
-  useEffect(() => {
-    // inizializza comments
-    dataService.getComments(data => getPhrase(data))
-
-    // controlla gli aggiornamenti ogni 30 secondi (30*1000ms)
+  // 30 secs polling on comments api
+  const commentsPolling = () => {
     setInterval(
       () => dataService.getComments(data => getPhrase(data)),
       30 * 1000
     )
+  }
+
+  useEffect(() => {
+    // inizializza comments
+    dataService.getComments(data => getPhrase(data))
+    commentsPolling()
+    // eslint-disable-next-line
   }, [])
 
   return (

@@ -130,6 +130,7 @@ const Dashboard = () => {
       }
       // console.log(data)
     },
+    // eslint-disable-next-line
     [isMounted]
   )
   const updateWeather = useCallback(
@@ -149,6 +150,7 @@ const Dashboard = () => {
       api.getData(data => updateData(data), config.bikeName)
       api.getWeatherSingleStation(data => updateWeather(data), 1008)
     }, 1000)
+    // eslint-disable-next-line
   }, [])
 
   const Loading = () => (

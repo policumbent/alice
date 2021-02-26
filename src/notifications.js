@@ -25,30 +25,32 @@ const base = {
 const Notifications = () => {
   let counter = 0
 
-  // 3 secs polling on notifications api
-  useEffect(() => {
-    setInterval(() => {
-      notificationsPolling()
-    }, 3000)
-  }, [])
+  // 5 secs polling on notifications api
+  const notificationsPolling = () => {
+    setInterval(async () => {
+      let notes = await api.getNotifications(counter)
 
-  const notificationsPolling = async () => {
-    let notes = await api.getNotifications(counter)
+      // console.log(notes)
 
-    console.log(notes)
-
-    notes.forEach(n => {
-      if (n.public) {
-        store.addNotification({
+      notes.forEach(n => {
+        let note = {
           message: n.message,
+          type: n.public ? 'info' : 'warning',
           ...base,
-        })
-      } else {
+        }
         // TODO: Handle private notifications
-      }
-      counter = n.id
-    })
+
+        store.addNotification(note)
+
+        counter = n.id
+      })
+    }, 5 * 1000)
   }
+
+  useEffect(() => {
+    notificationsPolling()
+    // eslint-disable-next-line
+  }, [])
 
   return <ReactNotification />
 }
