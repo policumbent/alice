@@ -7,11 +7,12 @@ import PropTypes from 'prop-types'
 import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
-import dataService from '../../api'
+import { default as api } from '../../api'
+import { parseDate } from '../../utils'
+
 const propTypes = {
   children: PropTypes.node,
 }
-
 const defaultProps = {}
 const brandFull = { src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }
 const brandMinimized = {
@@ -22,6 +23,20 @@ const brandMinimized = {
 }
 
 class DefaultHeader extends Component {
+  constructor() {
+    super()
+    this.state = { bike: '', show: false }
+  }
+
+  componentDidMount() {
+    api.getConfig(data =>
+      this.setState({
+        bike: data.bikeName,
+        show: parseDate(data.date, data.startTime) < Date.now(),
+      })
+    )
+  }
+
   render() {
     const {
       children,
@@ -39,11 +54,17 @@ class DefaultHeader extends Component {
         </Nav>
         {/* <AppSidebarToggler className="d-lg-none" display="md" mobile /> */}
         <AppNavbarBrand
-          style={{ position: `absolute`, left: `50%`, marginLeft: `-77.5px` }}
+          className="logo"
           full={brandFull}
           minimized={brandMinimized}
         />
         <Nav className="ml-auto" navbar>
+          <NavItem className="px-3 blink">
+            <div>
+              {this.state.show ? this.state.bike + ' on the road' : null}
+            </div>
+          </NavItem>
+
           <NavItem className="px-3">
             <Link to="/credits" className="nav-link">
               Credits
@@ -51,10 +72,10 @@ class DefaultHeader extends Component {
           </NavItem>
           <NavItem className="px-3">
             <Link
-              to={dataService.isLogged() ? '/logout' : '/login'}
+              to={api.isLogged() ? '/logout' : '/login'}
               className="nav-link"
             >
-              {dataService.isLogged() ? 'Logout' : 'Login'}
+              {api.isLogged() ? 'Logout' : 'Login'}
             </Link>
           </NavItem>
         </Nav>

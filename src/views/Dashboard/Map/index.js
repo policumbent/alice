@@ -2,13 +2,12 @@ import LeafletMap from './LeafletMap'
 import marker from './assets/taurus_icon.png'
 import L from 'leaflet'
 
-
 const options = {
   view: {
     position: [40.433212, -117.053714],
     zoom: 12,
   },
-  style: { height: '50vh' },
+  style: { height: 'inherit' },
   tile: {
     url:
       'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=5adf6850b4034fb3a71eff6eeab5d818',

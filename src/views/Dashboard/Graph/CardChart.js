@@ -15,45 +15,37 @@ import {
 const CardChart = ({ state, type, data, history, opts }) => {
   const [line, setLine] = useState(state)
 
-  const updateHistory = useCallback(() => {
-    let newLine = { ...line }
-    newLine.datasets[0].data.push(...history[type])
-    setLine(newLine)
-  }, [line, history, type])
+  // const updateHistory = useCallback(() => {
+  //   let newLine = { ...line }
+  //   newLine.datasets[0].data.push(...history[type])
+  //   setLine(newLine)
+  // }, [line, history, type])
 
   const updateLine = useCallback(() => {
-    let oldDataSet = { ...line.datasets[0] }
-    let labels = [...line.labels]
-    let newData = []
+    let value = data[type] === -1 ? null : data[type]
 
-    for (let x = 1; x < labels.length; x++) {
-      let value = oldDataSet.data[x]
+    if (value !== null) {
+      let oldDataSet = { ...line.datasets[0] }
+      let newData = [...oldDataSet.data.slice(1)]
 
-      if (value !== undefined) {
-        newData.push(value)
-      } else {
-        newData.unshift(value)
-      }
+      newData.push(value)
+
+      setLine(l => {
+        return {
+          ...l,
+          datasets: [
+            {
+              ...oldDataSet,
+              data: newData,
+            },
+          ],
+        }
+      })
     }
-
-    labels.shift()
-    labels.push('')
-
-    let value = data[type] === -1 ? 0 : data[type];
-    newData.push(value)
-    setLine({
-      ...line,
-      datasets: [
-        {
-          ...oldDataSet,
-          data: newData,
-        },
-      ],
-    })
-  }, [line, type, data])
+  }, [line.datasets, type, data])
 
   useEffect(() => {
-    updateHistory()
+    // updateHistory()
     // eslint-disable-next-line
   }, [history])
 

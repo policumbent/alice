@@ -10,14 +10,44 @@
 // Import Main styles for this application
 @import './scss/style.scss';
 
-.fixed {
+.fixed-footer-custom {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   z-index: 99999;
+  height: 55px;
+  line-height: 1;
+  font-size: 1.05em;
 }
 
-.margin-top-footer{
-  padding-top: 40px;
+.logo {
+  position: absolute;
+  left: 50%;
+  margin-left: -77.5px;
+
+  @media only screen and (max-width: 350px) {
+    img {
+      display: none;
+    }
+  }
+}
+
+.blink {
+  animation: blinker 2.5s linear infinite;
+
+  color: red;
+  font-weight: bold;
+  font-size: 1.1em;
+  // right: 50%;
+
+  @media only screen and (max-width: 760px) {
+    display: none;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }

@@ -12,14 +12,26 @@ import {
   Label,
   Input,
 } from 'reactstrap'
-
+import { useHistory } from 'react-router-dom'
 import { FaSignInAlt } from 'react-icons/fa'
-import dataService from '../../api'
+
+import { default as api } from '../../api'
 
 const Login = () => {
-  const [username] = useState('')
-  const [password] = useState('')
-  const handleText = () => console.log(username)
+  const history = useHistory()
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleUsername = event => setUsername(event.target.value)
+  const handlePassword = event => setPassword(event.target.value)
+
+  const handleClick = () => {
+    api.login(username, password)
+
+    setTimeout(() => history.push('/'), 1000)
+  }
+
   return (
     <article>
       <Row>
@@ -46,7 +58,7 @@ const Login = () => {
                       name="username"
                       placeholder="Username"
                       value={username}
-                      onChange={handleText}
+                      onChange={handleUsername}
                     />
                   </Col>
                 </FormGroup>
@@ -60,7 +72,7 @@ const Login = () => {
                       type="password"
                       pattern="*"
                       placeholder="Password"
-                    // onChange={handleText}
+                      onChange={handlePassword}
                     />
                   </Col>
                 </FormGroup>
@@ -72,7 +84,7 @@ const Login = () => {
                 data-dismiss="alert"
                 size="sl"
                 color="success"
-                onClick={() => dataService.login(username, password)}
+                onClick={handleClick}
               >
                 <FaSignInAlt />
                 &ensp;Sign in

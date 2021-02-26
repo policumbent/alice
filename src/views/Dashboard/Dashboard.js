@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Countdown from 'react-countdown'
 import {
   Modal,
@@ -20,37 +20,51 @@ import {
   numElement,
 } from './Graph'
 import { LeafletMap, options } from './Map'
+import Extra from './Extra'
 
-import dataService from 'api'
 import { FiActivity } from 'react-icons/fi'
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
-import Extra from "./Extra";
 
-const useIsMounted = () => {
-  const isMounted = useRef(false)
+import { default as api } from 'api'
+import { parseDate, useIsMounted } from 'utils'
 
-  useEffect(() => {
-    isMounted.current = true
-    return () => (isMounted.current = false)
-  }, [])
-
-  return isMounted
+const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' }
+const defaultData = {
+  power: 0,
+  speed: 0,
+  cadence: 0,
+  heartrate: 0,
+  time: 0,
+  distance: 0,
+  gear: 0,
+  altitude: 0,
+}
+const defaultHistory = {
+  chart: { heartrate: [], power: [], cadence: [], speed: [] },
+  miniChart: { heartrate: [], power: [], cadence: [], speed: [] },
+}
+const defaultWeather = {
+  windSpeed: 0,
+  windDirection: 0,
+  temperature: 0,
+  pressure: 0,
 }
 
 const Dashboard = () => {
   const isMounted = useIsMounted()
-  const [data, setData] = useState({power: 0, speed: 0, cadence: 0, heartrate: 0, time: 0, distance: 0, gear: 0, altitude: 0})
-  const [config, setConfig] = useState({ bikeName: 'taurusx', trackName: 'bm' })
+
+  const [data, setData] = useState(defaultData)
+  const [config, setConfig] = useState(defaultConfig)
   const [startTime, setStartTime] = useState(0)
   const [modalOpen, setModalOpen] = useState(startTime > Date.now())
-  const [history, setHistory] = useState({
-    chart: { heartrate: [], power: [], cadence: [], speed: [] },
-    miniChart: { heartrate: [], power: [], cadence: [], speed: [] },
-  })
-  const [weather, setWeather] = useState({windSpeed: 0, windDirection: 0, temperature: 0, pressure: 0})
+  const [history, setHistory] = useState(defaultHistory)
+  const [weather, setWeather] = useState(defaultWeather)
   const [position, setPosition] = useState(options.view.position)
+
   const loading = data === undefined || history === undefined // || weather === undefined
+
+  // @TODO: Rimuovere history da `Dashboard`
   const updateHistory = useCallback(history => {
     // console.log(history);
     let param = ['heartrate', 'cadence', 'power', 'speed']
@@ -91,66 +105,64 @@ const Dashboard = () => {
   }, [])
 
   const updateData = useCallback(
-    data => {
+    d => {
       // console.log(data);
 
       if (isMounted.current) {
-        setData(data)
-        setPosition([parseFloat(data.latitude), parseFloat(data.longitude)])
+        setData(d)
+        setPosition([parseFloat(d.latitude), parseFloat(d.longitude)])
       }
     },
     [isMounted]
   )
-  function parseDate(date, time) {
-    date = date.split('-')
-    time = time.split(':')
-    return Date.UTC(date[0], date[1] - 1, date[2], time[0], time[1], time[2])
-  }
 
   const updateConfig = useCallback(
     data => {
-      if (isMounted.current) {
+      if (isMounted.current && data !== defaultData) {
+        let start = parseDate(data.date, data.startTime)
+
         setConfig(data)
-        const start = parseDate(data.date, data.startTime)
         setStartTime(start)
         setModalOpen(start > Date.now())
-        dataService.getHistory(data => updateHistory(data), data.bikeName);
-        dataService.getData(data => updateData(data), data.bikeName);
+
+        api.getHistory(data => updateHistory(data), data.bikeName)
+        api.getData(data => updateData(data), data.bikeName)
       }
-      console.log(data)
+      // console.log(data)
     },
+    // eslint-disable-next-line
     [isMounted]
   )
+
   const updateWeather = useCallback(
     data => {
       // console.log(data);
 
-      if (isMounted.current)
-        setWeather(data)
+      if (isMounted.current) setWeather(data)
     },
     [isMounted]
   )
 
+  // ciclo principale con le chiamate api
   useEffect(() => {
-    dataService.getConfig(data => updateConfig(data))
+    api.getConfig(data => updateConfig(data))
 
-    setInterval(
-      () => {
-        dataService.getData(data => updateData(data), config.bikeName);
-        dataService.getWeatherSingleStation(data => updateWeather(data), 1008);
-      },
-      1000
-    )
+    setInterval(() => {
+      api.getData(data => updateData(data), config.bikeName)
+      // api.getWeatherSingleStation(data => updateWeather(data), 1000)
+    }, 1000)
+    // eslint-disable-next-line
   }, [])
 
   const Loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
-)
+  )
 
   return loading ? (
     Loading
   ) : (
     <>
+      {/* Countdown per la live */}
       <Modal isOpen={modalOpen} className={'modal-info'}>
         <ModalHeader className="text-dark bg-yellow">
           La diretta live inizierà tra:
@@ -161,6 +173,8 @@ const Dashboard = () => {
           </Countdown>
         </ModalBody>
       </Modal>
+
+      {/* Row dei mini chart */}
       <Row>
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-info">
@@ -168,7 +182,9 @@ const Dashboard = () => {
               <ButtonGroup id="card1" className="float-right">
                 <FaSpaceShuttle size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{data.power === -1 ? 'Reserved': data.power}</div>
+              <div className="text-value">
+                {data.power === -1 ? 'Reserved' : data.power}
+              </div>
               <div>Power [W]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -198,7 +214,9 @@ const Dashboard = () => {
               <ButtonGroup id="card3" className="float-right">
                 <GiSpeedometer size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{Math.round(data.speed*100)/100}</div>
+              <div className="text-value">
+                {Math.round(data.speed * 100) / 100}
+              </div>
               <div>Speed [km/h]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -213,7 +231,9 @@ const Dashboard = () => {
               <ButtonGroup id="card4" className="float-right">
                 <FiActivity size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{data.heartrate === -1 ? 'Reserved': data.heartrate}</div>
+              <div className="text-value">
+                {data.heartrate === -1 ? 'Reserved' : data.heartrate}
+              </div>
               <div>Heartrate [bpm]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -223,13 +243,14 @@ const Dashboard = () => {
         </Col>
       </Row>
 
+      {/* Row del main chart e mappa */}
       <Row>
         <Col>
           <Card>
             <CardBody>
               <div
                 className="chart-wrapper"
-                style={{ height: `50vh`, marginTop: 0 }}
+                style={{ height: `45vh`, marginTop: 0 }}
               >
                 <MainChart data={data} history={history.chart} />
               </div>
@@ -239,23 +260,29 @@ const Dashboard = () => {
         <Col>
           <Card>
             <CardBody>
-              <div className="Map">
-                <LeafletMap position={position} options={options} track={config.trackName}/>
+              <div className="Map" style={{ height: `45vh`, marginTop: 0 }}>
+                <LeafletMap
+                  position={position}
+                  options={options}
+                  track={config.trackName}
+                />
               </div>
             </CardBody>
           </Card>
         </Col>
       </Row>
 
-      {
+      {/* Row degli extra */}
+      <Row>
         <Extra
           showExtra={true}
-          gear={data.gear}
-          distance={data.distance}
-          time={data.time}
           altitude={data.altitude}
+          distance={data.distance}
+          gear={data.gear}
+          time={data.time}
           weather={weather}
-        />}
+        />
+      </Row>
     </>
   )
 }
