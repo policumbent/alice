@@ -12,11 +12,7 @@ const numCardElement = 50
 
 // Main Chart
 
-let label = []
-
-for (let i = 0; i < numElement; i++) {
-  label.push('')
-}
+let label = Array(numElement).fill('')
 
 const mainChartOpts = {
   tooltips: {
@@ -83,7 +79,7 @@ const mainChartData = {
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
       hidden: true,
-      data: [],
+      data: Array(numElement + 1).fill(null),
     },
     {
       label: 'Cadence',
@@ -92,7 +88,7 @@ const mainChartData = {
       borderColor: brandSuccess,
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
-      data: [],
+      data: Array(numElement + 1).fill(null),
     },
     {
       label: 'Speed',
@@ -102,7 +98,7 @@ const mainChartData = {
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
       //borderDash: [8, 5],
-      data: [],
+      data: Array(numElement + 1).fill(null),
     },
     {
       label: 'Heartrate',
@@ -112,19 +108,14 @@ const mainChartData = {
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
       hidden: true,
-      data: [],
+      data: Array(numElement + 1).fill(null),
     },
   ],
 }
 
 // Card Charts
 
-let miniLabel = []
-
-// lascio per caricare lo storico
-for (let i = 0; i < numCardElement; i++) {
-  miniLabel.push('')
-}
+let miniLabel = Array(numCardElement).fill('')
 
 // Power
 const cardChartData1 = {
@@ -133,7 +124,7 @@ const cardChartData1 = {
     {
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
-      data: [],
+      data: Array(numCardElement).fill(null),
     },
   ],
 }
@@ -184,7 +175,7 @@ const cardChartData2 = {
     {
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
-      data: [],
+      data: Array(numCardElement).fill(null),
     },
   ],
 }
@@ -235,7 +226,7 @@ const cardChartData3 = {
     {
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
-      data: [],
+      data: Array(numCardElement).fill(null),
     },
   ],
 }
@@ -286,7 +277,7 @@ const cardChartData4 = {
     {
       backgroundColor: 'rgba(255,255,255,.2)',
       borderColor: 'rgba(255,255,255,.55)',
-      data: [],
+      data: Array(numCardElement + 1).fill(null),
     },
   ],
 }

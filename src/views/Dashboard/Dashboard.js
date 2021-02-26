@@ -105,12 +105,12 @@ const Dashboard = () => {
   }, [])
 
   const updateData = useCallback(
-    data => {
+    d => {
       // console.log(data);
 
       if (isMounted.current) {
-        setData(data)
-        setPosition([parseFloat(data.latitude), parseFloat(data.longitude)])
+        setData(d)
+        setPosition([parseFloat(d.latitude), parseFloat(d.longitude)])
       }
     },
     [isMounted]
@@ -133,6 +133,7 @@ const Dashboard = () => {
     // eslint-disable-next-line
     [isMounted]
   )
+
   const updateWeather = useCallback(
     data => {
       // console.log(data);
@@ -148,7 +149,7 @@ const Dashboard = () => {
 
     setInterval(() => {
       api.getData(data => updateData(data), config.bikeName)
-      api.getWeatherSingleStation(data => updateWeather(data), 1008)
+      // api.getWeatherSingleStation(data => updateWeather(data), 1000)
     }, 1000)
     // eslint-disable-next-line
   }, [])

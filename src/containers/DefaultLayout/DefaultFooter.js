@@ -14,7 +14,7 @@ const DefaultFooter = () => {
   const [comments, setComments] = useState('')
   const [move, setMove] = useState(true)
 
-  const getPhrase = rawData => {
+  const getPhrase = useCallback(rawData => {
     let result = []
     // questo è il carattere ASCII 255:
     // https://theasciicode.com.ar/extended-ascii-code/non-breaking-space-no-break-space-ascii-code-255.html
@@ -39,7 +39,7 @@ const DefaultFooter = () => {
     result.push(whiteSpace.repeat(50))
 
     setComments(result)
-  }
+  }, [])
 
   const moveOption = useCallback(
     event => {

@@ -113,16 +113,15 @@ const dataService = {
 
   // ritorna l'ultimo dato meteo di una specifica stazione
   getWeatherSingleStation: function(cb: any, id: number) {
-    // socket.on('weather_response', weather => cb(JSON.parse(weather)))
-    // const url = `${host}/v3/weather/last/${id}`
-    // fetch(url, { method: 'GET', headers: dataService.getHeaders() })
-    //   .then(r => {
-    //     if (r.status === 200) return r
-    //     throw new Error('Network response was not ok')
-    //   })
-    //   .then(r => r.json())
-    //   .then(data => cb(data))
-    //   .catch(error => console.log(error))
+    const url = `${host}/v3/weather/last/${id}`
+    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+      .then(r => {
+        if (r.status === 200) return r
+        throw new Error('Network response was not ok')
+      })
+      .then(r => r.json())
+      .then(data => cb(data))
+      .catch(error => console.log(error))
   },
 
   getComments: function(cb: any) {
