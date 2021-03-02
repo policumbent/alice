@@ -18,7 +18,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://gabelluardo.github.io"><img src="https://avatars.githubusercontent.com/u/42920247?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriele Belluardo</b></sub></a><br /><a href="https://github.com/policumbent/alice/commits?author=gabelluardo" title="Code">💻</a> <a href="https://github.com/policumbent/alice/commits?author=gabelluardo" title="Documentation">📖</a> <a href="#ideas-gabelluardo" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/gabelluardo"><img src="https://avatars.githubusercontent.com/u/42920247?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriele Belluardo</b></sub></a><br /><a href="https://github.com/policumbent/alice/commits?author=gabelluardo" title="Code">💻</a> <a href="https://github.com/policumbent/alice/commits?author=gabelluardo" title="Documentation">📖</a> <a href="#ideas-gabelluardo" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/stelosca96"><img src="https://avatars.githubusercontent.com/u/44433696?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stefano Loscalzo</b></sub></a><br /><a href="https://github.com/policumbent/alice/commits?author=stelosca96" title="Code">💻</a> <a href="#design-stelosca96" title="Design">🎨</a> <a href="#ideas-stelosca96" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
