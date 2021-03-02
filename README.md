@@ -32,4 +32,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## License
 
-[Apache 2.0](https://github.com/policumbent/alice)
+[Apache 2.0](https://github.com/policumbent/alice/blob/master/LICENSE)
