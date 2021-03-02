@@ -9,10 +9,6 @@ WebApp pubblica per seguire live le run del team [Policumbent](https://www.polic
 
 :rocket: Live [qui](https://www.policumbent.it/alice)
 
-## License
-
-[Apache 2.0](https://github.com/policumbent/alice)
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -32,3 +28,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## License
+
+[Apache 2.0](https://github.com/policumbent/alice)
