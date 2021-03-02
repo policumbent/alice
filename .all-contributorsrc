@@ -6,6 +6,17 @@
   "commit": false,
   "contributors": [
     {
+      "login": "gabelluardo",
+      "name": "Gabriele Belluardo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42920247?v=4",
+      "profile": "https://gabelluardo.github.io",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
+    },
+    {
       "login": "stelosca96",
       "name": "Stefano Loscalzo",
       "avatar_url": "https://avatars.githubusercontent.com/u/44433696?v=4",
