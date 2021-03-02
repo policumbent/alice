@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "gabelluardo",
+      "name": "Gabriele Belluardo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42920247?v=4",
+      "profile": "https://gabelluardo.github.io",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "alice",
+  "projectOwner": "policumbent",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
