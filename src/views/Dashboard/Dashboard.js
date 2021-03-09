@@ -62,7 +62,7 @@ const Dashboard = () => {
   const [weather, setWeather] = useState(defaultWeather)
   const [position, setPosition] = useState(options.view.position)
 
-  const loading = data === undefined || history === undefined // || weather === undefined
+  const loading = data === undefined || history === undefined || weather === undefined
 
   // @TODO: Rimuovere history da `Dashboard`
   const updateHistory = useCallback(history => {
@@ -149,7 +149,7 @@ const Dashboard = () => {
 
     setInterval(() => {
       api.getData(data => updateData(data), config.bikeName)
-      // api.getWeatherSingleStation(data => updateWeather(data), 1000)
+      api.getWeatherSingleStation(data => updateWeather(data), 3)
     }, 1000)
     // eslint-disable-next-line
   }, [])

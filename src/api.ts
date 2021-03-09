@@ -115,7 +115,6 @@ const dataService = {
 
   // ritorna una lista con l'ultimo dato meteo di ogni stazione
   getWeather: function(cb: any) {
-    // socket.on('weather_response', weather => cb(JSON.parse(weather)))
     const url = `${host}/v3/weather/last`
     fetch(url, { method: 'GET', headers: dataService.getHeaders() })
       .then(r => r.json())
