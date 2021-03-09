@@ -33,7 +33,7 @@ const Login = () => {
   }
 
   return (
-    <article>
+    <article className="animated fadeIn">
       <Row>
         <Col className="mx-auto" xs="7" xl="4">
           <Card>

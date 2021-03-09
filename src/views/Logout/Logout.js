@@ -11,7 +11,7 @@ const Logout = () => {
     api.removeJwt()
 
     setTimeout(() => history.push('/'), 1000)
-  }, [])
+  }, [history])
 
   return (
     <article>
