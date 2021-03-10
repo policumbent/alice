@@ -41,8 +41,8 @@ const defaultData = {
   altitude: 0,
 }
 const defaultHistory = {
-  chart: { heartrate: [], power: [], cadence: [], speed: [] },
-  miniChart: { heartrate: [], power: [], cadence: [], speed: [] },
+  chart: [],
+  miniChart: [],
 }
 const defaultWeather = {
   windSpeed: 0,
@@ -62,52 +62,23 @@ const Dashboard = () => {
   const [weather, setWeather] = useState(defaultWeather)
   const [position, setPosition] = useState(options.view.position)
 
-  const loading = data === undefined || history === undefined || weather === undefined
+  const loading = data === defaultData || history === defaultHistory
 
-  // @TODO: Rimuovere history da `Dashboard`
   const updateHistory = useCallback(history => {
-    // console.log(history);
-    let param = ['heartrate', 'cadence', 'power', 'speed']
-    let chart = {
-      heartrate: [],
-      cadence: [],
-      power: [],
-      speed: [],
-    }
-    let miniChart = {
-      heartrate: [],
-      cadence: [],
-      power: [],
-      speed: [],
-    }
-    let rev_history = history.reverse()
-    let list = rev_history.slice(0, numElement)
-    let miniList = rev_history.slice(0, numCardElement)
+    console.log(history)
+    let chart = history.map(e => ({
+      heartrate: e.heartrate,
+      cadence: e.cadence,
+      power: e.power,
+      speed: e.speed,
+    }))
+    let miniChart = chart.slice(numCardElement, chart.length - numCardElement)
 
-    list.reverse()
-    miniList.reverse()
-
-    for (let i = 0; i < list.length && i < numElement; i++) {
-      for (let j = 0; j < param.length; j++) {
-        chart[param[j]].push(list[i][param[j]])
-        if (i < numCardElement) {
-          miniChart[param[j]].push(miniList[i][param[j]])
-        }
-      }
-    }
-
-    let newHistory = {
-      chart: chart,
-      miniChart: miniChart,
-    }
-
-    setHistory(newHistory)
+    setHistory({ chart, miniChart })
   }, [])
 
   const updateData = useCallback(
     d => {
-      // console.log(data);
-
       if (isMounted.current) {
         setData(d)
         setPosition([parseFloat(d.latitude), parseFloat(d.longitude)])
@@ -125,10 +96,9 @@ const Dashboard = () => {
         setStartTime(start)
         setModalOpen(start > Date.now())
 
-        api.getHistory(data => updateHistory(data), data.bikeName)
+        api.getHistory(data => updateHistory(data), data.bikeName, numElement)
         api.getData(data => updateData(data), data.bikeName)
       }
-      // console.log(data)
     },
     // eslint-disable-next-line
     [isMounted]
@@ -136,9 +106,9 @@ const Dashboard = () => {
 
   const updateWeather = useCallback(
     data => {
-      // console.log(data);
-
-      if (isMounted.current) setWeather(data)
+      if (isMounted.current) {
+        setWeather(data)
+      }
     },
     [isMounted]
   )
@@ -161,7 +131,7 @@ const Dashboard = () => {
   return loading ? (
     Loading
   ) : (
-    <>
+    <article className="animated fadeIn">
       {/* Countdown per la live */}
       <Modal isOpen={modalOpen} className={'modal-info'}>
         <ModalHeader className="text-dark bg-yellow">
@@ -283,7 +253,7 @@ const Dashboard = () => {
           weather={weather}
         />
       </Row>
-    </>
+    </article>
   )
 }
 

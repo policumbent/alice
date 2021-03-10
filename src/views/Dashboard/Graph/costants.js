@@ -7,7 +7,8 @@ const brandInfo = getStyle('--info')
 const brandWarning = getStyle('--warning')
 const brandDanger = getStyle('--danger')
 
-const numElement = 200
+// TODO: change `numElement` to 200
+const numElement = 150
 const numCardElement = 50
 
 // Main Chart
@@ -148,7 +149,7 @@ const cardChartOpts1 = {
         display: false,
         ticks: {
           beginAtZero: true,
-          max: 450,
+          max: 500,
         },
       },
     ],

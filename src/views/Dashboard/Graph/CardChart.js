@@ -11,18 +11,23 @@ import {
   cardChartOpts3,
   cardChartOpts4,
 } from './costants'
+import { filterReserved } from '../../../utils'
 
 const CardChart = ({ state, type, data, history, opts }) => {
-  const [line, setLine] = useState(state)
+  const initValue = {
+    ...state,
+    datasets: [
+      {
+        ...state.datasets[0],
+        data: history.map(e => filterReserved(e[type])),
+      },
+    ],
+  }
 
-  // const updateHistory = useCallback(() => {
-  //   let newLine = { ...line }
-  //   newLine.datasets[0].data.push(...history[type])
-  //   setLine(newLine)
-  // }, [line, history, type])
+  const [line, setLine] = useState(initValue)
 
   const updateLine = useCallback(() => {
-    let value = data[type] === -1 ? null : data[type]
+    let value = filterReserved(data[type])
 
     if (value !== null) {
       let oldDataSet = { ...line.datasets[0] }
@@ -43,11 +48,6 @@ const CardChart = ({ state, type, data, history, opts }) => {
       })
     }
   }, [line.datasets, type, data])
-
-  useEffect(() => {
-    // updateHistory()
-    // eslint-disable-next-line
-  }, [history])
 
   useEffect(() => {
     updateLine()

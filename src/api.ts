@@ -1,7 +1,4 @@
-// const poliServer = 'https://poliserverbeta.duckdns.org:9002'
 const host = 'https://poliserver.duckdns.org:9002'
-// const username = process.env.REACT_APP_USER
-// const password = process.env.REACT_APP_PASS
 
 const dataService = {
   isLogged: function(): boolean {
@@ -87,8 +84,8 @@ const dataService = {
       .catch(error => console.log(error))
   },
 
-  getHistory: function(cb: any, bike: string) {
-    const url = `${host}/v3/activities/last/${bike}?n=60`
+  getHistory: function(cb: any, bike: string, len: number) {
+    const url = `${host}/v3/activities/last/${bike}?n=${len}`
 
     fetch(url, { method: 'GET', headers: dataService.getHeaders() })
       .then(r => {
@@ -128,7 +125,7 @@ const dataService = {
     fetch(url, { method: 'GET', headers: dataService.getHeaders() })
       .then(r => {
         if (r.status === 200) return r
-        throw new Error('Network response was not ok')
+        throw new Error('Access denied to weather api')
       })
       .then(r => r.json())
       .then(data => cb(data))

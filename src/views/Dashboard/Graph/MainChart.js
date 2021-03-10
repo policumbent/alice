@@ -2,21 +2,28 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Line } from 'react-chartjs-2'
 
 import { mainChartData, mainChartOpts } from './costants'
+import { filterReserved } from '../../../utils'
 
 const MainChart = ({ data, history }) => {
-  const [state, setState] = useState(mainChartData)
+  const initValue = () => {
+    let s = mainChartData
+    let power = history.map(e => filterReserved(e.power))
+    let cadence = history.map(e => e.cadence)
+    let speed = history.map(e => e.speed)
+    let heartrate = history.map(e => filterReserved(e.heartrate))
 
-  // const updateHistory = useCallback(() => {
-  //   let newState = { ...state }
-  //   let datasets = newState.datasets
+    return {
+      ...s,
+      datasets: [
+        { ...s.datasets[0], data: [...power] },
+        { ...s.datasets[1], data: [...cadence] },
+        { ...s.datasets[2], data: [...speed] },
+        { ...s.datasets[3], data: [...heartrate] },
+      ],
+    }
+  }
 
-  //   datasets[0].data.push(...history.power)
-  //   datasets[1].data.push(...history.cadence)
-  //   datasets[2].data.push(...history.speed)
-  //   datasets[3].data.push(...history.heartrate)
-
-  //   setState(newState)
-  // }, [history])
+  const [state, setState] = useState(initValue)
 
   const updateData = useCallback(() => {
     let oldDataSet1 = state.datasets[0]
@@ -33,10 +40,10 @@ const MainChart = ({ data, history }) => {
     let newData3 = [...oldDataSet3.data.slice(1)]
     let newData4 = [...oldDataSet4.data.slice(1)]
 
-    newData1.push(data.power === -1 ? 0 : data.power)
+    newData1.push(filterReserved(data.power))
     newData2.push(data.cadence)
     newData3.push(data.speed)
-    newData4.push(data.heartrate === -1 ? 0 : data.heartrate)
+    newData4.push(filterReserved(data.heartrate))
 
     setState(s => {
       return {
@@ -62,11 +69,6 @@ const MainChart = ({ data, history }) => {
       }
     })
   }, [state.datasets, data])
-
-  useEffect(() => {
-    // updateHistory()
-    // eslint-disable-next-line
-  }, [history])
 
   useEffect(() => {
     updateData()
