@@ -6,8 +6,7 @@
   "extends": [
     "react-app",
     "plugin:jsx-a11y/recommended",
-    "prettier",
-    "prettier/react"
+    "prettier"
   ],
   "globals": {
     "__PATH_PREFIX__": true
