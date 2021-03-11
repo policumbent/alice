@@ -14,14 +14,14 @@ const DefaultFooter = () => {
   const [comments, setComments] = useState('')
   const [move, setMove] = useState(true)
 
-  const getPhrase = useCallback(rawData => {
+  const getPhrase = useCallback((rawData) => {
     let result = []
     // questo è il carattere ASCII 255:
     // https://theasciicode.com.ar/extended-ascii-code/non-breaking-space-no-break-space-ascii-code-255.html
     const whiteSpace = ' '
     const betweenSeparator = `${whiteSpace.repeat(2)}|${whiteSpace.repeat(2)}`
 
-    rawData.forEach(comment => {
+    rawData.forEach((comment) => {
       const timestamp = parseDateTime(comment.timestamp)
       // lista in ordine cronologico
       let separator =
@@ -42,7 +42,7 @@ const DefaultFooter = () => {
   }, [])
 
   const moveOption = useCallback(
-    event => {
+    (event) => {
       switch (event) {
         case 'over':
           setMove(false)
@@ -63,14 +63,14 @@ const DefaultFooter = () => {
   // 30 secs polling on comments api
   const commentsPolling = () => {
     setInterval(
-      () => dataService.getComments(data => getPhrase(data)),
+      () => dataService.getComments((data) => getPhrase(data)),
       30 * 1000
     )
   }
 
   useEffect(() => {
     // inizializza comments
-    dataService.getComments(data => getPhrase(data))
+    dataService.getComments((data) => getPhrase(data))
     commentsPolling()
     // eslint-disable-next-line
   }, [])
@@ -80,6 +80,7 @@ const DefaultFooter = () => {
       {comments === '' ? null : (
         <div
           className="ml-auto mr-auto noselect"
+          onFocus={() => moveOption('over')}
           onMouseOver={() => moveOption('over')}
           onMouseLeave={() => moveOption('leave')}
           onTouchStart={() => moveOption('touch')}

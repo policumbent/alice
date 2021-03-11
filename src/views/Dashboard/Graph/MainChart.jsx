@@ -7,10 +7,10 @@ import { filterReserved } from '../../../utils'
 const MainChart = ({ data, history }) => {
   const initValue = () => {
     let s = mainChartData
-    let power = history.map(e => filterReserved(e.power))
-    let cadence = history.map(e => e.cadence)
-    let speed = history.map(e => e.speed)
-    let heartrate = history.map(e => filterReserved(e.heartrate))
+    let power = history.map((e) => filterReserved(e.power))
+    let cadence = history.map((e) => e.cadence)
+    let speed = history.map((e) => e.speed)
+    let heartrate = history.map((e) => filterReserved(e.heartrate))
 
     return {
       ...s,
@@ -45,7 +45,7 @@ const MainChart = ({ data, history }) => {
     newData3.push(data.speed)
     newData4.push(filterReserved(data.heartrate))
 
-    setState(s => {
+    setState((s) => {
       return {
         ...s,
         datasets: [

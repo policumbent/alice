@@ -23,7 +23,7 @@ const mainChartOpts = {
     mode: 'index',
     position: 'nearest',
     callbacks: {
-      labelColor: function(tooltipItem, chart) {
+      labelColor: function (tooltipItem, chart) {
         return {
           backgroundColor:
             chart.data.datasets[tooltipItem.datasetIndex].borderColor,

@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 
-const filterReserved = value => (value === -1 ? null : value)
+const filterReserved = (value) => (value === -1 ? null : value)
 
 const parseDate = (date, time) => {
   date = date.split('-')
@@ -8,7 +8,7 @@ const parseDate = (date, time) => {
   return Date.UTC(date[0], date[1] - 1, date[2], time[0], time[1], time[2])
 }
 
-const parseDateTime = dateTime => {
+const parseDateTime = (dateTime) => {
   dateTime = dateTime.split(/[-: ]+/)
   return new Date(
     Date.UTC(

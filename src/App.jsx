@@ -12,7 +12,7 @@ const loading = () => (
 
 // Containers
 const DefaultLayout = Loadable({
-  loader: () => import('./containers/DefaultLayout'),
+  loader: () => import('./containers/DefaultLayout/DefaultLayout'),
   loading,
 })
 

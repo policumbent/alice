@@ -1,7 +1,7 @@
 import React from 'react'
 import DefaultLayout from './containers/DefaultLayout'
 
-const Dashboard = React.lazy(() => import('./views/Dashboard'))
+const Dashboard = React.lazy(() => import('./views/Dashboard/Dashboard'))
 const Credits = React.lazy(() => import('./views/Credits'))
 const Login = React.lazy(() => import('./views/Login'))
 const Logout = React.lazy(() => import('./views/Logout'))

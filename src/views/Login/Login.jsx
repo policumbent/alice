@@ -23,8 +23,8 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleUsername = event => setUsername(event.target.value)
-  const handlePassword = event => setPassword(event.target.value)
+  const handleUsername = (event) => setUsername(event.target.value)
+  const handlePassword = (event) => setPassword(event.target.value)
 
   const handleClick = () => {
     api.login(username, password)

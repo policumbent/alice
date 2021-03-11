@@ -1,6 +1,6 @@
 {
-  "name": "Page500",
+  "name": "page500",
   "version": "0.0.0",
   "private": true,
-  "main": "./Page500.js"
+  "main": "./Page500.jsx"
 }

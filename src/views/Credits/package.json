@@ -1,6 +1,6 @@
 {
-  "name": "Credits",
+  "name": "credits",
   "version": "0.0.0",
   "private": true,
-  "main": "./Credits.js"
+  "main": "./Credits.jsx"
 }

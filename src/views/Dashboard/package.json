@@ -1,6 +1,6 @@
 {
-  "name": "Dashboard",
+  "name": "dashboard",
   "version": "0.0.0",
   "private": true,
-  "main": "./Dashboard.js"
+  "main": "./Dashboard.jsx"
 }

@@ -32,7 +32,7 @@ const Notifications = () => {
 
       // console.log(notes)
 
-      notes.forEach(n => {
+      notes.forEach((n) => {
         let note = {
           message: n.message,
           type: n.public ? 'info' : 'warning',

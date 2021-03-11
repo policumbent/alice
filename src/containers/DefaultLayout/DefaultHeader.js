@@ -29,7 +29,7 @@ class DefaultHeader extends Component {
   }
 
   componentDidMount() {
-    api.getConfig(data =>
+    api.getConfig((data) =>
       this.setState({
         bike: data.bikeName,
         show: parseDate(data.date, data.startTime) < Date.now(),

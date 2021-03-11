@@ -64,9 +64,9 @@ const Dashboard = () => {
 
   const loading = data === defaultData || history === defaultHistory
 
-  const updateHistory = useCallback(history => {
+  const updateHistory = useCallback((history) => {
     console.log(history)
-    let chart = history.map(e => ({
+    let chart = history.map((e) => ({
       heartrate: e.heartrate,
       cadence: e.cadence,
       power: e.power,
@@ -78,7 +78,7 @@ const Dashboard = () => {
   }, [])
 
   const updateData = useCallback(
-    d => {
+    (d) => {
       if (isMounted.current) {
         setData(d)
         setPosition([parseFloat(d.latitude), parseFloat(d.longitude)])
@@ -88,7 +88,7 @@ const Dashboard = () => {
   )
 
   const updateConfig = useCallback(
-    data => {
+    (data) => {
       if (isMounted.current && data !== defaultData) {
         let start = parseDate(data.date, data.startTime)
 
@@ -96,8 +96,8 @@ const Dashboard = () => {
         setStartTime(start)
         setModalOpen(start > Date.now())
 
-        api.getHistory(data => updateHistory(data), data.bikeName, numElement)
-        api.getData(data => updateData(data), data.bikeName)
+        api.getHistory((data) => updateHistory(data), data.bikeName, numElement)
+        api.getData((data) => updateData(data), data.bikeName)
       }
     },
     // eslint-disable-next-line
@@ -105,7 +105,7 @@ const Dashboard = () => {
   )
 
   const updateWeather = useCallback(
-    data => {
+    (data) => {
       if (isMounted.current) {
         setWeather(data)
       }
@@ -115,11 +115,11 @@ const Dashboard = () => {
 
   // ciclo principale con le chiamate api
   useEffect(() => {
-    api.getConfig(data => updateConfig(data))
+    api.getConfig((data) => updateConfig(data))
 
     setInterval(() => {
-      api.getData(data => updateData(data), config.bikeName)
-      api.getWeatherSingleStation(data => updateWeather(data), 3)
+      api.getData((data) => updateData(data), config.bikeName)
+      api.getWeatherSingleStation((data) => updateWeather(data), 3)
     }, 1000)
     // eslint-disable-next-line
   }, [])

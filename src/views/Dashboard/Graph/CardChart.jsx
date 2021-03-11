@@ -19,7 +19,7 @@ const CardChart = ({ state, type, data, history, opts }) => {
     datasets: [
       {
         ...state.datasets[0],
-        data: history.map(e => filterReserved(e[type])),
+        data: history.map((e) => filterReserved(e[type])),
       },
     ],
   }
@@ -35,7 +35,7 @@ const CardChart = ({ state, type, data, history, opts }) => {
 
       newData.push(value)
 
-      setLine(l => {
+      setLine((l) => {
         return {
           ...l,
           datasets: [
