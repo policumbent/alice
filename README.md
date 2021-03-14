@@ -5,9 +5,7 @@
 
 Analisi Live InterContinentale Edotta
 
-WebApp pubblica per seguire live le run del team [Policumbent](https://www.policumbent.it/)
-
-:rocket: Live [qui](https://www.policumbent.it/alice)
+Public PWA telemetry dashboard of [Team Policumbent](https://www.policumbent.it/) for runs and tests during [WHPSC](http://www.ihpva.org/whpsc/index.htm) competition
 
 ## Contributors ✨
 
