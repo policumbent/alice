@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import App from './App'
-import * as serviceWorker from './serviceWorker'
+import * as serviceWorker from './serviceWorkerRegister'
 
 ReactDOM.render(<App />, document.getElementById('root'))
 
