@@ -1,15 +1,21 @@
 {
-  "short_name": "MARTA",
-  "name": "policumbent marta",
+  "short_name": "ALICE",
+  "name": "Analisi Live InterContinentale Edotta",
+  "description": "Public PWA telemetry dashboard of Team Policumbent for runs and tests during WHPSC competition",
   "icons": [
     {
       "src": "/assets/img/favicon.png",
-      "sizes": "100x100",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/favicon.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
+  "start_url": "/",
+  "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }
