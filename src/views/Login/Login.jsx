@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <article className="animated fadeIn">
       <Row>
-        <Col className="mx-auto" xs="7" xl="4">
+        <Col className="mx-auto" xs="12" md="7" xl="4">
           <Card>
             <CardHeader>
               <h2 className="text-center">Login</h2>

@@ -4,7 +4,7 @@ import { Nav, NavItem } from 'reactstrap'
 import PropTypes from 'prop-types'
 
 // eslint-disable-next-line
-import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
+import { AppNavbarBrand } from '@coreui/react'
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import { default as api } from '../../api'
@@ -14,12 +14,12 @@ const propTypes = {
   children: PropTypes.node,
 }
 const defaultProps = {}
-const brandFull = { src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }
+const brandFull = { src: logo, width: 89, height: 25, alt: 'Policumbent Logo' }
 const brandMinimized = {
   src: sygnet,
   width: 30,
   height: 30,
-  alt: 'CoreUI Logo',
+  alt: 'Policumbent Logo',
 }
 
 class DefaultHeader extends Component {
@@ -59,13 +59,13 @@ class DefaultHeader extends Component {
           minimized={brandMinimized}
         />
         <Nav className="ml-auto" navbar>
-          <NavItem className="px-3 blink">
+          <NavItem className="px-2 blink">
             <div>
               {this.state.show ? this.state.bike + ' on the road' : null}
             </div>
           </NavItem>
 
-          <NavItem className="px-3">
+          <NavItem className="px-2">
             <Link to="/credits" className="nav-link">
               Credits
             </Link>
