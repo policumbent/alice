@@ -4,18 +4,17 @@
   "description": "Public PWA telemetry dashboard of Team Policumbent for runs and tests during WHPSC competition",
   "icons": [
     {
-      "src": "/assets/img/favicon.png",
+      "src": "/assets/img/icon-32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/assets/img/favicon.png",
+      "src": "/assets/img/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "start_url": "/",
-  "scope": "/",
+  "start_url": ".",
   "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
