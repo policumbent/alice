@@ -65,7 +65,6 @@ const Dashboard = () => {
   const loading = data === defaultData || history === defaultHistory
 
   const updateHistory = useCallback((history) => {
-    console.log(history)
     let chart = history.map((e) => ({
       heartrate: e.heartrate,
       cadence: e.cadence,
