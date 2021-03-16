@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
-import ReactNotification, { store } from 'react-notifications-component'
+import ReactNotification, {
+  ReactNotificationOptions,
+  store,
+} from 'react-notifications-component'
 import { default as api } from 'api'
 
 import 'react-notifications-component/dist/theme.css'
 import 'animate.css'
 
+interface Note extends ReactNotificationOptions {}
+
 // base note
-const base = {
-  type: 'info',
+const base: Note = {
   insert: 'top',
   container: 'top-right',
   animationIn: ['animated', 'fadeIn'],
@@ -30,15 +34,14 @@ const Notifications = () => {
     setInterval(async () => {
       let notes = await api.getNotifications(counter)
 
-      // console.log(notes)
-
-      notes.forEach((n) => {
-        let note = {
+      notes.forEach((n: any) => {
+        let note: Note = {
           message: n.message,
           type: n.public ? 'info' : 'warning',
           ...base,
         }
-        // TODO: Handle private notifications
+
+        // @todo Handle private notifications
 
         store.addNotification(note)
 
