@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2'
 import { mainChartData, mainChartOpts } from './costants'
 import { filterReserved } from '../../../utils'
 
-const MainChart = ({ data, history }) => {
+const MainChart = ({ data, history, isLogged }) => {
   const initValue = () => {
     let s = mainChartData
     let power = history.map((e) => filterReserved(e.power))
@@ -26,10 +26,10 @@ const MainChart = ({ data, history }) => {
   const [state, setState] = useState(initValue)
 
   const updateData = useCallback(() => {
-    let oldDataSet1 = state.datasets[0]
+    let oldDataSet1 = state.datasets[0] // Power
     let oldDataSet2 = state.datasets[1]
     let oldDataSet3 = state.datasets[2]
-    let oldDataSet4 = state.datasets[3]
+    let oldDataSet4 = state.datasets[3] // HR
 
     /*let time = Math.round(data.Minutes * 100 * 60) / 100;
     let minutes = Math.floor(time / 60);
@@ -44,6 +44,12 @@ const MainChart = ({ data, history }) => {
     newData2.push(data.cadence)
     newData3.push(data.speed)
     newData4.push(filterReserved(data.heartrate))
+
+    // Show power and hr if logged
+    if (filterReserved(data.power)) {
+      oldDataSet1.hidden = false
+      oldDataSet4.hidden = false
+    }
 
     setState((s) => {
       return {

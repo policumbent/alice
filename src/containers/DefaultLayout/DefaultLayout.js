@@ -4,23 +4,10 @@ import React, { Component, Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { Container } from 'reactstrap'
 
-import {
-  //  AppAside,
-  AppFooter,
-  AppHeader,
-  AppSidebar,
-  AppSidebarFooter,
-  AppSidebarForm,
-  AppSidebarHeader,
-  AppSidebarMinimizer,
-  AppSidebarNav,
-} from '@coreui/react'
-// sidebar nav config
-import navigation from '../../_nav'
+import { AppFooter, AppHeader } from '@coreui/react'
 // routes config
 import routes from '../../routes'
 
-//const DefaultAside = React.lazy(() => import("./DefaultAside"));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'))
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'))
 
@@ -42,43 +29,31 @@ class DefaultLayout extends Component {
             <DefaultHeader onLogout={(e) => this.signOut(e)} />
           </Suspense>
         </AppHeader>
-        <div className="app-body">
-          {/* <AppSidebar minimized fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
-            <Suspense>
-              <AppSidebarNav navConfig={navigation} {...this.props} />
+        <main className="main app-body">
+          <Container fluid className="main-container">
+            <Suspense fallback={this.loading()}>
+              <Switch>
+                {routes.map((route, idx) => {
+                  return route.component ? (
+                    <Route
+                      key={idx}
+                      path={route.path}
+                      exact={route.exact}
+                      name={route.name}
+                      render={(props) => <route.component {...props} />}
+                    />
+                  ) : null
+                })}
+                <Redirect from="/" to="/dashboard" />
+              </Switch>
             </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
-          </AppSidebar> */}
-          <main className="main">
-            <div style={{ marginBottom: `1.5rem` }} />
-            <Container fluid>
-              <Suspense fallback={this.loading()}>
-                <Switch>
-                  {routes.map((route, idx) => {
-                    return route.component ? (
-                      <Route
-                        key={idx}
-                        path={route.path}
-                        exact={route.exact}
-                        name={route.name}
-                        render={(props) => <route.component {...props} />}
-                      />
-                    ) : null
-                  })}
-                  <Redirect from="/" to="/dashboard" />
-                </Switch>
-              </Suspense>
-            </Container>
-          </main>
-        </div>
-        <div className="app-footer-custom fixed-footer-custom">
+          </Container>
+        </main>
+        <footer className="app-footer-custom fixed-footer-custom">
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>
-        </div>
+        </footer>
       </div>
     )
   }

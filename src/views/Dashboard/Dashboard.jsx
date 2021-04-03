@@ -217,10 +217,7 @@ const Dashboard = () => {
         <Col>
           <Card>
             <CardBody>
-              <div
-                className="chart-wrapper"
-                style={{ height: `45vh`, marginTop: 0 }}
-              >
+              <div className="central-chart">
                 <MainChart data={data} history={history.chart} />
               </div>
             </CardBody>
@@ -229,7 +226,7 @@ const Dashboard = () => {
         <Col>
           <Card>
             <CardBody>
-              <div className="Map" style={{ height: `45vh`, marginTop: 0 }}>
+              <div className="central-chart">
                 <LeafletMap
                   position={position}
                   options={options}
