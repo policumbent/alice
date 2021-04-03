@@ -64,91 +64,91 @@ const dataService = {
 
   getHeaders: function (): Headers {
     let headers = new Headers()
-    if (dataService.isLogged())
-      headers.set('Authorization', 'Bearer ' + dataService.getJwt())
+    if (this.isLogged()) headers.set('Authorization', 'Bearer ' + this.getJwt())
     return headers
   },
 
   getBike: async function () {
     const url = `${host}/v3/alice/config`
 
-    return await fetch(url)
+    return fetch(url)
       .then((r) => {
         if (r.status === 200) return r
         throw new Error('Network response was not ok')
       })
       .then((r) => r.json())
-      .then((data) => {
-        return data
-      })
+      .then((data) => data)
       .catch((error) => console.log(error))
   },
 
-  getHistory: function (cb: any, bike: string, len: number) {
+  getHistory: async function (bike: string, len: number) {
     const url = `${host}/v3/activities/last/${bike}?n=${len}`
 
-    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+    return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
         if (r.status === 200) return r
         throw new Error('Network response was not ok')
       })
       .then((r) => r.json())
-      .then((data) => cb(data))
+      .then((data) => data)
       .catch((error) => console.log(error))
   },
 
-  getConfig: function (cb: any) {
+  getConfig: async function () {
     const url = `${host}/v3/alice/config`
 
-    fetch(url)
+    return fetch(url)
       .then((r) => {
         if (r.status === 200) return r
         throw new Error('Network response was not ok')
       })
       .then((r) => r.json())
-      .then((data) => cb(data))
+      .then((data) => data)
       .catch((error) => console.log(error))
   },
 
   // ritorna una lista con l'ultimo dato meteo di ogni stazione
-  getWeather: function (cb: any) {
+  getWeather: async function () {
     const url = `${host}/v3/weather/last`
-    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+
+    return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => r.json())
-      .then((data) => cb(data))
+      .then((data) => data)
       .catch((error) => console.log(error))
   },
 
   // ritorna l'ultimo dato meteo di una specifica stazione
-  getWeatherSingleStation: function (cb: any, id: number) {
+  getWeatherSingleStation: async function (id: number) {
     const url = `${host}/v3/weather/last/${id}`
-    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+
+    return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
         if (r.status === 200) return r
         throw new Error('Access denied to weather api')
       })
       .then((r) => r.json())
-      .then((data) => cb(data))
+      .then((data) => data)
       .catch((error) => console.log(error))
   },
 
-  getComments: function (cb: any) {
+  getComments: async function () {
     const url = `${host}/v3/alice/comments`
-    fetch(url)
+    return fetch(url)
       .then((comments) => comments.json())
-      .then((data) => cb(data))
+      .then((data) => data)
       .catch((error) => console.log(error))
   },
 
-  getData: function (cb: any, bike: string) {
+  getData: async function (bike: string) {
     const url = `${host}/v3/activities/last/${bike}`
-    fetch(url, { method: 'GET', headers: dataService.getHeaders() })
+
+    return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
         if (r.status === 200) return r
         throw new Error('Network response was not ok')
       })
       .then((r) => r.json())
-      .then((data) => cb(data[0]))
+      .then((data) => data[0])
       .catch((error) => console.log(error))
   },
 
@@ -157,7 +157,7 @@ const dataService = {
 
     return fetch(url, {
       method: 'GET',
-      headers: dataService.getHeaders(),
+      headers: this.getHeaders(),
     })
       .then((r) => {
         if (r.status === 200) return r

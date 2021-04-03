@@ -1,5 +1,3 @@
-import { useRef, useEffect } from 'react'
-
 const filterReserved = (value: number) => (value === -1 ? null : value)
 
 const parseDate = (date: string, time: string): number => {
@@ -16,18 +14,4 @@ const parseDateTime = (dateTime: string): Date => {
   return new Date(date)
 }
 
-const useIsMounted = () => {
-  const isMounted = useRef(false)
-
-  useEffect(() => {
-    isMounted.current = true
-
-    return () => {
-      isMounted.current = false
-    }
-  }, [])
-
-  return isMounted
-}
-
-export { parseDate, useIsMounted, parseDateTime, filterReserved }
+export { parseDate, parseDateTime, filterReserved }

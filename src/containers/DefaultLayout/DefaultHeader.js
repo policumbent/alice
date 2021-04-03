@@ -28,13 +28,13 @@ class DefaultHeader extends Component {
     this.state = { bike: '', show: false }
   }
 
-  componentDidMount() {
-    api.getConfig((data) =>
-      this.setState({
-        bike: data.bikeName,
-        show: parseDate(data.date, data.startTime) < Date.now(),
-      })
-    )
+  async componentDidMount() {
+    const data = await api.getConfig()
+
+    this.setState({
+      bike: data.bikeName,
+      show: parseDate(data.date, data.startTime) < Date.now(),
+    })
   }
 
   render() {

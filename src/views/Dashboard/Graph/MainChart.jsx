@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2'
 import { mainChartData, mainChartOpts } from './costants'
 import { filterReserved } from '../../../utils'
 
-const MainChart = ({ data, history, isLogged }) => {
+const MainChart = ({ data, history }) => {
   const initValue = () => {
     let s = mainChartData
     let power = history.map((e) => filterReserved(e.power))

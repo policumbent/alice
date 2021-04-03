@@ -60,17 +60,19 @@ const DefaultFooter = () => {
     [move]
   )
 
+  const fetchComments = async () => {
+    const c = await dataService.getComments()
+    getPhrase(c)
+  }
+
   // 30 secs polling on comments api
   const commentsPolling = () => {
-    setInterval(
-      () => dataService.getComments((data) => getPhrase(data)),
-      30 * 1000
-    )
+    setInterval(async () => fetchComments(), 30 * 1000)
   }
 
   useEffect(() => {
-    // inizializza comments
-    dataService.getComments((data) => getPhrase(data))
+    fetchComments()
+
     commentsPolling()
     // eslint-disable-next-line
   }, [])

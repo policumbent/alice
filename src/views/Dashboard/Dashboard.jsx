@@ -27,7 +27,8 @@ import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
 
 import { default as api } from 'api'
-import { parseDate, useIsMounted } from 'utils'
+import { parseDate } from 'utils'
+import useIsMountedRef from 'use-is-mounted-ref'
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' }
 const defaultData = {
@@ -52,7 +53,7 @@ const defaultWeather = {
 }
 
 const Dashboard = () => {
-  const isMounted = useIsMounted()
+  const isMounted = useIsMountedRef()
 
   const [data, setData] = useState(defaultData)
   const [config, setConfig] = useState(defaultConfig)
@@ -87,7 +88,7 @@ const Dashboard = () => {
   )
 
   const updateConfig = useCallback(
-    (data) => {
+    async (data) => {
       if (isMounted.current && data !== defaultData) {
         let start = parseDate(data.date, data.startTime)
 
@@ -95,8 +96,12 @@ const Dashboard = () => {
         setStartTime(start)
         setModalOpen(start > Date.now())
 
-        api.getHistory((data) => updateHistory(data), data.bikeName, numElement)
-        api.getData((data) => updateData(data), data.bikeName)
+        // NOTE: Placeholder, will be removed
+        const h = await api.getHistory(data.bikeName, numElement)
+        const d = await api.getData(data.bikeName)
+
+        updateHistory(h)
+        updateData(d)
       }
     },
     // eslint-disable-next-line
@@ -114,14 +119,35 @@ const Dashboard = () => {
 
   // ciclo principale con le chiamate api
   useEffect(() => {
-    api.getConfig((data) => updateConfig(data))
+    fetchInit()
+    dataPolling()
 
-    setInterval(() => {
-      api.getData((data) => updateData(data), config.bikeName)
-      api.getWeatherSingleStation((data) => updateWeather(data), 3)
-    }, 1000)
     // eslint-disable-next-line
   }, [])
+
+  const fetchInit = async () => {
+    const config = await api.getConfig()
+    updateConfig(config)
+    fetchData()
+  }
+
+  const fetchData = async () => {
+    const data = await api.getData(config.bikeName)
+    const weather = await api.getWeatherSingleStation(3)
+
+    updateData(data)
+
+    // NOTE: weather is private for non logged users
+    if (weather) {
+      updateWeather(weather)
+    } else {
+      console.log(weather)
+    }
+  }
+
+  const dataPolling = async () => {
+    setInterval(async () => fetchData(), 1000)
+  }
 
   const Loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
