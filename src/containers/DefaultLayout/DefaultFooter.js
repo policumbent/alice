@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import dataService from 'api'
 import Ticker from 'react-ticker'
-import { parseDateTime } from 'utils'
+import { parseDateTime, usePolling } from 'utils'
 
 const propTypes = {
   children: PropTypes.node,
@@ -66,14 +66,10 @@ const DefaultFooter = () => {
   }
 
   // 30 secs polling on comments api
-  const commentsPolling = () => {
-    setInterval(async () => fetchComments(), 30 * 1000)
-  }
+  usePolling(async () => fetchComments(), 30 * 1000)
 
   useEffect(() => {
     fetchComments()
-
-    commentsPolling()
     // eslint-disable-next-line
   }, [])
 

@@ -16,8 +16,8 @@ const dataService = {
         return false
       }
       return true
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      console.error(err)
 
       localStorage.removeItem('jwt')
       return false
@@ -59,7 +59,7 @@ const dataService = {
     })
       .then((data) => data.json())
       .then((data) => this.setJwt(data.token))
-      .catch((err) => console.log(err))
+      .catch((err) => console.error(err))
   },
 
   getHeaders: function (): Headers {
@@ -78,7 +78,7 @@ const dataService = {
       })
       .then((r) => r.json())
       .then((data) => data)
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   },
 
   getHistory: async function (bike: string, len: number) {
@@ -91,7 +91,7 @@ const dataService = {
       })
       .then((r) => r.json())
       .then((data) => data)
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   },
 
   getConfig: async function () {
@@ -104,7 +104,7 @@ const dataService = {
       })
       .then((r) => r.json())
       .then((data) => data)
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   },
 
   // ritorna una lista con l'ultimo dato meteo di ogni stazione
@@ -114,7 +114,7 @@ const dataService = {
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => r.json())
       .then((data) => data)
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   },
 
   // ritorna l'ultimo dato meteo di una specifica stazione
@@ -128,7 +128,7 @@ const dataService = {
       })
       .then((r) => r.json())
       .then((data) => data)
-      .catch((error) => console.log(error))
+      .catch((error) => {})
   },
 
   getComments: async function () {
@@ -136,7 +136,7 @@ const dataService = {
     return fetch(url)
       .then((comments) => comments.json())
       .then((data) => data)
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   },
 
   getData: async function (bike: string) {
@@ -149,7 +149,7 @@ const dataService = {
       })
       .then((r) => r.json())
       .then((data) => data[0])
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   },
 
   getNotifications: function (counter: number) {
@@ -165,7 +165,7 @@ const dataService = {
       })
       .then((r) => r.json())
       .then((data) => data.filter((n: any) => n.id >= counter))
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
   },
 }
 

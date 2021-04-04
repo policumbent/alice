@@ -11916,11 +11916,6 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-is-mounted-ref@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/use-is-mounted-ref/-/use-is-mounted-ref-1.3.1.tgz#d24f6b5bd1ebe67cf4601d4fe4c5f08a41f18867"
-  integrity sha512-adq7fiFyPBMheS9ks/m/ZBlXhtwxZ9/HwlTUDjzutYMKY9O2FVf24X4zmYGWMmZ3fLfl//ge2pDVwMZPLfI90Q==
-
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"

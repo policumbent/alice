@@ -1,3 +1,5 @@
+import { useRef, useEffect } from 'react'
+
 const filterReserved = (value: number) => (value === -1 ? null : value)
 
 const parseDate = (date: string, time: string): number => {
@@ -14,4 +16,30 @@ const parseDateTime = (dateTime: string): Date => {
   return new Date(date)
 }
 
-export { parseDate, parseDateTime, filterReserved }
+const useIsMounted = (): { current: boolean } => {
+  const isMounted = useRef(false)
+
+  useEffect(() => {
+    isMounted.current = true
+
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
+
+  return isMounted
+}
+
+const usePolling = (call: Function, time: number) => {
+  const intervalId = useRef(0)
+
+  useEffect(() => {
+    intervalId.current = setInterval(call, time)
+    return () => {
+      clearInterval(intervalId.current)
+    }
+    // eslint-disable-next-line
+  }, [])
+}
+
+export { parseDate, parseDateTime, filterReserved, useIsMounted, usePolling }

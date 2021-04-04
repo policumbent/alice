@@ -27,8 +27,7 @@ import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
 import { FaSpaceShuttle } from 'react-icons/fa'
 
 import { default as api } from 'api'
-import { parseDate } from 'utils'
-import useIsMountedRef from 'use-is-mounted-ref'
+import { parseDate, useIsMounted, usePolling } from 'utils'
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' }
 const defaultData = {
@@ -53,7 +52,7 @@ const defaultWeather = {
 }
 
 const Dashboard = () => {
-  const isMounted = useIsMountedRef()
+  const isMounted = useIsMounted()
 
   const [data, setData] = useState(defaultData)
   const [config, setConfig] = useState(defaultConfig)
@@ -90,7 +89,7 @@ const Dashboard = () => {
   const updateConfig = useCallback(
     async (data) => {
       if (isMounted.current && data !== defaultData) {
-        let start = parseDate(data.date, data.startTime)
+        const start = parseDate(data.date, data.startTime)
 
         setConfig(data)
         setStartTime(start)
@@ -117,11 +116,11 @@ const Dashboard = () => {
     [isMounted]
   )
 
-  // ciclo principale con le chiamate api
+  usePolling(async () => fetchData(), 1000)
+
+  // api call after component is mounted
   useEffect(() => {
     fetchInit()
-    dataPolling()
-
     // eslint-disable-next-line
   }, [])
 
@@ -140,13 +139,7 @@ const Dashboard = () => {
     // NOTE: weather is private for non logged users
     if (weather) {
       updateWeather(weather)
-    } else {
-      console.log(weather)
     }
-  }
-
-  const dataPolling = async () => {
-    setInterval(async () => fetchData(), 1000)
   }
 
   const Loading = () => (
