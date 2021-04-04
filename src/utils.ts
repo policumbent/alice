@@ -2,6 +2,26 @@ import { useRef, useEffect } from 'react'
 
 const filterReserved = (value: number) => (value === -1 ? null : value)
 
+const parseComments = (
+  data: { timestamp: string; message: string }[]
+): string[] => {
+  // questo è il carattere ASCII 255:
+  // https://theasciicode.com.ar/extended-ascii-code/non-breaking-space-no-break-space-ascii-code-255.html
+  const whiteSpace = ' '
+  const betweenSeparator = `${whiteSpace.repeat(2)}|${whiteSpace.repeat(2)}`
+
+  let result = data.map((c) => {
+    const ts = parseDateTime(c.timestamp)
+    const separator = data[data.length - 1] === c ? '' : betweenSeparator
+
+    return `${ts.getHours()}:${ts.getMinutes()} ${c.message}${separator}`
+  })
+
+  result.push(whiteSpace.repeat(50))
+
+  return result
+}
+
 const parseDate = (date: string, time: string): number => {
   const d = date.split('-').map((s) => parseInt(s))
   const t = time.split(':').map((s) => parseInt(s))
@@ -42,4 +62,11 @@ const usePolling = (call: Function, time: number) => {
   }, [])
 }
 
-export { parseDate, parseDateTime, filterReserved, useIsMounted, usePolling }
+export {
+  parseComments,
+  parseDate,
+  parseDateTime,
+  filterReserved,
+  useIsMounted,
+  usePolling,
+}
