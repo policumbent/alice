@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap'
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap';
 
-import { default as api } from '../../api'
+import { default as api } from '../../api';
 
 const Logout = () => {
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
-    api.removeJwt()
+    api.removeJwt();
 
-    setTimeout(() => history.push('/'), 1000)
-  }, [history])
+    setTimeout(() => history.push('/'), 1000);
+  }, [history]);
 
   return (
     <article>
@@ -28,7 +28,7 @@ const Logout = () => {
         </Col>
       </Row>
     </article>
-  )
-}
+  );
+};
 
-export default Logout
+export default Logout;

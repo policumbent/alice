@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Line } from 'react-chartjs-2'
+import React, { useState, useEffect, useCallback } from 'react';
+import { Line } from 'react-chartjs-2';
 
-import { mainChartData, mainChartOpts } from './costants'
-import { filterReserved } from '../../../utils'
+import { mainChartData, mainChartOpts } from './costants';
+import { filterReserved } from '../../../utils';
 
 const MainChart = ({ data, history }) => {
   const initValue = () => {
-    let s = mainChartData
-    let power = history.map((e) => filterReserved(e.power))
-    let cadence = history.map((e) => e.cadence)
-    let speed = history.map((e) => e.speed)
-    let heartrate = history.map((e) => filterReserved(e.heartrate))
+    let s = mainChartData;
+    let power = history.map((e) => filterReserved(e.power));
+    let cadence = history.map((e) => e.cadence);
+    let speed = history.map((e) => e.speed);
+    let heartrate = history.map((e) => filterReserved(e.heartrate));
 
     return {
       ...s,
@@ -20,35 +20,35 @@ const MainChart = ({ data, history }) => {
         { ...s.datasets[2], data: [...speed] },
         { ...s.datasets[3], data: [...heartrate] },
       ],
-    }
-  }
+    };
+  };
 
-  const [state, setState] = useState(initValue)
+  const [state, setState] = useState(initValue);
 
   const updateData = useCallback(() => {
-    let oldDataSet1 = state.datasets[0] // Power
-    let oldDataSet2 = state.datasets[1]
-    let oldDataSet3 = state.datasets[2]
-    let oldDataSet4 = state.datasets[3] // HR
+    let oldDataSet1 = state.datasets[0]; // Power
+    let oldDataSet2 = state.datasets[1];
+    let oldDataSet3 = state.datasets[2];
+    let oldDataSet4 = state.datasets[3]; // HR
 
     /*let time = Math.round(data.Minutes * 100 * 60) / 100;
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;*/
 
-    let newData1 = [...oldDataSet1.data.slice(1)]
-    let newData2 = [...oldDataSet2.data.slice(1)]
-    let newData3 = [...oldDataSet3.data.slice(1)]
-    let newData4 = [...oldDataSet4.data.slice(1)]
+    let newData1 = [...oldDataSet1.data.slice(1)];
+    let newData2 = [...oldDataSet2.data.slice(1)];
+    let newData3 = [...oldDataSet3.data.slice(1)];
+    let newData4 = [...oldDataSet4.data.slice(1)];
 
-    newData1.push(filterReserved(data.power))
-    newData2.push(data.cadence)
-    newData3.push(data.speed)
-    newData4.push(filterReserved(data.heartrate))
+    newData1.push(filterReserved(data.power));
+    newData2.push(data.cadence);
+    newData3.push(data.speed);
+    newData4.push(filterReserved(data.heartrate));
 
     // Show power and hr if logged
     if (filterReserved(data.power)) {
-      oldDataSet1.hidden = false
-      oldDataSet4.hidden = false
+      oldDataSet1.hidden = false;
+      oldDataSet4.hidden = false;
     }
 
     setState((s) => {
@@ -72,16 +72,16 @@ const MainChart = ({ data, history }) => {
             data: newData4,
           },
         ],
-      }
-    })
-  }, [state.datasets, data])
+      };
+    });
+  }, [state.datasets, data]);
 
   useEffect(() => {
-    updateData()
+    updateData();
     // eslint-disable-next-line
-  }, [data])
+  }, [data]);
 
-  return <Line data={state} options={mainChartOpts} />
-}
+  return <Line data={state} options={mainChartOpts} />;
+};
 
-export default MainChart
+export default MainChart;

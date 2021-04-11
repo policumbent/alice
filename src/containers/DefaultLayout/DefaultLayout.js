@@ -1,24 +1,22 @@
 /* eslint-disable */
 
-import React, { Component, Suspense } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
-import { Container } from 'reactstrap'
+import React, { Component, Suspense } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { Container } from 'reactstrap';
 
-import { AppFooter, AppHeader } from '@coreui/react'
+import { AppFooter, AppHeader } from '@coreui/react';
 // routes config
-import routes from '../../routes'
+import routes from '../../routes';
 
-const DefaultFooter = React.lazy(() => import('./DefaultFooter'))
-const DefaultHeader = React.lazy(() => import('./DefaultHeader'))
+const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
+const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
-  loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  )
+  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
   signOut(e) {
-    e.preventDefault()
-    this.props.history.push('/login')
+    e.preventDefault();
+    this.props.history.push('/login');
   }
 
   render() {
@@ -42,7 +40,7 @@ class DefaultLayout extends Component {
                       name={route.name}
                       render={(props) => <route.component {...props} />}
                     />
-                  ) : null
+                  ) : null;
                 })}
                 <Redirect from="/" to="/dashboard" />
               </Switch>
@@ -55,8 +53,8 @@ class DefaultLayout extends Component {
           </Suspense>
         </footer>
       </div>
-    )
+    );
   }
 }
 
-export default DefaultLayout
+export default DefaultLayout;

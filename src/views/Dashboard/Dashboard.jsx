@@ -1,15 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import Countdown from 'react-countdown'
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ButtonGroup,
-  Card,
-  CardBody,
-  Col,
-  Row,
-} from 'reactstrap'
+import React, { useState, useEffect, useCallback } from 'react';
+import Countdown from 'react-countdown';
+import { Modal, ModalHeader, ModalBody, ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap';
 import {
   MainChart,
   CadenceCard,
@@ -18,18 +9,18 @@ import {
   HRCard,
   numCardElement,
   numElement,
-} from './Graph'
-import { LeafletMap, options } from './Map'
-import Extra from './Extra'
+} from './Graph';
+import { LeafletMap, options } from './Map';
+import Extra from './Extra';
 
-import { FiActivity } from 'react-icons/fi'
-import { GiSpeedometer, GiCartwheel } from 'react-icons/gi'
-import { FaSpaceShuttle } from 'react-icons/fa'
+import { FiActivity } from 'react-icons/fi';
+import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
+import { FaSpaceShuttle } from 'react-icons/fa';
 
-import { default as api } from 'api'
-import { parseDate, useIsMounted, usePolling } from 'utils'
+import { default as api } from 'api';
+import { parseDate, useIsMounted, usePolling } from 'utils';
 
-const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' }
+const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 const defaultData = {
   power: 0,
   speed: 0,
@@ -39,30 +30,30 @@ const defaultData = {
   distance: 0,
   gear: 0,
   altitude: 0,
-}
+};
 const defaultHistory = {
   chart: [],
   miniChart: [],
-}
+};
 const defaultWeather = {
   windSpeed: 0,
   windDirection: 0,
   temperature: 0,
   pressure: 0,
-}
+};
 
 const Dashboard = () => {
-  const isMounted = useIsMounted()
+  const isMounted = useIsMounted();
 
-  const [data, setData] = useState(defaultData)
-  const [config, setConfig] = useState(defaultConfig)
-  const [startTime, setStartTime] = useState(0)
-  const [modalOpen, setModalOpen] = useState(startTime > Date.now())
-  const [history, setHistory] = useState(defaultHistory)
-  const [weather, setWeather] = useState(defaultWeather)
-  const [position, setPosition] = useState(options.view.position)
+  const [data, setData] = useState(defaultData);
+  const [config, setConfig] = useState(defaultConfig);
+  const [startTime, setStartTime] = useState(0);
+  const [modalOpen, setModalOpen] = useState(startTime > Date.now());
+  const [history, setHistory] = useState(defaultHistory);
+  const [weather, setWeather] = useState(defaultWeather);
+  const [position, setPosition] = useState(options.view.position);
 
-  const loading = data === defaultData || history === defaultHistory
+  const loading = data === defaultData || history === defaultHistory;
 
   const updateHistory = useCallback((history) => {
     let chart = history.map((e) => ({
@@ -70,81 +61,79 @@ const Dashboard = () => {
       cadence: e.cadence,
       power: e.power,
       speed: e.speed,
-    }))
-    let miniChart = chart.slice(numCardElement, chart.length - numCardElement)
+    }));
+    let miniChart = chart.slice(numCardElement, chart.length - numCardElement);
 
-    setHistory({ chart, miniChart })
-  }, [])
+    setHistory({ chart, miniChart });
+  }, []);
 
   const updateData = useCallback(
     (d) => {
       if (isMounted.current) {
-        setData(d)
-        setPosition([parseFloat(d.latitude), parseFloat(d.longitude)])
+        setData(d);
+        setPosition([parseFloat(d.latitude), parseFloat(d.longitude)]);
       }
     },
     [isMounted]
-  )
+  );
 
   const updateConfig = useCallback(
     async (data) => {
       if (isMounted.current && data !== defaultData) {
-        const start = parseDate(data.date, data.startTime)
+        const start = parseDate(data.date, data.startTime);
 
-        setConfig(data)
-        setStartTime(start)
-        setModalOpen(start > Date.now())
+        setConfig(data);
+        setStartTime(start);
+        setModalOpen(start > Date.now());
 
         // NOTE: Placeholder, will be removed
-        const h = await api.getHistory(data.bikeName, numElement)
-        const d = await api.getData(data.bikeName)
+        const h = await api.getHistory(data.bikeName, numElement);
+        const d = await api.getData(data.bikeName);
 
-        updateHistory(h)
-        updateData(d)
+        updateHistory(h);
+        updateData(d);
       }
     },
     // eslint-disable-next-line
     [isMounted]
-  )
+  );
 
   const updateWeather = useCallback(
     (data) => {
       if (isMounted.current) {
-        setWeather(data)
+        setWeather(data);
       }
     },
     [isMounted]
-  )
+  );
 
-  usePolling(async () => fetchData(), 1000)
+  usePolling(async () => fetchData(), 1000);
 
   // api call after component is mounted
   useEffect(() => {
-    fetchInit()
+    fetchInit();
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   const fetchInit = async () => {
-    const config = await api.getConfig()
-    updateConfig(config)
-    fetchData()
-  }
+    const config = await api.getConfig();
+    updateConfig(config);
+    fetchData();
+  };
 
   const fetchData = async () => {
-    const data = await api.getData(config.bikeName)
-    const weather = await api.getWeatherSingleStation(3)
+    const data = await api.getData(config.bikeName);
+    const weather = await api.getWeatherSingleStation(3);
 
-    updateData(data)
+    updateData(data);
 
     // NOTE: weather is private for non logged users
     if (weather) {
-      updateWeather(weather)
+      updateWeather(weather);
     }
-  }
+  };
 
-  const Loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  )
+  const Loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
   return loading ? (
     Loading
@@ -152,9 +141,7 @@ const Dashboard = () => {
     <article className="animated fadeIn">
       {/* Countdown per la live */}
       <Modal isOpen={modalOpen} className={'modal-info'}>
-        <ModalHeader className="text-dark bg-yellow">
-          La diretta live inizierà tra:
-        </ModalHeader>
+        <ModalHeader className="text-dark bg-yellow">La diretta live inizierà tra:</ModalHeader>
         <ModalBody>
           <Countdown date={startTime} onComplete={() => setModalOpen(false)}>
             <p>The bike is starting.</p>
@@ -170,9 +157,7 @@ const Dashboard = () => {
               <ButtonGroup id="card1" className="float-right">
                 <FaSpaceShuttle size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">
-                {data.power === -1 ? 'Reserved' : data.power}
-              </div>
+              <div className="text-value">{data.power === -1 ? 'Reserved' : data.power}</div>
               <div>Power [W]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -202,9 +187,7 @@ const Dashboard = () => {
               <ButtonGroup id="card3" className="float-right">
                 <GiSpeedometer size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">
-                {Math.round(data.speed * 100) / 100}
-              </div>
+              <div className="text-value">{Math.round(data.speed * 100) / 100}</div>
               <div>Speed [km/h]</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '60px' }}>
@@ -246,11 +229,7 @@ const Dashboard = () => {
           <Card>
             <CardBody>
               <div className="central-chart">
-                <LeafletMap
-                  position={position}
-                  options={options}
-                  track={config.trackName}
-                />
+                <LeafletMap position={position} options={options} track={config.trackName} />
               </div>
             </CardBody>
           </Card>
@@ -269,7 +248,7 @@ const Dashboard = () => {
         />
       </Row>
     </article>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

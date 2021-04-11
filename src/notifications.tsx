@@ -1,13 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
-import ReactNotification, {
-  ReactNotificationOptions,
-  store,
-} from 'react-notifications-component'
-import { default as api } from 'api'
+import ReactNotification, { ReactNotificationOptions, store } from 'react-notifications-component';
+import { default as api } from 'api';
 
-import 'react-notifications-component/dist/theme.css'
-import 'animate.css'
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
 
 interface Note extends ReactNotificationOptions {}
 
@@ -24,38 +21,38 @@ const base: Note = {
     pauseOnHover: true,
     showIcon: true,
   },
-}
+};
 
 const Notifications = () => {
-  let counter = 0
+  let counter = 0;
 
   // 5 secs polling on notifications api
   const notificationsPolling = () => {
     setInterval(async () => {
-      let notes = await api.getNotifications(counter)
+      let notes = await api.getNotifications(counter);
 
       notes.forEach((n: any) => {
         let note: Note = {
           message: n.message,
           type: n.public ? 'info' : 'warning',
           ...base,
-        }
+        };
 
         // @todo Handle private notifications
 
-        store.addNotification(note)
+        store.addNotification(note);
 
-        counter = n.id
-      })
-    }, 5 * 1000)
-  }
+        counter = n.id;
+      });
+    }, 5 * 1000);
+  };
 
   useEffect(() => {
-    notificationsPolling()
+    notificationsPolling();
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
-  return <ReactNotification />
-}
+  return <ReactNotification />;
+};
 
-export default Notifications
+export default Notifications;

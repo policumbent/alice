@@ -6,6 +6,6 @@ const _nav = {
       icon: 'icon-speedometer',
     },
   ],
-}
+};
 
-export default _nav
+export default _nav;

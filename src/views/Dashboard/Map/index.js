@@ -1,6 +1,6 @@
-import LeafletMap from './LeafletMap'
-import marker from './assets/taurus_icon.png'
-import L from 'leaflet'
+import LeafletMap from './LeafletMap';
+import marker from './assets/taurus_icon.png';
+import L from 'leaflet';
 
 const options = {
   view: {
@@ -30,6 +30,6 @@ const options = {
     // shadowAnchor: [4, 62],  // the same for the shadow
     popupAnchor: [0, -7], // point from which the popup should open relative to the iconAnchor
   }),
-}
+};
 
-export { LeafletMap, options }
+export { LeafletMap, options };

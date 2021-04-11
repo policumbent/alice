@@ -1,7 +1,7 @@
-import React from 'react'
-import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap'
+import React from 'react';
+import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap';
 
-import { FaCode, FaHeart, FaGithub } from 'react-icons/fa'
+import { FaCode, FaHeart, FaGithub } from 'react-icons/fa';
 
 const Credits = () => {
   return (
@@ -21,8 +21,7 @@ const Credits = () => {
                   className="text-center"
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://github.com/gabelluardo"
-                >
+                  href="https://github.com/gabelluardo">
                   <FaGithub />
                 </a>
               </h4>
@@ -32,8 +31,7 @@ const Credits = () => {
                   className="text-center"
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://github.com/stelosca96"
-                >
+                  href="https://github.com/stelosca96">
                   <FaGithub />
                 </a>
               </h4>
@@ -42,7 +40,7 @@ const Credits = () => {
         </Col>
       </Row>
     </article>
-  )
-}
+  );
+};
 
-export default Credits
+export default Credits;

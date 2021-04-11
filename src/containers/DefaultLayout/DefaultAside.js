@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   Nav,
   NavItem,
@@ -8,38 +8,38 @@ import {
   TabPane,
   ListGroup,
   ListGroupItem,
-} from 'reactstrap'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { AppSwitch } from '@coreui/react'
+} from 'reactstrap';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { AppSwitch } from '@coreui/react';
 
 const propTypes = {
   children: PropTypes.node,
-}
+};
 
-const defaultProps = {}
+const defaultProps = {};
 
 class DefaultAside extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.toggle = this.toggle.bind(this)
+    this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: '1',
-    }
+    };
   }
 
   toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab,
-      })
+      });
     }
   }
 
   render() {
     // eslint-disable-next-line
-    const { children, ...attributes } = this.props
+    const { children, ...attributes } = this.props;
 
     return (
       <React.Fragment>
@@ -48,9 +48,8 @@ class DefaultAside extends Component {
             <NavLink
               className={classNames({ active: this.state.activeTab === '1' })}
               onClick={() => {
-                this.toggle('1')
-              }}
-            >
+                this.toggle('1');
+              }}>
               <i className="icon-list"></i>
             </NavLink>
           </NavItem>
@@ -58,9 +57,8 @@ class DefaultAside extends Component {
             <NavLink
               className={classNames({ active: this.state.activeTab === '2' })}
               onClick={() => {
-                this.toggle('2')
-              }}
-            >
+                this.toggle('2');
+              }}>
               <i className="icon-speech"></i>
             </NavLink>
           </NavItem>
@@ -68,9 +66,8 @@ class DefaultAside extends Component {
             <NavLink
               className={classNames({ active: this.state.activeTab === '3' })}
               onClick={() => {
-                this.toggle('3')
-              }}
-            >
+                this.toggle('3');
+              }}>
               <i className="icon-settings"></i>
             </NavLink>
           </NavItem>
@@ -85,14 +82,12 @@ class DefaultAside extends Component {
                 action
                 tag="a"
                 href="#"
-                className="list-group-item-accent-warning list-group-item-divider"
-              >
+                className="list-group-item-accent-warning list-group-item-divider">
                 <div className="avatar float-right">
                   <img
                     className="img-avatar"
                     src="assets/img/avatars/7.jpg"
-                    alt="admin@bootstrapmaster.com"
-                  ></img>
+                    alt="admin@bootstrapmaster.com"></img>
                 </div>
                 <div>
                   Meeting with <strong>Lucas</strong>{' '}
@@ -108,14 +103,12 @@ class DefaultAside extends Component {
                 action
                 tag="a"
                 href="#"
-                className="list-group-item-accent-info list-group-item-divider"
-              >
+                className="list-group-item-accent-info list-group-item-divider">
                 <div className="avatar float-right">
                   <img
                     className="img-avatar"
                     src="assets/img/avatars/4.jpg"
-                    alt="admin@bootstrapmaster.com"
-                  ></img>
+                    alt="admin@bootstrapmaster.com"></img>
                 </div>
                 <div>
                   Skype with <strong>Megan</strong>
@@ -134,8 +127,7 @@ class DefaultAside extends Component {
                 action
                 tag="a"
                 href="#"
-                className="list-group-item-accent-danger list-group-item-divider"
-              >
+                className="list-group-item-accent-danger list-group-item-divider">
                 <div>
                   New UI Project - <strong>deadline</strong>
                 </div>
@@ -187,8 +179,7 @@ class DefaultAside extends Component {
                 action
                 tag="a"
                 href="#"
-                className="list-group-item-accent-success list-group-item-divider"
-              >
+                className="list-group-item-accent-success list-group-item-divider">
                 <div>
                   <strong>#10 Startups.Garden</strong> Meetup
                 </div>
@@ -203,8 +194,7 @@ class DefaultAside extends Component {
                 action
                 tag="a"
                 href="#"
-                className="list-group-item-accent-primary list-group-item-divider"
-              >
+                className="list-group-item-accent-primary list-group-item-divider">
                 <div>
                   <strong>Team meeting</strong>
                 </div>
@@ -284,12 +274,10 @@ class DefaultAside extends Component {
                 <small className="text-muted">Lukasz Holeczek</small>
                 <small className="text-muted float-right mt-1">1:52 PM</small>
               </div>
-              <div className="text-truncate font-weight-bold">
-                Lorem ipsum dolor sit amet
-              </div>
+              <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
               <small className="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt...
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt...
               </small>
             </div>
             <hr />
@@ -308,12 +296,10 @@ class DefaultAside extends Component {
                 <small className="text-muted">Lukasz Holeczek</small>
                 <small className="text-muted float-right mt-1">1:52 PM</small>
               </div>
-              <div className="text-truncate font-weight-bold">
-                Lorem ipsum dolor sit amet
-              </div>
+              <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
               <small className="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt...
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt...
               </small>
             </div>
             <hr />
@@ -332,12 +318,10 @@ class DefaultAside extends Component {
                 <small className="text-muted">Lukasz Holeczek</small>
                 <small className="text-muted float-right mt-1">1:52 PM</small>
               </div>
-              <div className="text-truncate font-weight-bold">
-                Lorem ipsum dolor sit amet
-              </div>
+              <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
               <small className="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt...
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt...
               </small>
             </div>
             <hr />
@@ -356,12 +340,10 @@ class DefaultAside extends Component {
                 <small className="text-muted">Lukasz Holeczek</small>
                 <small className="text-muted float-right mt-1">1:52 PM</small>
               </div>
-              <div className="text-truncate font-weight-bold">
-                Lorem ipsum dolor sit amet
-              </div>
+              <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
               <small className="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt...
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt...
               </small>
             </div>
             <hr />
@@ -380,12 +362,10 @@ class DefaultAside extends Component {
                 <small className="text-muted">Lukasz Holeczek</small>
                 <small className="text-muted float-right mt-1">1:52 PM</small>
               </div>
-              <div className="text-truncate font-weight-bold">
-                Lorem ipsum dolor sit amet
-              </div>
+              <div className="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
               <small className="text-muted">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                eiusmod tempor incididunt...
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt...
               </small>
             </div>
           </TabPane>
@@ -408,8 +388,8 @@ class DefaultAside extends Component {
               </div>
               <div>
                 <small className="text-muted">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua.
                 </small>
               </div>
             </div>
@@ -429,8 +409,8 @@ class DefaultAside extends Component {
               </div>
               <div>
                 <small className="text-muted">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua.
                 </small>
               </div>
             </div>
@@ -508,11 +488,11 @@ class DefaultAside extends Component {
           </TabPane>
         </TabContent>
       </React.Fragment>
-    )
+    );
   }
 }
 
-DefaultAside.propTypes = propTypes
-DefaultAside.defaultProps = defaultProps
+DefaultAside.propTypes = propTypes;
+DefaultAside.defaultProps = defaultProps;
 
-export default DefaultAside
+export default DefaultAside;

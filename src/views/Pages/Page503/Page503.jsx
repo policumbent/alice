@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Col, Container, Row } from 'reactstrap'
+import React, { Component } from 'react';
+import { Col, Container, Row } from 'reactstrap';
 
 class Page503 extends Component {
   render() {
@@ -19,8 +19,8 @@ class Page503 extends Component {
           </Row>
         </Container>
       </div>
-    )
+    );
   }
 }
 
-export default Page503
+export default Page503;

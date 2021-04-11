@@ -1,18 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Footer from 'footer'
+import Footer from 'footer';
 
 const propTypes = {
   children: PropTypes.node,
-}
-const defaultProps = {}
+};
+const defaultProps = {};
 
 const DefaultFooter = () => {
-  return <Footer />
-}
+  return <Footer />;
+};
 
-DefaultFooter.propTypes = propTypes
-DefaultFooter.defaultProps = defaultProps
+DefaultFooter.propTypes = propTypes;
+DefaultFooter.defaultProps = defaultProps;
 
-export default DefaultFooter
+export default DefaultFooter;

@@ -1,44 +1,44 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
-import { Map, Marker, Circle, Popup, TileLayer } from 'react-leaflet'
+import { Map, Marker, Circle, Popup, TileLayer } from 'react-leaflet';
 function setupView(position) {
   let view = {
     position: null,
     zoom: null,
-  }
+  };
   switch (position) {
     case 'bm':
-      view.position = [40.433212, -117.053714]
-      view.zoom = 12
-      break
+      view.position = [40.433212, -117.053714];
+      view.zoom = 12;
+      break;
     case 'orbassano':
-      view.position = [45.009978, 7.560453]
-      view.zoom = 16
-      break
+      view.position = [45.009978, 7.560453];
+      view.zoom = 16;
+      break;
     case 'balocco':
-      view.position = [45.478673, 8.300212]
-      view.zoom = 14
-      break
+      view.position = [45.478673, 8.300212];
+      view.zoom = 14;
+      break;
     default:
-      view.position = [40.433212, -117.053714]
-      view.zoom = 12
+      view.position = [40.433212, -117.053714];
+      view.zoom = 12;
   }
-  return view
+  return view;
 }
 const LeafletMap = ({ position, options, track }) => {
   // opzioni per la mappa
-  const { start, end, catching, radius } = options.circle
-  const { tile, style } = options
-  let view = setupView(track)
+  const { start, end, catching, radius } = options.circle;
+  const { tile, style } = options;
+  let view = setupView(track);
   // state hook `position` inizializzato alle prime
   // coordinate che vengono passate
-  const [markerPosition, setMarkerPosition] = useState(position)
+  const [markerPosition, setMarkerPosition] = useState(position);
 
   // aggiorna la posizione dell'icona quando
   // vengono passate nuove coordinate
   useEffect(() => {
-    setMarkerPosition(position)
-  }, [position])
+    setMarkerPosition(position);
+  }, [position]);
 
   return (
     <Map style={style} center={view.position} zoom={view.zoom}>
@@ -71,7 +71,7 @@ const LeafletMap = ({ position, options, track }) => {
         </Popup>
       </Marker>
     </Map>
-  )
-}
+  );
+};
 
-export default LeafletMap
+export default LeafletMap;

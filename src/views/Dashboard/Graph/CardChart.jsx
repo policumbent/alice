@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Line } from 'react-chartjs-2'
+import React, { useState, useEffect, useCallback } from 'react';
+import { Line } from 'react-chartjs-2';
 
 import {
   cardChartData1,
@@ -10,8 +10,8 @@ import {
   cardChartOpts2,
   cardChartOpts3,
   cardChartOpts4,
-} from './costants'
-import { filterReserved } from '../../../utils'
+} from './costants';
+import { filterReserved } from '../../../utils';
 
 const CardChart = ({ state, type, data, history, opts }) => {
   const initValue = {
@@ -22,18 +22,18 @@ const CardChart = ({ state, type, data, history, opts }) => {
         data: history.map((e) => filterReserved(e[type])),
       },
     ],
-  }
+  };
 
-  const [line, setLine] = useState(initValue)
+  const [line, setLine] = useState(initValue);
 
   const updateLine = useCallback(() => {
-    let value = filterReserved(data[type])
+    let value = filterReserved(data[type]);
 
     if (value !== null) {
-      let oldDataSet = { ...line.datasets[0] }
-      let newData = [...oldDataSet.data.slice(1)]
+      let oldDataSet = { ...line.datasets[0] };
+      let newData = [...oldDataSet.data.slice(1)];
 
-      newData.push(value)
+      newData.push(value);
 
       setLine((l) => {
         return {
@@ -44,17 +44,17 @@ const CardChart = ({ state, type, data, history, opts }) => {
               data: newData,
             },
           ],
-        }
-      })
+        };
+      });
     }
-  }, [line.datasets, type, data])
+  }, [line.datasets, type, data]);
 
   useEffect(() => {
-    updateLine()
+    updateLine();
     // eslint-disable-next-line
-  }, [data])
-  return <Line data={line} options={opts} />
-}
+  }, [data]);
+  return <Line data={line} options={opts} />;
+};
 
 const PowerCard = ({ data, history }) => {
   return (
@@ -65,8 +65,8 @@ const PowerCard = ({ data, history }) => {
       data={data}
       history={history}
     />
-  )
-}
+  );
+};
 
 const CadenceCard = ({ data, history }) => {
   return (
@@ -77,8 +77,8 @@ const CadenceCard = ({ data, history }) => {
       data={data}
       history={history}
     />
-  )
-}
+  );
+};
 
 const SpeedCard = ({ data, history }) => {
   return (
@@ -89,8 +89,8 @@ const SpeedCard = ({ data, history }) => {
       data={data}
       history={history}
     />
-  )
-}
+  );
+};
 
 const HRCard = ({ data, history }) => {
   return (
@@ -101,7 +101,7 @@ const HRCard = ({ data, history }) => {
       data={data}
       history={history}
     />
-  )
-}
+  );
+};
 
-export { CardChart, CadenceCard, PowerCard, SpeedCard, HRCard }
+export { CardChart, CadenceCard, PowerCard, SpeedCard, HRCard };

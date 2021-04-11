@@ -1,19 +1,19 @@
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips'
-import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities'
+import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
 
 //const brandPrimary = getStyle("--primary");
-const brandSuccess = getStyle('--success')
-const brandInfo = getStyle('--info')
-const brandWarning = getStyle('--warning')
-const brandDanger = getStyle('--danger')
+const brandSuccess = getStyle('--success');
+const brandInfo = getStyle('--info');
+const brandWarning = getStyle('--warning');
+const brandDanger = getStyle('--danger');
 
 // TODO: change `numElement` to 200
-const numElement = 150
-const numCardElement = 50
+const numElement = 150;
+const numCardElement = 50;
 
 // Main Chart
 
-let label = Array(numElement).fill('')
+let label = Array(numElement).fill('');
 
 const mainChartOpts = {
   tooltips: {
@@ -25,9 +25,8 @@ const mainChartOpts = {
     callbacks: {
       labelColor: function (tooltipItem, chart) {
         return {
-          backgroundColor:
-            chart.data.datasets[tooltipItem.datasetIndex].borderColor,
-        }
+          backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor,
+        };
       },
     },
   },
@@ -67,7 +66,7 @@ const mainChartOpts = {
   animation: {
     duration: 0,
   },
-}
+};
 
 const mainChartData = {
   labels: label,
@@ -112,11 +111,11 @@ const mainChartData = {
       data: Array(numElement + 1).fill(null),
     },
   ],
-}
+};
 
 // Card Charts
 
-let miniLabel = Array(numCardElement).fill('')
+let miniLabel = Array(numCardElement).fill('');
 
 // Power
 const cardChartData1 = {
@@ -128,7 +127,7 @@ const cardChartData1 = {
       data: Array(numCardElement).fill(null),
     },
   ],
-}
+};
 
 const cardChartOpts1 = {
   tooltips: {
@@ -167,7 +166,7 @@ const cardChartOpts1 = {
   animation: {
     duration: 0,
   },
-}
+};
 
 // Cadence
 const cardChartData2 = {
@@ -179,7 +178,7 @@ const cardChartData2 = {
       data: Array(numCardElement).fill(null),
     },
   ],
-}
+};
 
 const cardChartOpts2 = {
   tooltips: {
@@ -218,7 +217,7 @@ const cardChartOpts2 = {
   animation: {
     duration: 0,
   },
-}
+};
 
 // Speed
 const cardChartData3 = {
@@ -230,7 +229,7 @@ const cardChartData3 = {
       data: Array(numCardElement).fill(null),
     },
   ],
-}
+};
 
 const cardChartOpts3 = {
   tooltips: {
@@ -269,7 +268,7 @@ const cardChartOpts3 = {
   animation: {
     duration: 0,
   },
-}
+};
 
 // Heartrate
 const cardChartData4 = {
@@ -281,7 +280,7 @@ const cardChartData4 = {
       data: Array(numCardElement + 1).fill(null),
     },
   ],
-}
+};
 
 const cardChartOpts4 = {
   tooltips: {
@@ -320,7 +319,7 @@ const cardChartOpts4 = {
   animation: {
     duration: 0,
   },
-}
+};
 
 export {
   mainChartOpts,
@@ -335,4 +334,4 @@ export {
   cardChartOpts4,
   numCardElement,
   numElement,
-}
+};

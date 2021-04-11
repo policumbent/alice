@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, CardBody, Col, Row } from 'reactstrap'
+import React from 'react';
+import { Card, CardBody, Col, Row } from 'reactstrap';
 
 const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
   return !showExtra ? null : (
@@ -42,9 +42,7 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
             <Row>
               <Col xs="6" sm="6" lg="6">
                 <div className="text-center">Temp [°C]</div>
-                <div className="text-value text-center">
-                  {weather.temperature}
-                </div>
+                <div className="text-value text-center">{weather.temperature}</div>
               </Col>
               <Col xs="6" sm="6" lg="6">
                 <div className="text-center">Press [hPa]</div>
@@ -60,22 +58,18 @@ const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
             <Row>
               <Col xs="6" sm="6" lg="6">
                 <div className="text-center">Wind [m/s]</div>
-                <div className="text-value text-center">
-                  {weather.windSpeed}
-                </div>
+                <div className="text-value text-center">{weather.windSpeed}</div>
               </Col>
               <Col xs="6" sm="6" lg="6">
                 <div className="text-center">Direction [°]</div>
-                <div className="text-value text-center">
-                  {weather.windDirection}
-                </div>
+                <div className="text-value text-center">{weather.windDirection}</div>
               </Col>
             </Row>
           </CardBody>
         </Card>
       </Col>
     </>
-  )
-}
+  );
+};
 
-export default Extra
+export default Extra;

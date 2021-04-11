@@ -1,12 +1,6 @@
-import { numCardElement, numElement } from './costants'
-import MainChart from './MainChart'
-import {
-  CardChart,
-  CadenceCard,
-  PowerCard,
-  SpeedCard,
-  HRCard,
-} from './CardChart'
+import { numCardElement, numElement } from './costants';
+import MainChart from './MainChart';
+import { CardChart, CadenceCard, PowerCard, SpeedCard, HRCard } from './CardChart';
 
 export {
   MainChart,
@@ -17,4 +11,4 @@ export {
   HRCard,
   numCardElement,
   numElement,
-}
+};

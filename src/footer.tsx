@@ -1,48 +1,48 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react';
 
-import dataService from 'api'
-import Ticker from 'react-ticker'
-import { parseComments, usePolling } from 'utils'
+import dataService from 'api';
+import Ticker from 'react-ticker';
+import { parseComments, usePolling } from 'utils';
 
 const Footer = () => {
-  const [comments, setComments] = useState<string[] | null>()
-  const [move, setMove] = useState(true)
+  const [comments, setComments] = useState<string[] | null>();
+  const [move, setMove] = useState(true);
 
   const getPhrase = useCallback((data) => {
-    const result = parseComments(data)
-    setComments(result)
-  }, [])
+    const result = parseComments(data);
+    setComments(result);
+  }, []);
 
   const moveOption = useCallback(
     (event) => {
       switch (event) {
         case 'over':
-          setMove(false)
-          break
+          setMove(false);
+          break;
         case 'leave':
-          setMove(true)
-          break
+          setMove(true);
+          break;
         case 'touch':
-          setMove(!move)
-          break
+          setMove(!move);
+          break;
         default:
-          break
+          break;
       }
     },
     [move]
-  )
+  );
 
   const fetchComments = async () => {
-    getPhrase(await dataService.getComments())
-  }
+    getPhrase(await dataService.getComments());
+  };
 
   // 30 secs polling on comments api
-  usePolling(async () => fetchComments(), 30 * 1000)
+  usePolling(async () => fetchComments(), 30 * 1000);
 
   useEffect(() => {
-    fetchComments()
+    fetchComments();
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   return (
     <>
@@ -52,15 +52,14 @@ const Footer = () => {
           onFocus={() => moveOption('over')}
           onMouseOver={() => moveOption('over')}
           onMouseLeave={() => moveOption('leave')}
-          onTouchStart={() => moveOption('touch')}
-        >
+          onTouchStart={() => moveOption('touch')}>
           <Ticker mode="smooth" offset={'run-in'} move={move} speed={7}>
             {() => <span>{comments}</span>}
           </Ticker>
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

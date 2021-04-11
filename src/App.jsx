@@ -1,31 +1,29 @@
-import React from 'react'
+import React from 'react';
 
-import { HashRouter, Route, Switch } from 'react-router-dom'
-import Loadable from 'react-loadable'
-import Notifications from 'notifications'
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import Loadable from 'react-loadable';
+import Notifications from 'notifications';
 
-import './App.scss'
+import './App.scss';
 
-const loading = () => (
-  <div className="animated fadeIn pt-3 text-center">Loading...</div>
-)
+const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers
 const DefaultLayout = Loadable({
   loader: () => import('./containers/DefaultLayout/DefaultLayout'),
   loading,
-})
+});
 
 // Pages
 const Page404 = Loadable({
   loader: () => import('./views/Pages/Page404/Page404'),
   loading,
-})
+});
 
 const Page500 = Loadable({
   loader: () => import('./views/Pages/Page500/Page500'),
   loading,
-})
+});
 
 const App = () => {
   return (
@@ -39,7 +37,7 @@ const App = () => {
         </Switch>
       </HashRouter>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
