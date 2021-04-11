@@ -18,7 +18,7 @@ const Credits = () => {
               <h4>
                 Gabriele Belluardo{' '}
                 <a
-                  className="text-center"
+                  className="text-center github-icon"
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://github.com/gabelluardo">
@@ -28,7 +28,7 @@ const Credits = () => {
               <h4>
                 Stefano Loscalzo{' '}
                 <a
-                  className="text-center"
+                  className="text-center github-icon"
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://github.com/stelosca96">
