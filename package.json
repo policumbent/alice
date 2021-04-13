@@ -70,7 +70,7 @@
   },
   "scripts": {
     "start": "BROWSER=none craco start",
-    "build": "craco build ",
+    "build": "craco build",
     "format": "prettier --write \"**/*.{js,ts,jsx,tsx,json,yml,scss,css}\"",
     "eject": "react-scripts eject"
   },
