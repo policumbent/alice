@@ -2,7 +2,7 @@ import React from 'react';
 
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import Notifications from 'notifications';
+import Notifications from 'components/notifications';
 
 import './App.scss';
 

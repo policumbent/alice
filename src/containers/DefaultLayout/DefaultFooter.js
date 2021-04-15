@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Footer from 'footer';
+import Footer from 'components/footer';
 
 const propTypes = {
   children: PropTypes.node,
