@@ -92,6 +92,7 @@ const Dashboard = () => {
 
         updateHistory(h);
         updateData(d);
+        fetchData();
       }
     },
     // eslint-disable-next-line
@@ -118,7 +119,6 @@ const Dashboard = () => {
   const fetchInit = async () => {
     const config = await api.getConfig();
     updateConfig(config);
-    fetchData();
   };
 
   const fetchData = async () => {
