@@ -3,7 +3,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE: START - Do not remove or modify this section -->
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3c225d0f-fb24-4e75-8da3-420ab5e0fa97/deploy-status)](https://app.netlify.com/sites/alice-policumbent/deploys)
 <!-- ALL-CONTRIBUTORS-BADGE: END -->
 
 Analisi Live InterContinentale Edotta
