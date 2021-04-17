@@ -18,7 +18,7 @@ import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
 
 import { default as api } from 'api';
-import { parseDate, useIsMounted, usePolling } from 'utils';
+import { parseDate, useIsMounted, usePolling } from 'components/utils';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 const defaultData = {
@@ -52,6 +52,9 @@ const Dashboard = () => {
   const [history, setHistory] = useState(defaultHistory);
   const [weather, setWeather] = useState(defaultWeather);
   const [position, setPosition] = useState(options.view.position);
+
+  // eslint-disable-next-line
+  const [_, setPolling] = usePolling(() => fetchData(), 1000);
 
   const loading = data === defaultData || history === defaultHistory;
 
@@ -118,7 +121,8 @@ const Dashboard = () => {
 
   const fetchInit = async () => {
     const config = await api.getConfig();
-    updateConfig(config);
+    await updateConfig(config);
+    setPolling(true);
   };
 
   const fetchData = async () => {
@@ -127,7 +131,7 @@ const Dashboard = () => {
 
     updateData(data);
 
-    // NOTE: weather is private for non logged users
+    // NOTE: weather is private for not logged users
     if (weather) {
       updateWeather(weather);
     }

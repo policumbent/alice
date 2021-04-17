@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const filterReserved = (value: number) => (value === -1 ? null : value);
 
@@ -48,16 +48,20 @@ const useIsMounted = (): { current: boolean } => {
   return isMounted;
 };
 
-const usePolling = (call: Function, time: number) => {
+const usePolling = (call: Function, time: number, autostart = false) => {
+  const [start, setStart] = useState(autostart);
   const intervalId = useRef(0);
 
+  // Create interval on startup if autostart is enabled
   useEffect(() => {
-    intervalId.current = setInterval(call, time);
+    if (start) intervalId.current = setInterval(call, time);
     return () => {
       clearInterval(intervalId.current);
     };
     // eslint-disable-next-line
-  }, []);
+  }, [start]);
+
+  return [start, setStart];
 };
 
-export { parseComments, parseDate, parseDateTime, filterReserved, useIsMounted, usePolling };
+export { filterReserved, parseComments, parseDate, parseDateTime, useIsMounted, usePolling };

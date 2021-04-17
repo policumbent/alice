@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { mainChartData, mainChartOpts } from './costants';
-import { filterReserved } from '../../../utils';
+import { filterReserved } from 'components/utils';
 
 const MainChart = ({ data, history }) => {
   const initValue = () => {
