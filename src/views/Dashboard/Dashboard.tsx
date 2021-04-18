@@ -91,7 +91,6 @@ const Dashboard = () => {
 
         updateHistory(h);
         updateData(d);
-        fetchData();
       }
     },
     // eslint-disable-next-line
@@ -118,13 +117,14 @@ const Dashboard = () => {
   const fetchInit = async () => {
     const config = await api.getConfig();
     await updateConfig(config);
+    await fetchData();
+
     setPolling(true);
   };
 
   const fetchData = async () => {
     const data = await api.getData(config.bikeName);
     const weather = await api.getWeatherSingleStation(3);
-
     updateData(data);
 
     // NOTE: weather is private for not logged users
