@@ -2,15 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { mainChartData, mainChartOpts } from './costants';
-import { filterReserved } from '../../../utils';
+import { filterReserved } from 'components/utils';
 
 const MainChart = ({ data, history }) => {
   const initValue = () => {
-    let s = mainChartData;
-    let power = history.map((e) => filterReserved(e.power));
-    let cadence = history.map((e) => e.cadence);
-    let speed = history.map((e) => e.speed);
-    let heartrate = history.map((e) => filterReserved(e.heartrate));
+    const s = mainChartData;
+    const power = history.map((e) => filterReserved(e.power));
+    const cadence = history.map((e) => e.cadence);
+    const speed = history.map((e) => e.speed);
+    const heartrate = history.map((e) => filterReserved(e.heartrate));
 
     return {
       ...s,
@@ -26,27 +26,31 @@ const MainChart = ({ data, history }) => {
   const [state, setState] = useState(initValue);
 
   const updateData = useCallback(() => {
-    let oldDataSet1 = state.datasets[0]; // Power
-    let oldDataSet2 = state.datasets[1];
-    let oldDataSet3 = state.datasets[2];
-    let oldDataSet4 = state.datasets[3]; // HR
+    const { power, cadence, speed, heartrate } = data;
 
-    /*let time = Math.round(data.Minutes * 100 * 60) / 100;
-    let minutes = Math.floor(time / 60);
-    let seconds = time % 60;*/
+    const oldDataSet1 = state.datasets[0]; // Power
+    const oldDataSet2 = state.datasets[1]; // Cadence
+    const oldDataSet3 = state.datasets[2]; // Speed
+    const oldDataSet4 = state.datasets[3]; // HR
 
-    let newData1 = [...oldDataSet1.data.slice(1)];
-    let newData2 = [...oldDataSet2.data.slice(1)];
-    let newData3 = [...oldDataSet3.data.slice(1)];
-    let newData4 = [...oldDataSet4.data.slice(1)];
+    /*
+    const time = Math.round(data.Minutes * 100 * 60) / 100;
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    */
 
-    newData1.push(filterReserved(data.power));
-    newData2.push(data.cadence);
-    newData3.push(data.speed);
-    newData4.push(filterReserved(data.heartrate));
+    const newData1 = [...oldDataSet1.data.slice(1)];
+    const newData2 = [...oldDataSet2.data.slice(1)];
+    const newData3 = [...oldDataSet3.data.slice(1)];
+    const newData4 = [...oldDataSet4.data.slice(1)];
+
+    newData1.push(filterReserved(power));
+    newData2.push(cadence);
+    newData3.push(speed);
+    newData4.push(filterReserved(heartrate));
 
     // Show power and hr if logged
-    if (filterReserved(data.power)) {
+    if (filterReserved(power) || filterReserved(heartrate)) {
       oldDataSet1.hidden = false;
       oldDataSet4.hidden = false;
     }

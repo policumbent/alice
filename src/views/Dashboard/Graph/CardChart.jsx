@@ -11,7 +11,7 @@ import {
   cardChartOpts3,
   cardChartOpts4,
 } from './costants';
-import { filterReserved } from '../../../utils';
+import { filterReserved } from 'components/utils';
 
 const CardChart = ({ state, type, data, history, opts }) => {
   const initValue = {

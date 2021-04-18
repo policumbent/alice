@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 
 // eslint-disable-next-line
 import { AppNavbarBrand } from '@coreui/react';
-import logo from '../../assets/img/brand/logo.svg';
-import sygnet from '../../assets/img/brand/sygnet.svg';
-import { default as api } from '../../api';
-import { parseDate } from '../../utils';
+import logo from 'assets/img/brand/logo.svg';
+import sygnet from 'assets/img/brand/sygnet.svg';
+import { default as api } from 'api';
+import { parseDate } from 'components/utils';
 
 const propTypes = {
   children: PropTypes.node,
