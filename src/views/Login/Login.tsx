@@ -29,7 +29,7 @@ const Login = () => {
     if (loginSuccess) {
       setTimeout(() => history.push('/'), 1000);
     }
-    // @todo: Handle failed login
+    // @todo Handle failed login
     else {
     }
   };
