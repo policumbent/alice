@@ -233,7 +233,12 @@ const Dashboard = () => {
           <Card>
             <CardBody>
               <div className="central-chart">
-                <LeafletMap position={position} options={options} track={config.trackName} />
+                <LeafletMap
+                  position={position}
+                  options={options}
+                  track={config.trackName}
+                  bikeName={bikeName}
+                />
               </div>
             </CardBody>
           </Card>
