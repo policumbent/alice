@@ -6,3 +6,4 @@ public
 build
 src/views/example
 __tests__
+coverage

@@ -126,7 +126,7 @@ const Dashboard = () => {
     const data = await api.getData(config.bikeName);
     const weather = await api.getWeatherSingleStation(3);
     updateData(data);
-
+    console.log('qua');
     // NOTE: weather is private for not logged users
     if (weather) {
       updateWeather(weather);
