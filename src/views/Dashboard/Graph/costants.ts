@@ -321,6 +321,12 @@ const cardChartOpts4 = {
   },
 };
 
+export type ccOpts1 = typeof cardChartOpts1;
+export type ccOpts2 = typeof cardChartOpts2;
+export type ccOpts3 = typeof cardChartOpts3;
+export type ccOpts4 = typeof cardChartOpts4;
+export type ccData = typeof cardChartData1;
+
 export {
   mainChartOpts,
   mainChartData,

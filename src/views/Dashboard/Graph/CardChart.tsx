@@ -38,7 +38,7 @@ const CardChart = (props: ICardChart) => {
 
       newData.push(value);
 
-      setLine((l: any) => {
+      setLine((l) => {
         return {
           ...l,
           datasets: [

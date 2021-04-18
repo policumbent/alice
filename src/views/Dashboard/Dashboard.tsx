@@ -10,15 +10,16 @@ import {
   numCardElement,
   numElement,
 } from './Graph';
-import { LeafletMap, options } from './Map';
-import Extra from './Extra';
-
 import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
 
+import { LeafletMap, options } from './Map';
+import Extra from './Extra';
+
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
+import { createData } from './Graph/types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 const defaultData = {
@@ -59,13 +60,8 @@ const Dashboard = () => {
   const loading = data === defaultData || history === defaultHistory;
 
   const updateHistory = useCallback((history) => {
-    let chart = history.map((e) => ({
-      heartrate: e.heartrate,
-      cadence: e.cadence,
-      power: e.power,
-      speed: e.speed,
-    }));
-    let miniChart = chart.slice(numCardElement, chart.length - numCardElement);
+    const chart = history.map((e: typeof defaultData) => createData(e));
+    const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
 
     setHistory({ chart, miniChart });
   }, []);
@@ -237,7 +233,7 @@ const Dashboard = () => {
                   position={position}
                   options={options}
                   track={config.trackName}
-                  bikeName={data.bikeName}
+                  bikeName={config.bikeName}
                 />
               </div>
             </CardBody>

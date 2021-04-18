@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, Dispatch, SetStateAction } from 'react';
 
 const filterReserved = (value: number) => (value === -1 ? null : value);
 
@@ -48,8 +48,12 @@ const useIsMounted = (): { current: boolean } => {
   return isMounted;
 };
 
-const usePolling = (call: Function, time: number, autostart = false) => {
-  const [start, setStart] = useState(autostart);
+const usePolling = (
+  call: Function,
+  time: number,
+  autostart?: boolean
+): [boolean, Dispatch<SetStateAction<boolean>>] => {
+  const [start, setStart] = useState(autostart || false);
   const intervalId = useRef(0);
 
   // Create interval on startup if autostart is enabled
