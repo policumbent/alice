@@ -61,6 +61,7 @@
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "react-test-renderer": "^17.0.1",
     "typescript": "^4.2.3",
@@ -81,7 +82,9 @@
     "start": "BROWSER=none craco start",
     "build": "craco build",
     "format": "prettier --write \"**/*.{js,ts,jsx,tsx,json,yml,scss,css}\"",
-    "eject": "react-scripts eject"
+    "test": "craco test",
+    "test:cov": "craco test --coverage",
+    "test:debug": "craco --inspect-brk test --runInBand"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -13,7 +13,7 @@ const numCardElement = 50;
 
 // Main Chart
 
-let label = Array(numElement).fill('');
+const label = Array(numElement).fill('');
 
 const mainChartOpts = {
   tooltips: {
@@ -115,7 +115,7 @@ const mainChartData = {
 
 // Card Charts
 
-let miniLabel = Array(numCardElement).fill('');
+const miniLabel = Array(numCardElement).fill('');
 
 // Power
 const cardChartData1 = {

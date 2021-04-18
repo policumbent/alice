@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import {
@@ -12,8 +12,11 @@ import {
   cardChartOpts4,
 } from './costants';
 import { filterReserved } from 'components/utils';
+import { ICardChart, IChart } from './types';
 
-const CardChart = ({ state, type, data, history, opts }) => {
+const CardChart = (props: ICardChart) => {
+  const { state, type, data, history, opts } = props;
+
   const initValue = {
     ...state,
     datasets: [
@@ -27,15 +30,15 @@ const CardChart = ({ state, type, data, history, opts }) => {
   const [line, setLine] = useState(initValue);
 
   const updateLine = useCallback(() => {
-    let value = filterReserved(data[type]);
+    const value = filterReserved(data[type]);
 
     if (value !== null) {
-      let oldDataSet = { ...line.datasets[0] };
-      let newData = [...oldDataSet.data.slice(1)];
+      const oldDataSet = { ...line.datasets[0] };
+      const newData = [...oldDataSet.data.slice(1)];
 
       newData.push(value);
 
-      setLine((l) => {
+      setLine((l: any) => {
         return {
           ...l,
           datasets: [
@@ -56,7 +59,9 @@ const CardChart = ({ state, type, data, history, opts }) => {
   return <Line data={line} options={opts} />;
 };
 
-const PowerCard = ({ data, history }) => {
+const PowerCard = (props: IChart) => {
+  const { data, history } = props;
+
   return (
     <CardChart
       state={cardChartData1}
@@ -68,7 +73,9 @@ const PowerCard = ({ data, history }) => {
   );
 };
 
-const CadenceCard = ({ data, history }) => {
+const CadenceCard = (props: IChart) => {
+  const { data, history } = props;
+
   return (
     <CardChart
       state={cardChartData2}
@@ -80,7 +87,9 @@ const CadenceCard = ({ data, history }) => {
   );
 };
 
-const SpeedCard = ({ data, history }) => {
+const SpeedCard = (props: IChart) => {
+  const { data, history } = props;
+
   return (
     <CardChart
       state={cardChartData3}
@@ -92,7 +101,9 @@ const SpeedCard = ({ data, history }) => {
   );
 };
 
-const HRCard = ({ data, history }) => {
+const HRCard = (props: IChart) => {
+  const { data, history } = props;
+
   return (
     <CardChart
       state={cardChartData4}

@@ -237,7 +237,7 @@ const Dashboard = () => {
                   position={position}
                   options={options}
                   track={config.trackName}
-                  bikeName={bikeName}
+                  bikeName={data.bikeName}
                 />
               </div>
             </CardBody>
