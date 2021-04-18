@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import {
   Button,
   Col,
@@ -28,7 +28,7 @@ class Page404 extends Component {
                     <i className="fa fa-search"></i>
                   </InputGroupText>
                 </InputGroupAddon>
-                <Input size="16" type="text" placeholder="What are you looking for?" />
+                <Input size={16} type="text" placeholder="What are you looking for?" />
                 <InputGroupAddon addonType="append">
                   <Button color="info">Search</Button>
                 </InputGroupAddon>

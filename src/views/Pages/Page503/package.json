@@ -2,5 +2,5 @@
   "name": "page503",
   "version": "0.0.0",
   "private": true,
-  "main": "./Page503.jsx"
+  "main": "./Page503.tsx"
 }

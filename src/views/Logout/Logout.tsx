@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap';
 

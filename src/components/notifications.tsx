@@ -29,10 +29,10 @@ const Notifications = () => {
   // 5 secs polling on notifications api
   const notificationsPolling = () => {
     setInterval(async () => {
-      let notes = await api.getNotifications(counter);
+      const notes = await api.getNotifications(counter);
 
       notes.forEach((n: any) => {
-        let note: Note = {
+        const note: Note = {
           message: n.message,
           type: n.public ? 'info' : 'warning',
           ...base,

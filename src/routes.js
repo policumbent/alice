@@ -1,10 +1,10 @@
-import React from 'react';
-import DefaultLayout from './containers/DefaultLayout';
+import { lazy } from 'react';
+import DefaultLayout from 'containers/DefaultLayout';
 
-const Dashboard = React.lazy(() => import('./views/Dashboard/Dashboard'));
-const Credits = React.lazy(() => import('./views/Credits'));
-const Login = React.lazy(() => import('./views/Login'));
-const Logout = React.lazy(() => import('./views/Logout'));
+const Dashboard = lazy(() => import('views/Dashboard'));
+const Credits = lazy(() => import('views/Credits'));
+const Login = lazy(() => import('views/Login'));
+const Logout = lazy(() => import('views/Logout'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [

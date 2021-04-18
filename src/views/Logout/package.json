@@ -2,5 +2,5 @@
   "name": "logout",
   "version": "0.0.0",
   "private": true,
-  "main": "./Logout.jsx"
+  "main": "./Logout.tsx"
 }
