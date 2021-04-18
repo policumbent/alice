@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Countdown from 'react-countdown';
 import { Modal, ModalHeader, ModalBody, ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap';
 import {
@@ -10,15 +10,16 @@ import {
   numCardElement,
   numElement,
 } from './Graph';
-import { LeafletMap, options } from './Map';
-import Extra from './Extra';
-
 import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
 
+import { LeafletMap, options } from './Map';
+import Extra from './Extra';
+
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
+import { createData } from './Graph/types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 const defaultData = {
@@ -59,13 +60,8 @@ const Dashboard = () => {
   const loading = data === defaultData || history === defaultHistory;
 
   const updateHistory = useCallback((history) => {
-    let chart = history.map((e) => ({
-      heartrate: e.heartrate,
-      cadence: e.cadence,
-      power: e.power,
-      speed: e.speed,
-    }));
-    let miniChart = chart.slice(numCardElement, chart.length - numCardElement);
+    const chart = history.map((e: typeof defaultData) => createData(e));
+    const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
 
     setHistory({ chart, miniChart });
   }, []);
@@ -95,7 +91,6 @@ const Dashboard = () => {
 
         updateHistory(h);
         updateData(d);
-        fetchData();
       }
     },
     // eslint-disable-next-line
@@ -122,13 +117,14 @@ const Dashboard = () => {
   const fetchInit = async () => {
     const config = await api.getConfig();
     await updateConfig(config);
+    await fetchData();
+
     setPolling(true);
   };
 
   const fetchData = async () => {
     const data = await api.getData(config.bikeName);
     const weather = await api.getWeatherSingleStation(3);
-
     updateData(data);
 
     // NOTE: weather is private for not logged users
@@ -233,7 +229,12 @@ const Dashboard = () => {
           <Card>
             <CardBody>
               <div className="central-chart">
-                <LeafletMap position={position} options={options} track={config.trackName} />
+                <LeafletMap
+                  position={position}
+                  options={options}
+                  track={config.trackName}
+                  bikeName={config.bikeName}
+                />
               </div>
             </CardBody>
           </Card>

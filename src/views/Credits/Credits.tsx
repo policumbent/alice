@@ -1,4 +1,3 @@
-import React from 'react';
 import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap';
 
 import { FaCode, FaHeart, FaGithub } from 'react-icons/fa';

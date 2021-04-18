@@ -2,5 +2,5 @@
   "name": "credits",
   "version": "0.0.0",
   "private": true,
-  "main": "./Credits.jsx"
+  "main": "./Credits.tsx"
 }

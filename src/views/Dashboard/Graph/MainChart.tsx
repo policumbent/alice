@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { mainChartData, mainChartOpts } from './costants';
 import { filterReserved } from 'components/utils';
+import { IChart } from './types';
 
-const MainChart = ({ data, history }) => {
+const MainChart = (props: IChart) => {
+  const { data, history } = props;
+
   const initValue = () => {
     const s = mainChartData;
     const power = history.map((e) => filterReserved(e.power));

@@ -1,5 +1,11 @@
 const host = 'https://poliserver.duckdns.org:9002';
 
+// Interface for login form
+interface Login {
+  username: string | undefined;
+  password: string | undefined;
+}
+
 const dataService = {
   isLogged: function (): boolean {
     const jwt = localStorage.getItem('jwt');
@@ -45,11 +51,8 @@ const dataService = {
     localStorage.removeItem('jwt');
   },
 
-  login: function (username: string, password: string): void {
-    const v = { username, password };
-    // console.log(v)
-
-    fetch(host + '/authenticate', {
+  login: async function (v: Login): Promise<boolean> {
+    await fetch(host + '/authenticate', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -60,6 +63,8 @@ const dataService = {
       .then((data) => data.json())
       .then((data) => this.setJwt(data.token))
       .catch((err) => console.error(err));
+
+    return this.isLogged();
   },
 
   getHeaders: function (): Headers {

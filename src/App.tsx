@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Notifications from 'components/notifications';
@@ -31,9 +29,9 @@ const App = () => {
       <Notifications />
       <HashRouter hashType="noslash">
         <Switch>
-          <Route path="/404" name="Page 404" component={Page404} />
-          <Route path="/500" name="Page 500" component={Page500} />
-          <Route path="/" name="Home" component={DefaultLayout} />
+          <Route path="/404" component={Page404} />
+          <Route path="/500" component={Page500} />
+          <Route path="/" component={DefaultLayout} />
         </Switch>
       </HashRouter>
     </div>

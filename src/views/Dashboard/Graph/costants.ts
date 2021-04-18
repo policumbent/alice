@@ -13,7 +13,7 @@ const numCardElement = 50;
 
 // Main Chart
 
-let label = Array(numElement).fill('');
+const label = Array(numElement).fill('');
 
 const mainChartOpts = {
   tooltips: {
@@ -23,7 +23,7 @@ const mainChartOpts = {
     mode: 'index',
     position: 'nearest',
     callbacks: {
-      labelColor: function (tooltipItem, chart) {
+      labelColor: function (tooltipItem: any, chart: any) {
         return {
           backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor,
         };
@@ -115,7 +115,7 @@ const mainChartData = {
 
 // Card Charts
 
-let miniLabel = Array(numCardElement).fill('');
+const miniLabel = Array(numCardElement).fill('');
 
 // Power
 const cardChartData1 = {
@@ -320,6 +320,12 @@ const cardChartOpts4 = {
     duration: 0,
   },
 };
+
+export type ccOpts1 = typeof cardChartOpts1;
+export type ccOpts2 = typeof cardChartOpts2;
+export type ccOpts3 = typeof cardChartOpts3;
+export type ccOpts4 = typeof cardChartOpts4;
+export type ccData = typeof cardChartData1;
 
 export {
   mainChartOpts,

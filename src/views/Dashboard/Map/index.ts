@@ -1,12 +1,10 @@
 import LeafletMap from './LeafletMap';
 import marker from './assets/taurus_icon.png';
 import L from 'leaflet';
+import { createView } from './types';
 
 const options = {
-  view: {
-    position: [40.433212, -117.053714],
-    zoom: 12,
-  },
+  view: createView(),
   style: { height: 'inherit' },
   tile: {
     url:

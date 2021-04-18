@@ -33,8 +33,17 @@
     "@babel/helper-builder-react-jsx-experimental": "^7.12.11",
     "@babel/helper-regex": "^7.10.5",
     "@craco/craco": "^6.1.1",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.22",
+    "@types/leaflet": "^1.7.0",
+    "@types/mocha": "^8.2.2",
     "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-leaflet": "^2.8.1",
+    "@types/react-loadable": "^5.5.5",
     "@types/react-notifications-component": "^2.4.0",
+    "@types/react-router-dom": "^5.1.7",
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
@@ -52,6 +61,7 @@
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "react-test-renderer": "^17.0.1",
     "typescript": "^4.2.3",
@@ -72,7 +82,9 @@
     "start": "BROWSER=none craco start",
     "build": "craco build",
     "format": "prettier --write \"**/*.{js,ts,jsx,tsx,json,yml,scss,css}\"",
-    "eject": "react-scripts eject"
+    "test": "craco test",
+    "test:cov": "craco test --coverage",
+    "test:debug": "craco --inspect-brk test --runInBand"
   },
   "eslintConfig": {
     "extends": "react-app"

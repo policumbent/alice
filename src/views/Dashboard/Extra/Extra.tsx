@@ -1,7 +1,24 @@
-import React from 'react';
 import { Card, CardBody, Col, Row } from 'reactstrap';
 
-const Extra = ({ time, gear, distance, altitude, showExtra, weather }) => {
+interface Weather {
+  pressure: number;
+  temperature: number;
+  windDirection: number;
+  windSpeed: number;
+}
+
+interface IExtra {
+  altitude: number;
+  distance: number;
+  gear: number;
+  showExtra: boolean;
+  time: number;
+  weather: Weather;
+}
+
+const Extra = (props: IExtra) => {
+  const { time, gear, distance, altitude, showExtra, weather } = props;
+
   return !showExtra ? null : (
     <>
       <Col xs="12" sm="6" lg="2">
