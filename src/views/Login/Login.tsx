@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Col,
   Row,
@@ -15,21 +15,23 @@ import {
 import { useHistory } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 
-import { default as api } from '../../api';
+import { default as api } from 'api';
 
 const Login = () => {
   const history = useHistory();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const handleUsername = (event) => setUsername(event.target.value);
-  const handlePassword = (event) => setPassword(event.target.value);
+  const handleSubmit = async () => {
+    const loginSuccess = await api.login({ username, password });
 
-  const handleClick = () => {
-    api.login(username, password);
-
-    setTimeout(() => history.push('/'), 1000);
+    if (loginSuccess) {
+      setTimeout(() => history.push('/'), 1000);
+    }
+    // @todo: Handle failed login
+    else {
+    }
   };
 
   return (
@@ -40,12 +42,11 @@ const Login = () => {
             <CardHeader>
               <h2 className="text-center">Login</h2>
             </CardHeader>
-            <CardBody className="text-center">
-              <Form action="" encType="multipart/form-data" className="form-horizontal">
-                <FormGroup row></FormGroup>
+            <Form encType="multipart/form-data" className="form-horizontal">
+              <CardBody className="text-center">
                 <FormGroup row>
                   <Col sm="12">
-                    <Label>Username</Label>
+                    <Label for="username">Username</Label>
                   </Col>
                   <Col sm="12">
                     <Input
@@ -53,34 +54,33 @@ const Login = () => {
                       type="text"
                       name="username"
                       placeholder="Username"
-                      value={username}
-                      onChange={handleUsername}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
                 <FormGroup row>
                   <Col sm="12">
-                    <Label>Password</Label>
+                    <Label for="password">Password</Label>
                   </Col>
                   <Col sm="12">
                     <Input
                       className="text-center"
                       type="password"
-                      pattern="*"
                       placeholder="Password"
-                      onChange={handlePassword}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </Col>
                 </FormGroup>
-              </Form>
-            </CardBody>
+              </CardBody>
+            </Form>
+
             <CardFooter>
               <Button
+                onClick={handleSubmit}
                 type="submit"
                 data-dismiss="alert"
                 size="sl"
-                color="success"
-                onClick={handleClick}>
+                color="success">
                 <FaSignInAlt />
                 &ensp;Sign in
               </Button>
