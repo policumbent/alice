@@ -1,15 +1,13 @@
-export interface Weather {
-  pressure: number;
-  temperature: number;
-  windDirection: number;
-  windSpeed: number;
+export interface IExtra {
+  bgColor: string;
+  name: string;
+  unit?: string;
+  value: number;
 }
 
-export interface IExtra {
-  altitude: number;
-  distance: number;
-  gear: number;
-  showExtra: boolean;
-  time: number;
-  weather: Weather;
+export interface IWCard {
+  bgColor: string;
+  name: [string, string];
+  unit?: [string, string];
+  value: [number, number];
 }
