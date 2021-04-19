@@ -97,17 +97,19 @@
   ],
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
+      "src/**/*.{js,jsx,ts,tsx}",
       "!**/*index.{js,ts,tsx}",
-      "!**/*types.ts",
-      "!src/serviceWorkerRegister.js",
-      "!src/service-worker.js"
+      "!**/*.types.ts",
+      "!src/routes.ts",
+      "!src/serviceWorkerRegister.ts",
+      "!src/service-worker.ts"
     ],
     "coveragePathIgnorePatterns": [
       "./src/*/*.types.{ts,tsx}",
       "./src/index.tsx",
-      "src/serviceWorkerRegister.js",
-      "src/service-worker.js"
+      "./src/routes.ts",
+      "./src/serviceWorkerRegister.ts",
+      "./src/service-worker.ts"
     ],
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
