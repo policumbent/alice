@@ -1,20 +1,5 @@
 import { Card, CardBody, Col, Row } from 'reactstrap';
-
-interface Weather {
-  pressure: number;
-  temperature: number;
-  windDirection: number;
-  windSpeed: number;
-}
-
-interface IExtra {
-  altitude: number;
-  distance: number;
-  gear: number;
-  showExtra: boolean;
-  time: number;
-  weather: Weather;
-}
+import { IExtra } from './types';
 
 const Extra = (props: IExtra) => {
   const { time, gear, distance, altitude, showExtra, weather } = props;

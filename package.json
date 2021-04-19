@@ -97,10 +97,25 @@
   ],
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!**/*index.js",
-      "!src/serviceWorker.js",
-      "!src/polyfill.js"
-    ]
+      "src/**/*.{ts,tsx}",
+      "!**/*index.{js,ts,tsx}",
+      "!**/*types.ts",
+      "!src/serviceWorkerRegister.js",
+      "!src/service-worker.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./src/*/*.types.{ts,tsx}",
+      "./src/index.tsx",
+      "src/serviceWorkerRegister.js",
+      "src/service-worker.js"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "src/(.*)$": "<rootDir>/src/$1"
+    }
   }
 }
