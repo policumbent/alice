@@ -1,92 +1,51 @@
 import { Card, CardBody, Col, Row } from 'reactstrap';
+import { IExtra, IWCard } from './types';
 
-interface Weather {
-  pressure: number;
-  temperature: number;
-  windDirection: number;
-  windSpeed: number;
-}
+export const ExtraCard = ({ name, unit, value, bgColor }: IExtra) => {
+  const textColor = bgColor === 'secondary' || bgColor === 'yellow' ? 'text-dark' : 'text-white';
+  const strUnit = unit ? ` [${unit}]` : null;
 
-interface IExtra {
-  altitude: number;
-  distance: number;
-  gear: number;
-  showExtra: boolean;
-  time: number;
-  weather: Weather;
-}
-
-const Extra = (props: IExtra) => {
-  const { time, gear, distance, altitude, showExtra, weather } = props;
-
-  return !showExtra ? null : (
-    <>
-      <Col xs="12" sm="6" lg="2">
-        <Card className="text-white bg-pink">
-          <CardBody className="pb-2">
-            <div>Time [s]</div>
-            <div className="text-value text-center">{time}</div>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col xs="12" sm="6" lg="2">
-        <Card className="text-white bg-dark">
-          <CardBody className="pb-2">
-            <div>Gear</div>
-            <div className="text-value text-center">{gear}</div>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col xs="12" sm="6" lg="2">
-        <Card className="text-dark bg-secondary">
-          <CardBody className="pb-2">
-            <div>Distance [m]</div>
-            <div className="text-value text-center">{distance}</div>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col xs="12" sm="6" lg="2">
-        <Card className="text-dark bg-yellow">
-          <CardBody className="pb-2">
-            <div>Altitude [m]</div>
-            <div className="text-value text-center">{altitude}</div>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col xs="12" sm="6" lg="2">
-        <Card className="text-white bg-purple">
-          <CardBody className="pb-2">
-            <Row>
-              <Col xs="6" sm="6" lg="6">
-                <div className="text-center">Temp [°C]</div>
-                <div className="text-value text-center">{weather.temperature}</div>
-              </Col>
-              <Col xs="6" sm="6" lg="6">
-                <div className="text-center">Press [hPa]</div>
-                <div className="text-value text-center">{weather.pressure}</div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </Col>{' '}
-      <Col xs="12" sm="6" lg="2">
-        <Card className="text-white bg-behance">
-          <CardBody className="pb-2">
-            <Row>
-              <Col xs="6" sm="6" lg="6">
-                <div className="text-center">Wind [m/s]</div>
-                <div className="text-value text-center">{weather.windSpeed}</div>
-              </Col>
-              <Col xs="6" sm="6" lg="6">
-                <div className="text-center">Direction [°]</div>
-                <div className="text-value text-center">{weather.windDirection}</div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </Col>
-    </>
+  return (
+    <Col xs="12" sm="6" lg="2">
+      <Card className={`${textColor} bg-${bgColor}`}>
+        <CardBody className="pb-2">
+          <div>
+            {name}
+            {strUnit}
+          </div>
+          <div className="text-value text-center">{value}</div>
+        </CardBody>
+      </Card>
+    </Col>
   );
 };
 
-export default Extra;
+export const WeatherCard = ({ name, unit, value, bgColor }: IWCard) => {
+  const strUnit1 = unit ? ` [${unit[0]}]` : null;
+  const strUnit2 = unit ? ` [${unit[1]}]` : null;
+
+  return (
+    <Col xs="12" sm="6" lg="2">
+      <Card className={`text-white bg-${bgColor}`}>
+        <CardBody className="pb-2">
+          <Row>
+            <Col xs="6" sm="6" lg="6">
+              <div className="text-center">
+                {name[0]}
+                {strUnit1}
+              </div>
+              <div className="text-value text-center">{value[0]}</div>
+            </Col>
+            <Col xs="6" sm="6" lg="6">
+              <div className="text-center">
+                {name[1]}
+                {strUnit2}
+              </div>
+              <div className="text-value text-center">{value[1]}</div>
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
+    </Col>
+  );
+};

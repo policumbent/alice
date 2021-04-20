@@ -14,9 +14,7 @@ import {
 import { filterReserved } from 'components/utils';
 import { ICardChart, IChart } from './types';
 
-const CardChart = (props: ICardChart) => {
-  const { state, type, data, history, opts } = props;
-
+const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
   const initValue = {
     ...state,
     datasets: [
@@ -59,9 +57,7 @@ const CardChart = (props: ICardChart) => {
   return <Line data={line} options={opts} />;
 };
 
-const PowerCard = (props: IChart) => {
-  const { data, history } = props;
-
+const PowerCard = ({ data, history }: IChart) => {
   return (
     <CardChart
       state={cardChartData1}
@@ -73,9 +69,7 @@ const PowerCard = (props: IChart) => {
   );
 };
 
-const CadenceCard = (props: IChart) => {
-  const { data, history } = props;
-
+const CadenceCard = ({ data, history }: IChart) => {
   return (
     <CardChart
       state={cardChartData2}
@@ -87,9 +81,7 @@ const CadenceCard = (props: IChart) => {
   );
 };
 
-const SpeedCard = (props: IChart) => {
-  const { data, history } = props;
-
+const SpeedCard = ({ data, history }: IChart) => {
   return (
     <CardChart
       state={cardChartData3}
@@ -101,9 +93,7 @@ const SpeedCard = (props: IChart) => {
   );
 };
 
-const HRCard = (props: IChart) => {
-  const { data, history } = props;
-
+const HRCard = ({ data, history }: IChart) => {
   return (
     <CardChart
       state={cardChartData4}

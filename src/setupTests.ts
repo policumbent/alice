@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -13,3 +15,7 @@ if (global.document) {
     },
   });
 }
+
+jest.mock('react-chartjs-2', () => ({
+  Bar: () => null,
+}));

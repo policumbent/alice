@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Countdown from 'react-countdown';
 import { Modal, ModalHeader, ModalBody, ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap';
 import {
@@ -15,11 +15,11 @@ import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
 
 import { LeafletMap, options } from './Map';
-import Extra from './Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
 import { createData } from './Graph/types';
+import { ExtraCard, WeatherCard } from './Extra';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 const defaultData = {
@@ -56,8 +56,6 @@ const Dashboard = () => {
 
   // eslint-disable-next-line
   const [_, setPolling] = usePolling(() => fetchData(), 1000);
-
-  const loading = data === defaultData || history === defaultHistory;
 
   const updateHistory = useCallback((history) => {
     const chart = history.map((e: typeof defaultData) => createData(e));
@@ -133,11 +131,12 @@ const Dashboard = () => {
     }
   };
 
-  const Loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  const loading = data === defaultData || history === defaultHistory;
+  if (loading) {
+    return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  }
 
-  return loading ? (
-    Loading
-  ) : (
+  return (
     <article className="animated fadeIn">
       {/* Countdown per la live */}
       <Modal isOpen={modalOpen} className={'modal-info'}>
@@ -160,7 +159,7 @@ const Dashboard = () => {
               <div className="text-value">{data.power === -1 ? 'Reserved' : data.power}</div>
               <div>Power [W]</div>
             </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
+            <div className="chart-wrapper card-chart">
               <PowerCard data={data} history={history.miniChart} />
             </div>
           </Card>
@@ -175,7 +174,7 @@ const Dashboard = () => {
               <div className="text-value">{data.cadence}</div>
               <div>Cadence [rpm]</div>
             </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
+            <div className="chart-wrapper card-chart">
               <CadenceCard data={data} history={history.miniChart} />
             </div>
           </Card>
@@ -190,7 +189,7 @@ const Dashboard = () => {
               <div className="text-value">{Math.round(data.speed * 100) / 100}</div>
               <div>Speed [km/h]</div>
             </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
+            <div className="chart-wrapper card-chart">
               <SpeedCard data={data} history={history.miniChart} />
             </div>
           </Card>
@@ -207,7 +206,7 @@ const Dashboard = () => {
               </div>
               <div>Heartrate [bpm]</div>
             </CardBody>
-            <div className="chart-wrapper" style={{ height: '60px' }}>
+            <div className="chart-wrapper card-chart">
               <HRCard data={data} history={history.miniChart} />
             </div>
           </Card>
@@ -243,14 +242,22 @@ const Dashboard = () => {
 
       {/* Row degli extra */}
       <Row>
-        <Extra
-          showExtra={true}
-          altitude={data.altitude}
-          distance={data.distance}
-          gear={data.gear}
-          time={data.time}
-          weather={weather}
+        <ExtraCard name="Time" unit="m" bgColor="pink" value={data.time} />
+        <ExtraCard name="Gear" bgColor="dark" value={data.gear} />
+        <ExtraCard name="Distance" unit="m" bgColor="secondary" value={data.distance} />
+        <ExtraCard name="Altitude" unit="m" bgColor="yellow" value={data.altitude} />
+        <WeatherCard
+          name={['Temp', 'Press']}
+          unit={['°C', 'hPa']}
+          bgColor="purple"
+          value={[weather.temperature, weather.pressure]}
         />
+        <WeatherCard
+          name={['Wind', 'Direction']}
+          unit={['m/s', '°']}
+          bgColor="behance"
+          value={[weather.windSpeed, weather.windDirection]}
+        />{' '}
       </Row>
     </article>
   );

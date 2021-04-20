@@ -22,7 +22,7 @@
     "react-icons": "^3.9.0",
     "react-leaflet": "^2.6.1",
     "react-loadable": "^5.5.0",
-    "react-notifications-component": "^2.3.0",
+    "react-notifications-component": "^3.0.0",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",
     "react-ticker": "^1.2.2",
@@ -34,7 +34,6 @@
     "@babel/helper-regex": "^7.10.5",
     "@craco/craco": "^6.1.1",
     "@types/enzyme": "^3.10.8",
-    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^26.0.22",
     "@types/leaflet": "^1.7.0",
     "@types/mocha": "^8.2.2",
@@ -48,8 +47,9 @@
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "babel-eslint": "^10.1.0",
+    "craco-alias": "^2.2.0",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-adapter-preact-pure": "^3.1.0",
     "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-react-app": "^6.0.0",
@@ -97,10 +97,27 @@
   ],
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!**/*index.js",
-      "!src/serviceWorker.js",
-      "!src/polyfill.js"
-    ]
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!**/*index.{js,ts,tsx}",
+      "!**/*.types.ts",
+      "!src/routes.ts",
+      "!src/serviceWorkerRegister.ts",
+      "!src/service-worker.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./src/*/*.types.{ts,tsx}",
+      "./src/index.tsx",
+      "./src/routes.ts",
+      "./src/serviceWorkerRegister.ts",
+      "./src/service-worker.ts"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "src/(.*)$": "<rootDir>/src/$1"
+    }
   }
 }

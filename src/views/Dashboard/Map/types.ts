@@ -1,4 +1,5 @@
-import { LatLngTuple } from 'leaflet';
+import L, { LatLngTuple } from 'leaflet';
+import { defViews } from './constants';
 
 export interface View {
   position: LatLngTuple;
@@ -7,20 +8,26 @@ export interface View {
 
 export function createView(track?: string): View {
   switch (track) {
-    case 'bm':
-      return { position: [40.433212, -117.053714], zoom: 12 };
     case 'orbassano':
-      return { position: [45.009978, 7.560453], zoom: 16 };
+      return defViews.orbassano;
     case 'balocco':
-      return { position: [45.478673, 8.300212], zoom: 14 };
+      return defViews.balocco;
     default:
-      return { position: [40.433212, -117.053714], zoom: 12 };
+      return defViews.battleMontain;
   }
+}
+
+export interface mapOpts {
+  circle: { start: LatLngTuple; end: LatLngTuple; catching: LatLngTuple; radius: number };
+  icon: L.Icon;
+  style: any;
+  tile: { url: string; attribution: string; apiKey: string };
+  view: View;
 }
 
 export interface ILeafletMap {
   track: string;
-  options: any;
+  options: mapOpts;
   position: LatLngTuple;
   bikeName: string;
 }

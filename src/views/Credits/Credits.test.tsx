@@ -1,9 +1,8 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import Page500 from './Page500';
+import Credits from './Credits';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Page500 />, div);
+  ReactDOM.render(<Credits />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

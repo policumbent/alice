@@ -1,3 +1,3 @@
-import Extra from './Extra';
+import { ExtraCard, WeatherCard } from './Extra';
 
-export default Extra;
+export { ExtraCard, WeatherCard };

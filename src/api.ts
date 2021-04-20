@@ -68,7 +68,7 @@ const dataService = {
   },
 
   getHeaders: function (): Headers {
-    let headers = new Headers();
+    const headers = new Headers();
     if (this.isLogged()) headers.set('Authorization', 'Bearer ' + this.getJwt());
     return headers;
   },
@@ -126,6 +126,7 @@ const dataService = {
   getWeatherSingleStation: async function (id: number) {
     const url = `${host}/v3/weather/last/${id}`;
 
+    // TODO: print errors on catch
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
         if (r.status === 200) return r;

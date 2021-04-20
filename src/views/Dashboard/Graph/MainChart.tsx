@@ -5,9 +5,7 @@ import { mainChartData, mainChartOpts } from './costants';
 import { filterReserved } from 'components/utils';
 import { IChart } from './types';
 
-const MainChart = (props: IChart) => {
-  const { data, history } = props;
-
+const MainChart = ({ data, history }: IChart) => {
   const initValue = () => {
     const s = mainChartData;
     const power = history.map((e) => filterReserved(e.power));
