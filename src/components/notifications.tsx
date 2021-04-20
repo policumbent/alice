@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import ReactNotification, { ReactNotificationOptions, store } from 'react-notifications-component';
 import { default as api } from 'api';
@@ -24,12 +24,12 @@ const base: Note = {
 };
 
 const Notifications = () => {
-  let counter = 0;
+  const counter = useRef(0);
 
   // 5 secs polling on notifications api
   const notificationsPolling = () => {
     setInterval(async () => {
-      const notes = await api.getNotifications(counter);
+      const notes = await api.getNotifications(counter.current);
 
       notes.forEach((n: any) => {
         const note: Note = {
@@ -42,7 +42,7 @@ const Notifications = () => {
 
         store.addNotification(note);
 
-        counter = n.id;
+        counter.current = n.id;
       });
     }, 5 * 1000);
   };
