@@ -31,6 +31,14 @@ const defaultData = {
   distance: 0,
   gear: 0,
   altitude: 0,
+  cpuTemp: 0,
+  accX: 0,
+  accXMax: 0,
+  accY: 0,
+  accYMax: 0,
+  accZ: 0,
+  accZMax: 0,
+  timestamp: 0
 };
 const defaultHistory = {
   chart: [],
@@ -258,6 +266,30 @@ const Dashboard = () => {
           bgColor="behance"
           value={[weather.windSpeed, weather.windDirection]}
         />{' '}
+      </Row>
+      <Row>
+        {/*// todo: riga da mostrare solo se loggati*/}
+        <WeatherCard
+          name={['Acc X', 'Acc X ']}
+          unit={['m/s²', 'm/s²']}
+          bgColor="cyan"
+          value={[data.accX, data.accXMax]}
+        />
+        <WeatherCard
+          name={['Acc Y', 'Acc Y ']}
+          unit={['m/s²', 'm/s²']}
+          bgColor="indigo"
+          value={[data.accY, data.accYMax]}
+        />
+        <WeatherCard
+          name={['Acc Z', 'Acc Z ']}
+          unit={['m/s²', 'm/s²']}
+          bgColor="teal"
+          value={[data.accZ, data.accZMax]}
+        />
+        <ExtraCard name="CpuTemp" unit="°C" bgColor="red" value={data.cpuTemp} />
+        <ExtraCard name="Last Update" unit="" bgColor="gray" value={data.timestamp} />
+
       </Row>
     </article>
   );
