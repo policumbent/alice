@@ -43,7 +43,7 @@ const LeafletMap = ({ position, options, track, bikeName }: ILeafletMap) => {
       </Circle>
       <Marker key={bikeName} position={markerPosition} icon={options.icon}>
         <Popup>
-          <b>TaurusX</b>
+          <b>{bikeName}</b>
         </Popup>
       </Marker>
     </Map>
