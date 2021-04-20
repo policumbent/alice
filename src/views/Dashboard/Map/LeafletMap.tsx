@@ -3,9 +3,7 @@ import { useState, useEffect } from 'react';
 import { Map, Marker, Circle, Popup, TileLayer } from 'react-leaflet';
 import { ILeafletMap, createView } from './types';
 
-const LeafletMap = (props: ILeafletMap) => {
-  const { position, options, track, bikeName } = props;
-
+const LeafletMap = ({ position, options, track, bikeName }: ILeafletMap) => {
   // opzioni per la mappa
   const { tile, style, circle } = options;
   const view = createView(track);

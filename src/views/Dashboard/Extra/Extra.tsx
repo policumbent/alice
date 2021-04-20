@@ -1,8 +1,7 @@
 import { Card, CardBody, Col, Row } from 'reactstrap';
 import { IExtra, IWCard } from './types';
 
-export const ExtraCard = (props: IExtra) => {
-  const { name, unit, value, bgColor } = props;
+export const ExtraCard = ({ name, unit, value, bgColor }: IExtra) => {
   const textColor = bgColor === 'secondary' || bgColor === 'yellow' ? 'text-dark' : 'text-white';
   const strUnit = unit ? ` [${unit}]` : null;
 
@@ -21,8 +20,7 @@ export const ExtraCard = (props: IExtra) => {
   );
 };
 
-export const WeatherCard = (props: IWCard) => {
-  const { name, unit, value, bgColor } = props;
+export const WeatherCard = ({ name, unit, value, bgColor }: IWCard) => {
   const strUnit1 = unit ? ` [${unit[0]}]` : null;
   const strUnit2 = unit ? ` [${unit[1]}]` : null;
 
