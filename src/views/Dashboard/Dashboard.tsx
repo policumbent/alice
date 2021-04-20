@@ -57,8 +57,6 @@ const Dashboard = () => {
   // eslint-disable-next-line
   const [_, setPolling] = usePolling(() => fetchData(), 1000);
 
-  const loading = data === defaultData || history === defaultHistory;
-
   const updateHistory = useCallback((history) => {
     const chart = history.map((e: typeof defaultData) => createData(e));
     const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
@@ -133,11 +131,12 @@ const Dashboard = () => {
     }
   };
 
-  const Loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  const loading = data === defaultData || history === defaultHistory;
+  if (loading) {
+    return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  }
 
-  return loading ? (
-    Loading
-  ) : (
+  return (
     <article className="animated fadeIn">
       {/* Countdown per la live */}
       <Modal isOpen={modalOpen} className={'modal-info'}>
