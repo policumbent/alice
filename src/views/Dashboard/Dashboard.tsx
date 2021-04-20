@@ -38,7 +38,7 @@ const defaultData = {
   accYMax: 0,
   accZ: 0,
   accZMax: 0,
-  timestamp: 0
+  timestamp: 0,
 };
 const defaultHistory = {
   chart: [],
@@ -265,10 +265,11 @@ const Dashboard = () => {
           unit={['m/s', '°']}
           bgColor="behance"
           value={[weather.windSpeed, weather.windDirection]}
-        />{' '}
+        />
       </Row>
-      <Row>
-        {/*// todo: riga da mostrare solo se loggati*/}
+
+      {/*// Row riservata agli utenti loggati */}
+      <Row hidden={!api.isLogged()}>
         <WeatherCard
           name={['Acc X', 'Acc X ']}
           unit={['m/s²', 'm/s²']}
@@ -288,8 +289,7 @@ const Dashboard = () => {
           value={[data.accZ, data.accZMax]}
         />
         <ExtraCard name="CpuTemp" unit="°C" bgColor="red" value={data.cpuTemp} />
-        <ExtraCard name="Last Update" unit="" bgColor="gray" value={data.timestamp} />
-
+        <ExtraCard name="Last Update" bgColor="gray" value={data.timestamp} />
       </Row>
     </article>
   );
