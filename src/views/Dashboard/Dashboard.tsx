@@ -31,6 +31,14 @@ const defaultData = {
   distance: 0,
   gear: 0,
   altitude: 0,
+  cpuTemp: 0,
+  accX: 0,
+  accXMax: 0,
+  accY: 0,
+  accYMax: 0,
+  accZ: 0,
+  accZMax: 0,
+  timestamp: 0,
 };
 const defaultHistory = {
   chart: [],
@@ -41,6 +49,7 @@ const defaultWeather = {
   windDirection: 0,
   temperature: 0,
   pressure: 0,
+  timestamp: 0
 };
 
 const Dashboard = () => {
@@ -257,7 +266,32 @@ const Dashboard = () => {
           unit={['m/s', '°']}
           bgColor="behance"
           value={[weather.windSpeed, weather.windDirection]}
-        />{' '}
+        />
+      </Row>
+
+      {/*// Row riservata agli utenti loggati */}
+      <Row hidden={!api.isLogged()}>
+        <WeatherCard
+          name={['Acc X', 'Acc X ']}
+          unit={['m/s²', 'm/s²']}
+          bgColor="cyan"
+          value={[data.accX, data.accXMax]}
+        />
+        <WeatherCard
+          name={['Acc Y', 'Acc Y ']}
+          unit={['m/s²', 'm/s²']}
+          bgColor="indigo"
+          value={[data.accY, data.accYMax]}
+        />
+        <WeatherCard
+          name={['Acc Z', 'Acc Z ']}
+          unit={['m/s²', 'm/s²']}
+          bgColor="teal"
+          value={[data.accZ, data.accZMax]}
+        />
+        <ExtraCard name="CpuTemp" unit="°C" bgColor="red" value={data.cpuTemp} />
+        <ExtraCard name="Last Update" bgColor="gray" value={data.timestamp} />
+        <ExtraCard name="Last Weather Update" bgColor="orange" value={weather.timestamp} />
       </Row>
     </article>
   );
