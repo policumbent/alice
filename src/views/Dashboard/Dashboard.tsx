@@ -49,6 +49,7 @@ const defaultWeather = {
   windDirection: 0,
   temperature: 0,
   pressure: 0,
+  timestamp: 0
 };
 
 const Dashboard = () => {
@@ -290,6 +291,7 @@ const Dashboard = () => {
         />
         <ExtraCard name="CpuTemp" unit="°C" bgColor="red" value={data.cpuTemp} />
         <ExtraCard name="Last Update" bgColor="gray" value={data.timestamp} />
+        <ExtraCard name="Last Weather Update" bgColor="orange" value={weather.timestamp} />
       </Row>
     </article>
   );
