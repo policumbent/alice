@@ -49,7 +49,7 @@ const defaultWeather = {
   windDirection: 0,
   temperature: 0,
   pressure: 0,
-  timestamp: 0
+  timestamp: 0,
 };
 
 const Dashboard = () => {
@@ -224,7 +224,7 @@ const Dashboard = () => {
 
       {/* Row del main chart e mappa */}
       <Row>
-        <Col>
+        <Col xs="12" sm="6">
           <Card>
             <CardBody>
               <div className="central-chart">
@@ -233,7 +233,7 @@ const Dashboard = () => {
             </CardBody>
           </Card>
         </Col>
-        <Col>
+        <Col xs="12" sm="6">
           <Card>
             <CardBody>
               <div className="central-chart">

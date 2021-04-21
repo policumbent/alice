@@ -1,7 +1,6 @@
 import { lazy } from 'react';
 import DefaultLayout from 'containers/DefaultLayout';
 
-// @ts-ignore
 const Dashboard = lazy(() => import('views/Dashboard'));
 const Credits = lazy(() => import('views/Credits'));
 const Login = lazy(() => import('views/Login'));

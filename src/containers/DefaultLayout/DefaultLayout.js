@@ -5,8 +5,9 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import { AppFooter, AppHeader } from '@coreui/react';
+
 // routes config
-import routes from '../../routes';
+import routes from 'routes';
 
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -47,11 +48,11 @@ class DefaultLayout extends Component {
             </Suspense>
           </Container>
         </main>
-        <footer className="app-footer-custom fixed-footer-custom">
+        <AppFooter fixed className="ticker-footer">
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>
-        </footer>
+        </AppFooter>
       </div>
     );
   }
