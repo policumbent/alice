@@ -1,6 +1,6 @@
 import { ccData, ccOpts1, ccOpts2, ccOpts3, ccOpts4 } from './costants';
 
-export interface IData {
+export interface IGData {
   [key: string]: number;
 
   cadence: number;
@@ -9,19 +9,19 @@ export interface IData {
   speed: number;
 }
 
-export function createData(d: any): IData {
+export function createData(d: any): IGData {
   const { heartrate, cadence, power, speed } = d;
   return { heartrate, cadence, power, speed };
 }
 
 export interface IChart {
-  data: IData;
-  history: IData[];
+  data: IGData;
+  history: IGData[];
 }
 
 export interface ICardChart {
-  data: IData;
-  history: IData[];
+  data: IGData;
+  history: IGData[];
   opts: ccOpts1 | ccOpts2 | ccOpts3 | ccOpts4;
   state: ccData;
   type: string;
