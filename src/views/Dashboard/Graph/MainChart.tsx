@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { mainChartData, mainChartOpts } from './costants';
-import { filterReserved } from 'components/utils';
+import { filterReserved, isLogged } from 'components/utils';
 import { IChart } from './types';
 
 const MainChart = ({ data, history }: IChart) => {
@@ -51,7 +51,7 @@ const MainChart = ({ data, history }: IChart) => {
     newData4.push(filterReserved(heartrate));
 
     // Show power and hr if logged
-    if (filterReserved(power) || filterReserved(heartrate)) {
+    if (isLogged()) {
       oldDataSet1.hidden = false;
       oldDataSet4.hidden = false;
     }

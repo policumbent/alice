@@ -5,7 +5,7 @@ import Ticker from 'react-ticker';
 import { parseComments, usePolling } from './utils';
 
 const Footer = () => {
-  const [comments, setComments] = useState<string[] | null>();
+  const [comments, setComments] = useState<string[]>();
   const [move, setMove] = useState(true);
 
   // 30 secs polling on comments api
@@ -44,21 +44,21 @@ const Footer = () => {
     // eslint-disable-next-line
   }, []);
 
+  if (!comments) {
+    return null;
+  }
+
   return (
-    <>
-      {!comments ? null : (
-        <div
-          className="ml-auto mr-auto noselect"
-          onFocus={() => moveOption('over')}
-          onMouseOver={() => moveOption('over')}
-          onMouseLeave={() => moveOption('leave')}
-          onTouchStart={() => moveOption('touch')}>
-          <Ticker mode="smooth" offset={'run-in'} move={move} speed={7}>
-            {() => <span>{comments}</span>}
-          </Ticker>
-        </div>
-      )}
-    </>
+    <div
+      className="ml-auto mr-auto noselect"
+      onFocus={() => moveOption('over')}
+      onMouseOver={() => moveOption('over')}
+      onMouseLeave={() => moveOption('leave')}
+      onTouchStart={() => moveOption('touch')}>
+      <Ticker mode="smooth" offset={'run-in'} move={move} speed={7}>
+        {() => <>{comments}</>}
+      </Ticker>
+    </div>
   );
 };
 

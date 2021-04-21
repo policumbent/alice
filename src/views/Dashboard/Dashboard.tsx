@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Countdown from 'react-countdown';
 import { Modal, ModalHeader, ModalBody, ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap';
+import { FiActivity } from 'react-icons/fi';
+import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
+import { FaSpaceShuttle } from 'react-icons/fa';
+
 import {
   MainChart,
   CadenceCard,
@@ -10,64 +14,33 @@ import {
   numCardElement,
   numElement,
 } from './Graph';
-import { FiActivity } from 'react-icons/fi';
-import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
-import { FaSpaceShuttle } from 'react-icons/fa';
-
+import { createData } from './Graph/types';
 import { LeafletMap, options } from './Map';
+import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
-import { createData } from './Graph/types';
-import { ExtraCard, WeatherCard } from './Extra';
+import { IData, IHistory, IWeather } from './types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
-const defaultData = {
-  power: 0,
-  speed: 0,
-  cadence: 0,
-  heartrate: 0,
-  time: 0,
-  distance: 0,
-  gear: 0,
-  altitude: 0,
-  cpuTemp: 0,
-  accX: 0,
-  accXMax: 0,
-  accY: 0,
-  accYMax: 0,
-  accZ: 0,
-  accZMax: 0,
-  timestamp: 0,
-};
-const defaultHistory = {
-  chart: [],
-  miniChart: [],
-};
-const defaultWeather = {
-  windSpeed: 0,
-  windDirection: 0,
-  temperature: 0,
-  pressure: 0,
-  timestamp: 0
-};
 
 const Dashboard = () => {
   const isMounted = useIsMounted();
 
-  const [data, setData] = useState(defaultData);
+  const [data, setData] = useState<IData>();
+  const [history, setHistory] = useState<IHistory>();
+  const [weather, setWeather] = useState<IWeather>();
+
   const [config, setConfig] = useState(defaultConfig);
   const [startTime, setStartTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(startTime > Date.now());
-  const [history, setHistory] = useState(defaultHistory);
-  const [weather, setWeather] = useState(defaultWeather);
   const [position, setPosition] = useState(options.view.position);
 
   // eslint-disable-next-line
   const [_, setPolling] = usePolling(() => fetchData(), 1000);
 
   const updateHistory = useCallback((history) => {
-    const chart = history.map((e: typeof defaultData) => createData(e));
+    const chart = history.map((e: any) => createData(e));
     const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
 
     setHistory({ chart, miniChart });
@@ -85,7 +58,7 @@ const Dashboard = () => {
 
   const updateConfig = useCallback(
     async (data) => {
-      if (isMounted.current && data !== defaultData) {
+      if (isMounted.current && data) {
         const start = parseDate(data.date, data.startTime);
 
         setConfig(data);
@@ -131,18 +104,17 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     const data = await api.getData(config.bikeName);
-    const weather = await api.getWeatherSingleStation(3);
+    const weatherCall = await api.getWeatherSingleStation(3);
     updateData(data);
 
     // NOTE: weather is private for not logged users
-    if (weather) {
-      updateWeather(weather);
+    if (weatherCall) {
+      updateWeather(weatherCall);
     }
   };
 
-  const loading = data === defaultData || history === defaultHistory;
-  if (loading) {
-    return <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  if (!data || !history) {
+    return null;
   }
 
   return (
@@ -224,7 +196,7 @@ const Dashboard = () => {
 
       {/* Row del main chart e mappa */}
       <Row>
-        <Col>
+        <Col xs="12" sm="6">
           <Card>
             <CardBody>
               <div className="central-chart">
@@ -233,7 +205,7 @@ const Dashboard = () => {
             </CardBody>
           </Card>
         </Col>
-        <Col>
+        <Col xs="12" sm="6">
           <Card>
             <CardBody>
               <div className="central-chart">
@@ -259,13 +231,13 @@ const Dashboard = () => {
           name={['Temp', 'Press']}
           unit={['°C', 'hPa']}
           bgColor="purple"
-          value={[weather.temperature, weather.pressure]}
+          value={[weather?.temperature, weather?.pressure]}
         />
         <WeatherCard
           name={['Wind', 'Direction']}
           unit={['m/s', '°']}
           bgColor="behance"
-          value={[weather.windSpeed, weather.windDirection]}
+          value={[weather?.windSpeed, weather?.windDirection]}
         />
       </Row>
 
@@ -291,7 +263,7 @@ const Dashboard = () => {
         />
         <ExtraCard name="CpuTemp" unit="°C" bgColor="red" value={data.cpuTemp} />
         <ExtraCard name="Last Update" bgColor="gray" value={data.timestamp} />
-        <ExtraCard name="Last Weather Update" bgColor="orange" value={weather.timestamp} />
+        <ExtraCard name="Last Weather Update" bgColor="orange" value={weather?.timestamp} />
       </Row>
     </article>
   );

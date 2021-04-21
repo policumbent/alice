@@ -1,4 +1,4 @@
 import LeafletMap from './LeafletMap';
-import { options } from './constants';
+export { options } from './constants';
 
-export { LeafletMap, options };
+export { LeafletMap };

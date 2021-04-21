@@ -13,7 +13,7 @@ export const ExtraCard = ({ name, unit, value, bgColor }: IExtra) => {
             {name}
             {strUnit}
           </div>
-          <div className="text-value text-center">{value}</div>
+          <div className="text-value text-center">{value || 0}</div>
         </CardBody>
       </Card>
     </Col>
@@ -34,14 +34,14 @@ export const WeatherCard = ({ name, unit, value, bgColor }: IWCard) => {
                 {name[0]}
                 {strUnit1}
               </div>
-              <div className="text-value text-center">{value[0]}</div>
+              <div className="text-value text-center">{value[0] || 0}</div>
             </Col>
             <Col xs="6" sm="6" lg="6">
               <div className="text-center">
                 {name[1]}
                 {strUnit2}
               </div>
-              <div className="text-value text-center">{value[1]}</div>
+              <div className="text-value text-center">{value[1] || 0}</div>
             </Col>
           </Row>
         </CardBody>
