@@ -32,9 +32,6 @@ const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
 
     if (value !== null) {
       const oldDataSet = { ...line.datasets[0] };
-      const newData = [...oldDataSet.data.slice(1)];
-
-      newData.push(value);
 
       setLine((l) => {
         return {
@@ -42,7 +39,7 @@ const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
           datasets: [
             {
               ...oldDataSet,
-              data: newData,
+              data: [...oldDataSet.data.slice(1), value],
             },
           ],
         };
