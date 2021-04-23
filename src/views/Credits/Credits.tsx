@@ -1,4 +1,4 @@
-import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap';
+import { Col, Row, Card } from 'react-bootstrap';
 
 import { FaCode, FaHeart, FaGithub } from 'react-icons/fa';
 
@@ -8,12 +8,12 @@ const Credits = () => {
       <Row>
         <Col className="mx-auto" xs="12" md="7" xl="4">
           <Card>
-            <CardHeader>
+            <Card.Header>
               <h2 className="text-center">
                 <FaCode /> with <FaHeart /> by
               </h2>
-            </CardHeader>
-            <CardBody className="text-center">
+            </Card.Header>
+            <Card.Body className="text-center">
               <h4>
                 Gabriele Belluardo{' '}
                 <a
@@ -34,7 +34,7 @@ const Credits = () => {
                   <FaGithub />
                 </a>
               </h4>
-            </CardBody>
+            </Card.Body>
           </Card>
         </Col>
       </Row>

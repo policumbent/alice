@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { ExtraCard, WeatherCard } from '../Extra/Extra';
+import { ExtraCard, WeatherCard } from '../Extra';
 import { IExtra, IWCard } from '../Extra/types';
 
 const fakeExtra: IExtra = { bgColor: '', name: '', unit: '', value: 0 };

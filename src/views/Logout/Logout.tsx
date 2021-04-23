@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Col, Row, Card, CardBody, CardHeader } from 'reactstrap';
+import { Col, Row, Card } from 'react-bootstrap';
 
 import { default as api } from '../../api';
 
@@ -18,12 +18,12 @@ const Logout = () => {
       <Row>
         <Col className="mx-auto" xs="12" md="7" xl="4">
           <Card>
-            <CardHeader>
+            <Card.Header>
               <h2 className="text-center">Logout</h2>
-            </CardHeader>
-            <CardBody className="text-center">
+            </Card.Header>
+            <Card.Body className="text-center">
               <p>Logout in corso...</p>
-            </CardBody>
+            </Card.Body>
           </Card>
         </Col>
       </Row>

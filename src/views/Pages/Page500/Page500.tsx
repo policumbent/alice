@@ -1,14 +1,5 @@
 import { Component } from 'react';
-import {
-  Button,
-  Col,
-  Container,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-} from 'reactstrap';
+import { Button, Col, Container, InputGroup, Row } from 'react-bootstrap';
 
 class Page500 extends Component {
   render() {
@@ -24,17 +15,14 @@ class Page500 extends Component {
                   The page you are looking for is temporarily unavailable.
                 </p>
               </span>
-              <InputGroup className="input-prepend">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>
-                    <i className="fa fa-search"></i>
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input size={16} type="text" placeholder="What are you looking for?" />
-                <InputGroupAddon addonType="append">
+              <InputGroup.Prepend>
+                <InputGroup.Text>
+                  <i className="fa fa-search"></i>
+                </InputGroup.Text>
+                <InputGroup.Append>
                   <Button color="info">Search</Button>
-                </InputGroupAddon>
-              </InputGroup>
+                </InputGroup.Append>
+              </InputGroup.Prepend>
             </Col>
           </Row>
         </Container>
