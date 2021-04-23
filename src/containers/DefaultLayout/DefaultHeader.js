@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Nav, NavItem } from 'reactstrap';
+import { Nav, NavItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-// eslint-disable-next-line
-import { AppNavbarBrand } from '@coreui/react';
+import { AppNavbarBrand } from './components';
+
 import logo from 'assets/img/brand/logo.svg';
 import sygnet from 'assets/img/brand/sygnet.svg';
 import { default as api } from 'api';
@@ -45,16 +45,15 @@ class DefaultHeader extends Component {
     } = this.props;
     return (
       <React.Fragment>
-        <Nav className="mr-auto" navbar>
+        <Nav className="mr-auto navbar-nav">
           <NavItem className="px-3">
             <Link to="/dashboard" className="nav-link">
               Dashboard
             </Link>
           </NavItem>
         </Nav>
-        {/* <AppSidebarToggler className="d-lg-none" display="md" mobile /> */}
         <AppNavbarBrand className="logo" full={brandFull} minimized={brandMinimized} />
-        <Nav className="ml-auto" navbar>
+        <Nav className="ml-auto navbar-nav">
           <NavItem className="px-2 blink">
             <div>{this.state.show ? this.state.bike + ' on the road' : null}</div>
           </NavItem>
@@ -70,7 +69,6 @@ class DefaultHeader extends Component {
             </Link>
           </NavItem>
         </Nav>
-        {/* <AppSidebarToggler className="d-md-down-none" display="lg" /> */}
       </React.Fragment>
     );
   }
