@@ -1,17 +1,5 @@
 import { useState } from 'react';
-import {
-  Col,
-  Row,
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+import { Col, Row, Card, Button, Form, FormGroup, InputGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 
@@ -39,52 +27,37 @@ const Login = () => {
       <Row>
         <Col className="mx-auto" xs="12" md="7" xl="4">
           <Card>
-            <CardHeader>
+            <Card.Header>
               <h2 className="text-center">Login</h2>
-            </CardHeader>
-            <Form encType="multipart/form-data" className="form-horizontal">
-              <CardBody className="text-center">
-                <FormGroup row>
-                  <Col sm="12">
-                    <Label for="username">Username</Label>
-                  </Col>
-                  <Col sm="12">
-                    <Input
-                      className="text-center"
-                      type="text"
-                      name="username"
-                      placeholder="Username"
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Col sm="12">
-                    <Label for="password">Password</Label>
-                  </Col>
-                  <Col sm="12">
-                    <Input
-                      className="text-center"
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
-              </CardBody>
-            </Form>
+            </Card.Header>
+            <Form onSubmit={handleSubmit} encType="multipart/form-data" className="form-horizontal">
+              <Card.Body className="text-center">
+                <Form.Group>
+                  <Form.Control
+                    className="text-center"
+                    type="username"
+                    placeholder="Username"
+                    onChange={(e: any) => setUsername(e.target.value)}
+                  />
+                </Form.Group>
 
-            <CardFooter>
-              <Button
-                onClick={handleSubmit}
-                type="submit"
-                data-dismiss="alert"
-                size="sl"
-                color="success">
-                <FaSignInAlt />
-                &ensp;Sign in
-              </Button>
-            </CardFooter>
+                <Form.Group>
+                  <Form.Control
+                    className="text-center"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e: any) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+              </Card.Body>
+
+              <Card.Footer>
+                <Button type="submit" variant="primary">
+                  <FaSignInAlt />
+                  &ensp;Sign in
+                </Button>
+              </Card.Footer>
+            </Form>
           </Card>
         </Col>
       </Row>
