@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import { Col, Row, Card, Button, Form } from 'react-bootstrap';
+import { Col, Row, Card, Button, Form, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 
@@ -10,6 +10,7 @@ const Login = () => {
 
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [show, setShow] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,9 +19,8 @@ const Login = () => {
 
     if (loginSuccess) {
       history.push('/');
-    }
-    // @todo Handle failed login
-    else {
+    } else {
+      setShow(true);
     }
   };
 
@@ -40,6 +40,7 @@ const Login = () => {
                     className="text-center"
                     type="username"
                     placeholder="Username"
+                    isInvalid={show}
                     onChange={(e) => setUsername(e.target.value)}
                   />
                 </Form.Group>
@@ -50,11 +51,14 @@ const Login = () => {
                     className="text-center"
                     type="password"
                     placeholder="Password"
+                    isInvalid={show}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
+                <Alert dismissible show={show} onClose={() => setShow(false)} variant="danger">
+                  Username or password are wrong! Check them and retry
+                </Alert>
               </Card.Body>
-
               <Card.Footer>
                 <Button type="submit" variant="success">
                   <FaSignInAlt />
