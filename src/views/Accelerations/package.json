@@ -1,0 +1,6 @@
+{
+  "name": "accelerations",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Accelerations.tsx"
+}

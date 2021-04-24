@@ -51,6 +51,16 @@ class DefaultHeader extends Component {
               Dashboard
             </Link>
           </NavItem>
+          <NavItem className="px-3">
+            <Link to="/wind" className="nav-link">
+              Wind Stations
+            </Link>
+          </NavItem>
+          <NavItem className="px-3">
+            <Link to="/accelerations" className="nav-link">
+              Accelerations
+            </Link>
+          </NavItem>
         </Nav>
         <AppNavbarBrand className="logo" full={brandFull} minimized={brandMinimized} />
         <Nav className="ml-auto navbar-nav">

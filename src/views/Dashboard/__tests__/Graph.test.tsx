@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { MainChart, CadenceCard, PowerCard, SpeedCard, HRCard } from '../Graph';
+import { MainChart, CadenceCard, PowerCard, SpeedCard, HRCard } from '../../../components/Graph';
 
 const fakeData = {
   power: 0,

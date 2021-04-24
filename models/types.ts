@@ -1,4 +1,4 @@
-import { IGData } from './Graph/types';
+import { IGData } from '../src/components/Graph/types';
 
 export interface IData extends IGData {
   time: number;
