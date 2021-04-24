@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Countdown from 'react-countdown';
 import { Modal, ButtonGroup, Card, Col, Row } from 'react-bootstrap';
-import { FiActivity } from 'react-icons/fi';
-import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
-import { FaSpaceShuttle } from 'react-icons/fa';
+import { FiArrowRight, FiArrowLeft, FiArrowUp } from 'react-icons/fi';
 
 import {
   MainChart,
@@ -15,8 +13,7 @@ import {
   numElement,
 } from '../../components/Graph';
 import { createData } from '../../components/Graph/types';
-import { LeafletMap, options } from '../../components/Map';
-import { ExtraCard, WeatherCard } from '../../components/Extra';
+import { ExtraCard } from '../../components/Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
@@ -24,7 +21,7 @@ import { IData, IHistory, IWeather } from '../../../models/types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 
-const Dashboard = () => {
+const Accelerations = () => {
   const isMounted = useIsMounted();
 
   const [data, setData] = useState<IData>();
@@ -34,7 +31,6 @@ const Dashboard = () => {
   const [config, setConfig] = useState(defaultConfig);
   const [startTime, setStartTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(startTime > Date.now());
-  const [position, setPosition] = useState(options.view.position);
 
   // eslint-disable-next-line
   const [_, setPolling] = usePolling(() => fetchData(), 1000);
@@ -50,7 +46,6 @@ const Dashboard = () => {
     (d) => {
       if (isMounted.current) {
         setData(d);
-        setPosition([parseFloat(d.latitude), parseFloat(d.longitude)]);
       }
     },
     [isMounted]
@@ -131,14 +126,14 @@ const Dashboard = () => {
 
       {/* Row dei mini chart */}
       <Row>
-        <Col xs="12" sm="6" lg="3">
+        <Col xs="12" sm="4" lg="4">
           <Card className="text-white bg-info">
             <Card.Body className="pb-0">
               <ButtonGroup id="card1" className="float-right">
-                <FaSpaceShuttle size={'1.5em'} />
+                <FiArrowLeft size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">{data.power === -1 ? 'Reserved' : data.power}</div>
-              <div>Power [W]</div>
+              <div>X [m/s²]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
               <PowerCard data={data} history={history.miniChart} />
@@ -146,14 +141,14 @@ const Dashboard = () => {
           </Card>
         </Col>
 
-        <Col xs="12" sm="6" lg="3">
+        <Col xs="12" sm="4" lg="4">
           <Card className="text-white bg-success">
             <Card.Body className="pb-0">
               <ButtonGroup id="card2" className="float-right">
-                <GiCartwheel size={'1.5em'} />
+                <FiArrowRight size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">{data.cadence}</div>
-              <div>Cadence [rpm]</div>
+              <div>Y [m/s²]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
               <CadenceCard data={data} history={history.miniChart} />
@@ -161,34 +156,17 @@ const Dashboard = () => {
           </Card>
         </Col>
 
-        <Col xs="12" sm="6" lg="3">
+        <Col xs="12" sm="4" lg="4">
           <Card className="text-white bg-warning">
             <Card.Body className="pb-0">
               <ButtonGroup id="card3" className="float-right">
-                <GiSpeedometer size={'1.5em'} />
+                <FiArrowUp size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">{Math.round(data.speed * 100) / 100}</div>
-              <div>Speed [km/h]</div>
+              <div>Z [m/s²]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
               <SpeedCard data={data} history={history.miniChart} />
-            </div>
-          </Card>
-        </Col>
-
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white bg-danger">
-            <Card.Body className="pb-0">
-              <ButtonGroup id="card4" className="float-right">
-                <FiActivity size={'1.5em'} />
-              </ButtonGroup>
-              <div className="text-value">
-                {data.heartrate === -1 ? 'Reserved' : data.heartrate}
-              </div>
-              <div>Heartrate [bpm]</div>
-            </Card.Body>
-            <div className="chart-wrapper card-chart">
-              <HRCard data={data} history={history.miniChart} />
             </div>
           </Card>
         </Col>
@@ -196,7 +174,7 @@ const Dashboard = () => {
 
       {/* Row del main chart e mappa */}
       <Row>
-        <Col xs="12" sm="12" md="6" lg="6">
+        <Col xs="12" sm="12">
           <Card>
             <Card.Body>
               <div className="central-chart">
@@ -205,68 +183,16 @@ const Dashboard = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col xs="12" sm="12" md="6" lg="6">
-          <Card>
-            <Card.Body>
-              <div className="central-chart">
-                <LeafletMap
-                  position={position}
-                  options={options}
-                  track={config.trackName}
-                  bikeName={config.bikeName}
-                />
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
       </Row>
 
       {/* Row degli extra */}
       <Row>
-        <ExtraCard name="Time" unit="m" bgColor="pink" value={data.time} />
-        <ExtraCard name="Gear" bgColor="dark" value={data.gear} />
-        <ExtraCard name="Distance" unit="m" bgColor="secondary" value={data.distance} />
-        <ExtraCard name="Altitude" unit="m" bgColor="yellow" value={data.altitude} />
-        <WeatherCard
-          name={['Temp', 'Press']}
-          unit={['°C', 'hPa']}
-          bgColor="purple"
-          value={[weather?.temperature, weather?.pressure]}
-        />
-        <WeatherCard
-          name={['Wind', 'Direction']}
-          unit={['m/s', '°']}
-          bgColor="behance"
-          value={[weather?.windSpeed, weather?.windDirection]}
-        />
-      </Row>
-
-      {/*// Row riservata agli utenti loggati */}
-      <Row hidden={!api.isLogged()}>
-        <WeatherCard
-          name={['Acc X', 'Acc X ']}
-          unit={['m/s²', 'm/s²']}
-          bgColor="cyan"
-          value={[data.accX, data.accXMax]}
-        />
-        <WeatherCard
-          name={['Acc Y', 'Acc Y ']}
-          unit={['m/s²', 'm/s²']}
-          bgColor="indigo"
-          value={[data.accY, data.accYMax]}
-        />
-        <WeatherCard
-          name={['Acc Z', 'Acc Z ']}
-          unit={['m/s²', 'm/s²']}
-          bgColor="teal"
-          value={[data.accZ, data.accZMax]}
-        />
-        <ExtraCard name="CpuTemp" unit="°C" bgColor="red" value={data.cpuTemp} />
-        <ExtraCard name="Last Update" bgColor="gray" value={data.timestamp} />
-        <ExtraCard name="Last Weather Update" bgColor="orange" value={weather?.timestamp} />
+        <ExtraCard name="X max(1s)" unit="m/s²" bgColor="pink" value={data.time} />
+        <ExtraCard name="Y max(1s)" bgColor="dark" value={data.gear} />
+        <ExtraCard name="Z max(1s)" unit="m/s²" bgColor="secondary" value={data.distance} />
       </Row>
     </article>
   );
 };
 
-export default Dashboard;
+export default Accelerations;
