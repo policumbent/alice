@@ -13,7 +13,7 @@ import {
   numElement,
 } from '../../components/Graph';
 import { createData } from '../../components/Graph/types';
-import { ExtraCard } from '../../components/Extra';
+// import { ExtraCard } from '../../components/Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
@@ -48,6 +48,7 @@ const WindStations = () => {
     (d) => {
       if (isMounted.current) {
         setData(d);
+        setPosition([parseFloat(d.latitude), parseFloat(d.longitude)]);
       }
     },
     [isMounted]
@@ -179,7 +180,7 @@ const WindStations = () => {
                 <FiActivity size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">
-                {data.heartrate === -1 ? 'Reserved' : data.heartrate}
+                {weather?.temperature}
               </div>
               <div>Temperature [°C]</div>
             </Card.Body>
@@ -195,7 +196,7 @@ const WindStations = () => {
                 <FiActivity size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">
-                {data.heartrate === -1 ? 'Reserved' : data.heartrate}
+                {100}
               </div>
               <div>Humidity [%]</div>
             </Card.Body>

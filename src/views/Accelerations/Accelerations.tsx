@@ -8,7 +8,7 @@ import {
   CadenceCard,
   PowerCard,
   SpeedCard,
-  HRCard,
+  // HRCard,
   numCardElement,
   numElement,
 } from '../../components/Graph';
@@ -17,7 +17,7 @@ import { ExtraCard } from '../../components/Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
-import { IData, IHistory, IWeather } from '../../../models/types';
+import { IData, IHistory } from '../../../models/types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 
@@ -26,7 +26,7 @@ const Accelerations = () => {
 
   const [data, setData] = useState<IData>();
   const [history, setHistory] = useState<IHistory>();
-  const [weather, setWeather] = useState<IWeather>();
+  // const [weather, setWeather] = useState<IWeather>();
 
   const [config, setConfig] = useState(defaultConfig);
   const [startTime, setStartTime] = useState(0);
@@ -75,7 +75,7 @@ const Accelerations = () => {
   const updateWeather = useCallback(
     (data) => {
       if (isMounted.current) {
-        setWeather(data);
+        // setWeather(data);
       }
     },
     [isMounted]
