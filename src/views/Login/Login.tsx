@@ -1,17 +1,5 @@
-import { useState } from 'react';
-import {
-  Col,
-  Row,
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+import { useState, FormEvent } from 'react';
+import { Col, Row, Card, Button, Form, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 
@@ -20,17 +8,19 @@ import { default as api } from 'api';
 const Login = () => {
   const history = useHistory();
 
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [show, setShow] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const loginSuccess = await api.login({ username, password });
 
     if (loginSuccess) {
-      setTimeout(() => history.push('/'), 1000);
-    }
-    // @todo Handle failed login
-    else {
+      history.push('/');
+    } else {
+      setShow(true);
     }
   };
 
@@ -39,52 +29,43 @@ const Login = () => {
       <Row>
         <Col className="mx-auto" xs="12" md="7" xl="4">
           <Card>
-            <CardHeader>
+            <Card.Header>
               <h2 className="text-center">Login</h2>
-            </CardHeader>
-            <Form encType="multipart/form-data" className="form-horizontal">
-              <CardBody className="text-center">
-                <FormGroup row>
-                  <Col sm="12">
-                    <Label for="username">Username</Label>
-                  </Col>
-                  <Col sm="12">
-                    <Input
-                      className="text-center"
-                      type="text"
-                      name="username"
-                      placeholder="Username"
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Col sm="12">
-                    <Label for="password">Password</Label>
-                  </Col>
-                  <Col sm="12">
-                    <Input
-                      className="text-center"
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Col>
-                </FormGroup>
-              </CardBody>
-            </Form>
+            </Card.Header>
+            <Form onSubmit={handleSubmit} className="form-horizontal">
+              <Card.Body className="text-center">
+                <Form.Label>Username</Form.Label>
+                <Form.Group>
+                  <Form.Control
+                    className="text-center"
+                    type="username"
+                    placeholder="Username"
+                    isInvalid={show}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </Form.Group>
 
-            <CardFooter>
-              <Button
-                onClick={handleSubmit}
-                type="submit"
-                data-dismiss="alert"
-                size="sl"
-                color="success">
-                <FaSignInAlt />
-                &ensp;Sign in
-              </Button>
-            </CardFooter>
+                <Form.Group>
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    className="text-center"
+                    type="password"
+                    placeholder="Password"
+                    isInvalid={show}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+                <Alert dismissible show={show} onClose={() => setShow(false)} variant="danger">
+                  Username or password are wrong! Check them and retry
+                </Alert>
+              </Card.Body>
+              <Card.Footer>
+                <Button type="submit" variant="success">
+                  <FaSignInAlt />
+                  &ensp;Sign in
+                </Button>
+              </Card.Footer>
+            </Form>
           </Card>
         </Col>
       </Row>

@@ -34,27 +34,17 @@ const MainChart = ({ data, history }: IChart) => {
     const oldDataSet3 = state.datasets[2]; // Speed
     const oldDataSet4 = state.datasets[3]; // HR
 
-    /*
-    const time = Math.round(data.Minutes * 100 * 60) / 100;
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    */
-
-    const newData1 = [...oldDataSet1.data.slice(1)];
-    const newData2 = [...oldDataSet2.data.slice(1)];
-    const newData3 = [...oldDataSet3.data.slice(1)];
-    const newData4 = [...oldDataSet4.data.slice(1)];
-
-    newData1.push(filterReserved(power));
-    newData2.push(cadence);
-    newData3.push(speed);
-    newData4.push(filterReserved(heartrate));
-
     // Show power and hr if logged
     if (isLogged()) {
       oldDataSet1.hidden = false;
       oldDataSet4.hidden = false;
     }
+
+    /* note: for timed labels
+    const time = Math.round(data.Minutes * 100 * 60) / 100;
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    */
 
     setState((s) => {
       return {
@@ -62,19 +52,19 @@ const MainChart = ({ data, history }: IChart) => {
         datasets: [
           {
             ...oldDataSet1,
-            data: newData1,
+            data: [...oldDataSet1.data.slice(1), filterReserved(power)],
           },
           {
             ...oldDataSet2,
-            data: newData2,
+            data: [...oldDataSet2.data.slice(1), cadence],
           },
           {
             ...oldDataSet3,
-            data: newData3,
+            data: [...oldDataSet3.data.slice(1), speed],
           },
           {
             ...oldDataSet4,
-            data: newData4,
+            data: [...oldDataSet4.data.slice(1), filterReserved(heartrate)],
           },
         ],
       };

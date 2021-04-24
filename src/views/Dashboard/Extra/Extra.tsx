@@ -1,4 +1,4 @@
-import { Card, CardBody, Col, Row } from 'reactstrap';
+import { Card, Col, Row } from 'react-bootstrap';
 import { IExtra, IWCard } from './types';
 
 export const ExtraCard = ({ name, unit, value, bgColor }: IExtra) => {
@@ -8,13 +8,13 @@ export const ExtraCard = ({ name, unit, value, bgColor }: IExtra) => {
   return (
     <Col xs="12" sm="6" lg="2">
       <Card className={`${textColor} bg-${bgColor}`}>
-        <CardBody className="pb-2">
+        <Card.Body className="pb-2">
           <div>
             {name}
             {strUnit}
           </div>
           <div className="text-value text-center">{value || 0}</div>
-        </CardBody>
+        </Card.Body>
       </Card>
     </Col>
   );
@@ -27,7 +27,7 @@ export const WeatherCard = ({ name, unit, value, bgColor }: IWCard) => {
   return (
     <Col xs="12" sm="6" lg="2">
       <Card className={`text-white bg-${bgColor}`}>
-        <CardBody className="pb-2">
+        <Card.Body className="pb-2">
           <Row>
             <Col xs="6" sm="6" lg="6">
               <div className="text-center">
@@ -44,7 +44,7 @@ export const WeatherCard = ({ name, unit, value, bgColor }: IWCard) => {
               <div className="text-value text-center">{value[1] || 0}</div>
             </Col>
           </Row>
-        </CardBody>
+        </Card.Body>
       </Card>
     </Col>
   );

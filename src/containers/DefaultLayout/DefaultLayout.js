@@ -1,10 +1,8 @@
-/* eslint-disable */
-
 import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Container } from 'react-bootstrap';
 
-import { AppFooter, AppHeader } from '@coreui/react';
+import { AppFooter, AppHeader } from './components';
 
 // routes config
 import routes from 'routes';

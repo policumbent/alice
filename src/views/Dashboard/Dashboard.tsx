@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Countdown from 'react-countdown';
-import { Modal, ModalHeader, ModalBody, ButtonGroup, Card, CardBody, Col, Row } from 'reactstrap';
+import { Modal, ButtonGroup, Card, Col, Row } from 'react-bootstrap';
 import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
@@ -121,25 +121,25 @@ const Dashboard = () => {
     <article className="animated fadeIn">
       {/* Countdown per la live */}
       <Modal isOpen={modalOpen} className={'modal-info'}>
-        <ModalHeader className="text-dark bg-yellow">La diretta live inizierà tra:</ModalHeader>
-        <ModalBody>
+        <Modal.Header className="text-dark bg-yellow">La diretta live inizierà tra:</Modal.Header>
+        <Modal.Body>
           <Countdown date={startTime} onComplete={() => setModalOpen(false)}>
             <p>The bike is starting.</p>
           </Countdown>
-        </ModalBody>
+        </Modal.Body>
       </Modal>
 
       {/* Row dei mini chart */}
       <Row>
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-info">
-            <CardBody className="pb-0">
+            <Card.Body className="pb-0">
               <ButtonGroup id="card1" className="float-right">
                 <FaSpaceShuttle size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">{data.power === -1 ? 'Reserved' : data.power}</div>
               <div>Power [W]</div>
-            </CardBody>
+            </Card.Body>
             <div className="chart-wrapper card-chart">
               <PowerCard data={data} history={history.miniChart} />
             </div>
@@ -148,13 +148,13 @@ const Dashboard = () => {
 
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-success">
-            <CardBody className="pb-0">
+            <Card.Body className="pb-0">
               <ButtonGroup id="card2" className="float-right">
                 <GiCartwheel size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">{data.cadence}</div>
               <div>Cadence [rpm]</div>
-            </CardBody>
+            </Card.Body>
             <div className="chart-wrapper card-chart">
               <CadenceCard data={data} history={history.miniChart} />
             </div>
@@ -163,13 +163,13 @@ const Dashboard = () => {
 
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-warning">
-            <CardBody className="pb-0">
+            <Card.Body className="pb-0">
               <ButtonGroup id="card3" className="float-right">
                 <GiSpeedometer size={'1.5em'} />
               </ButtonGroup>
               <div className="text-value">{Math.round(data.speed * 100) / 100}</div>
               <div>Speed [km/h]</div>
-            </CardBody>
+            </Card.Body>
             <div className="chart-wrapper card-chart">
               <SpeedCard data={data} history={history.miniChart} />
             </div>
@@ -178,7 +178,7 @@ const Dashboard = () => {
 
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-danger">
-            <CardBody className="pb-0">
+            <Card.Body className="pb-0">
               <ButtonGroup id="card4" className="float-right">
                 <FiActivity size={'1.5em'} />
               </ButtonGroup>
@@ -186,7 +186,7 @@ const Dashboard = () => {
                 {data.heartrate === -1 ? 'Reserved' : data.heartrate}
               </div>
               <div>Heartrate [bpm]</div>
-            </CardBody>
+            </Card.Body>
             <div className="chart-wrapper card-chart">
               <HRCard data={data} history={history.miniChart} />
             </div>
@@ -198,16 +198,16 @@ const Dashboard = () => {
       <Row>
         <Col xs="12" sm="6">
           <Card>
-            <CardBody>
+            <Card.Body>
               <div className="central-chart">
                 <MainChart data={data} history={history.chart} />
               </div>
-            </CardBody>
+            </Card.Body>
           </Card>
         </Col>
         <Col xs="12" sm="6">
           <Card>
-            <CardBody>
+            <Card.Body>
               <div className="central-chart">
                 <LeafletMap
                   position={position}
@@ -216,7 +216,7 @@ const Dashboard = () => {
                   bikeName={config.bikeName}
                 />
               </div>
-            </CardBody>
+            </Card.Body>
           </Card>
         </Col>
       </Row>
