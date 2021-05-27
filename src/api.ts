@@ -78,7 +78,7 @@ const dataService = {
 
     return fetch(url)
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
@@ -91,7 +91,7 @@ const dataService = {
 
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
@@ -104,7 +104,7 @@ const dataService = {
 
     return fetch(url)
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
@@ -129,12 +129,12 @@ const dataService = {
     // TODO: print errors on catch
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Access denied to weather api');
       })
       .then((r) => r.json())
       .then((data) => data)
-      .catch((error) => {});
+      .catch((err) => {});
   },
 
   getComments: async function () {
@@ -150,7 +150,7 @@ const dataService = {
 
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
@@ -158,7 +158,7 @@ const dataService = {
       .catch((error) => console.error(error));
   },
 
-  getNotifications: function (counter: number) {
+  getNotifications: async function (counter: number) {
     const url = `${host}/v3/alice/notifications`;
 
     return fetch(url, {
@@ -166,7 +166,7 @@ const dataService = {
       headers: this.getHeaders(),
     })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())

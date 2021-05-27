@@ -1,20 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import dataService from 'api';
+import { default as api } from 'api';
 import Ticker from 'react-ticker';
 import { parseComments, usePolling } from './utils';
 
 const Footer = () => {
   const [comments, setComments] = useState<string[]>();
   const [move, setMove] = useState(true);
-
-  // 30 secs polling on comments api
-  usePolling(async () => fetchComments(), 30 * 1000, true);
-
-  const getPhrase = useCallback((data) => {
-    const result = parseComments(data);
-    setComments(result);
-  }, []);
 
   const moveOption = useCallback(
     (event) => {
@@ -36,12 +28,16 @@ const Footer = () => {
   );
 
   const fetchComments = async () => {
-    getPhrase(await dataService.getComments());
+    const data = await api.getComments();
+    const c = parseComments(data);
+    setComments(c);
   };
+
+  // 30 secs polling on comments api
+  usePolling(() => fetchComments(), 30 * 1000, true);
 
   useEffect(() => {
     fetchComments();
-    // eslint-disable-next-line
   }, []);
 
   if (!comments) {

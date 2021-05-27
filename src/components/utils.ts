@@ -57,16 +57,15 @@ export const usePolling = (
   autostart?: boolean
 ): [boolean, Dispatch<SetStateAction<boolean>>] => {
   const [start, setStart] = useState(autostart || false);
-  const intervalId = useRef(0);
+  const timerID = useRef(0);
 
   // Create interval on startup if autostart is enabled
   useEffect(() => {
-    if (start) intervalId.current = setInterval(call, time);
+    if (start) timerID.current = setTimeout(call, time);
     return () => {
-      clearInterval(intervalId.current);
+      clearTimeout(timerID.current);
     };
-    // eslint-disable-next-line
-  }, [start]);
+  }, [start, call, time]);
 
   return [start, setStart];
 };

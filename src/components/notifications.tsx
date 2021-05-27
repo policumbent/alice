@@ -49,7 +49,6 @@ const Notifications = () => {
 
   useEffect(() => {
     notificationsPolling();
-    // eslint-disable-next-line
   }, []);
 
   return <ReactNotification />;

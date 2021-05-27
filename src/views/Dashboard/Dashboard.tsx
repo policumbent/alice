@@ -36,83 +36,70 @@ const Dashboard = () => {
   const [modalOpen, setModalOpen] = useState(startTime > Date.now());
   const [position, setPosition] = useState(options.view.position);
 
-  // eslint-disable-next-line
-  const [_, setPolling] = usePolling(() => fetchData(), 1000);
+  /* Fetch data every second */
+  const [, setPolling] = usePolling(() => fetchData(), 1000);
 
-  const updateHistory = useCallback((history) => {
-    const chart = history.map((e: any) => createData(e));
-    const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
+  const updateHistory = useCallback(
+    (history) => {
+      if (isMounted.current && history) {
+        const chart = history.map((e: any) => createData(e));
+        const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
 
-    setHistory({ chart, miniChart });
-  }, []);
-
-  const updateData = useCallback(
-    (d) => {
-      if (isMounted.current) {
-        setData(d);
-        setPosition([parseFloat(d.latitude), parseFloat(d.longitude)]);
+        setHistory({ chart, miniChart });
       }
     },
     [isMounted]
   );
 
   const updateConfig = useCallback(
-    async (data) => {
-      if (isMounted.current && data) {
-        const start = parseDate(data.date, data.startTime);
+    async (config) => {
+      if (isMounted.current && config) {
+        const start = parseDate(config.date, config.startTime);
 
-        setConfig(data);
+        setConfig(config);
         setStartTime(start);
         setModalOpen(start > Date.now());
-
-        // NOTE: Placeholder, will be removed
-        const h = await api.getHistory(data.bikeName, numElement);
-        const d = await api.getData(data.bikeName);
-
-        updateHistory(h);
-        updateData(d);
       }
     },
-    // eslint-disable-next-line
     [isMounted]
   );
 
-  const updateWeather = useCallback(
-    (data) => {
+  const updateData = useCallback(
+    (data: IData & { latitude: string; longitude: string }, weather: IWeather | null = null) => {
+      console.log('qua');
       if (isMounted.current) {
-        setWeather(data);
+        setData(data);
+        setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
+
+        // NOTE: weather is private for not logged users
+        if (weather) {
+          setWeather(weather);
+        }
       }
     },
     [isMounted]
   );
 
-  usePolling(async () => fetchData(), 1000);
+  const fetchData = useCallback(async () => {
+    const c = await api.getConfig();
+    await updateConfig(c);
 
-  // api call after component is mounted
-  useEffect(() => {
-    fetchInit();
-    // eslint-disable-next-line
-  }, []);
+    const data = await api.getData(c.bikeName);
+    // const wData = await api.getWeatherSingleStation(3);
+    updateData(data, null);
 
-  const fetchInit = async () => {
-    const config = await api.getConfig();
-    await updateConfig(config);
-    await fetchData();
-
-    setPolling(true);
-  };
-
-  const fetchData = async () => {
-    const data = await api.getData(config.bikeName);
-    const weatherCall = await api.getWeatherSingleStation(3);
-    updateData(data);
-
-    // NOTE: weather is private for not logged users
-    if (weatherCall) {
-      updateWeather(weatherCall);
+    if (!history) {
+      const h = await api.getHistory(c.bikeName, numElement);
+      updateHistory(h);
     }
-  };
+  }, [history, updateConfig, updateData, updateHistory]);
 
+  useEffect(() => {
+    fetchData();
+    setPolling(true);
+  }, [fetchData, setPolling]);
+
+  /* If data aren't loaded return a null component */
   if (!data || !history) {
     return null;
   }
