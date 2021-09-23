@@ -42,10 +42,12 @@ const Dashboard = () => {
   const updateHistory = useCallback(
     (history) => {
       if (isMounted.current && history) {
-        const chart = history.map((e: any) => createData(e));
-        const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
-
-        setHistory({ chart, miniChart });
+        // TODO: uncomment when history api is ready
+        //
+        // const chart = history.map((e: any) => createData(e));
+        // const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
+        // setHistory({ chart, miniChart });
+        setHistory(history);
       }
     },
     [isMounted]
@@ -65,15 +67,17 @@ const Dashboard = () => {
   );
 
   const updateData = useCallback(
-    (data: IData & { latitude: string; longitude: string }, weather: IWeather | null = null) => {
-      console.log('qua');
+    (
+      data: IData & { latitude: string; longitude: string },
+      weatherData: IWeather | null = null
+    ) => {
       if (isMounted.current) {
         setData(data);
         setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
 
         // NOTE: weather is private for not logged users
-        if (weather) {
-          setWeather(weather);
+        if (weatherData) {
+          setWeather(weatherData);
         }
       }
     },
@@ -85,8 +89,8 @@ const Dashboard = () => {
     await updateConfig(c);
 
     const data = await api.getData(c.bikeName);
-    // const wData = await api.getWeatherSingleStation(3);
-    updateData(data, null);
+    const wData = await api.getWeatherSingleStation('ws1');
+    updateData(data, wData);
 
     if (!history) {
       const h = await api.getHistory(c.bikeName, numElement);
@@ -99,7 +103,7 @@ const Dashboard = () => {
     setPolling(true);
   }, [fetchData, setPolling]);
 
-  /* If data aren't loaded return a null component */
+  /* If there is no data yet, show blank screen */
   if (!data || !history) {
     return null;
   }
@@ -224,7 +228,7 @@ const Dashboard = () => {
           name={['Wind', 'Direction']}
           unit={['m/s', '°']}
           bgColor="behance"
-          value={[weather?.windSpeed, weather?.windDirection]}
+          value={[weather?.wind_speed, weather?.wind_direction]}
         />
       </Row>
 
