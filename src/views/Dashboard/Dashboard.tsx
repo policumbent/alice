@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useState, useEffect, useCallback } from 'react';
 import Countdown from 'react-countdown';
 import { Modal, ButtonGroup, Card, Col, Row } from 'react-bootstrap';
