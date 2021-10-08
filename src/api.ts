@@ -1,4 +1,4 @@
-const host = 'https://poliserver.duckdns.org:9002';
+const host = process.env.NODE_ENV === 'production' ? 'https://serverino.policumbent.it:9002' : '';
 
 // Interface for login form
 interface Login {
@@ -73,25 +73,12 @@ const dataService = {
     return headers;
   },
 
-  getBike: async function () {
-    const url = `${host}/v3/alice/config`;
-
-    return fetch(url)
-      .then((r) => {
-        if (r.status === 200) return r;
-        throw new Error('Network response was not ok');
-      })
-      .then((r) => r.json())
-      .then((data) => data)
-      .catch((error) => console.error(error));
-  },
-
   getHistory: async function (bike: string, len: number) {
-    const url = `${host}/v3/activities/last/${bike}?n=${len}`;
+    const url = `${host}/api/activities/last/${bike}/${len}`;
 
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
@@ -100,11 +87,11 @@ const dataService = {
   },
 
   getConfig: async function () {
-    const url = `${host}/v3/alice/config`;
+    const url = `${host}/api/alice/config`;
 
     return fetch(url)
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
@@ -114,7 +101,7 @@ const dataService = {
 
   // ritorna una lista con l'ultimo dato meteo di ogni stazione
   getWeather: async function () {
-    const url = `${host}/v3/weather/last`;
+    const url = `${host}/api/weather/last`;
 
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => r.json())
@@ -123,22 +110,21 @@ const dataService = {
   },
 
   // ritorna l'ultimo dato meteo di una specifica stazione
-  getWeatherSingleStation: async function (id: number) {
-    const url = `${host}/v3/weather/last/${id}`;
+  getWeatherSingleStation: async function (id: string) {
+    const url = `${host}/api/weather/last/${id}`;
 
-    // TODO: print errors on catch
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Access denied to weather api');
       })
       .then((r) => r.json())
       .then((data) => data)
-      .catch((error) => {});
+      .catch((error) => console.error(error));
   },
 
   getComments: async function () {
-    const url = `${host}/v3/alice/comments`;
+    const url = `${host}/api/alice/comments`;
     return fetch(url)
       .then((comments) => comments.json())
       .then((data) => data)
@@ -146,31 +132,31 @@ const dataService = {
   },
 
   getData: async function (bike: string) {
-    const url = `${host}/v3/activities/last/${bike}`;
+    const url = `${host}/api/activities/last/${bike}`;
 
     return fetch(url, { method: 'GET', headers: this.getHeaders() })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
-      .then((data) => data[0])
+      .then((data) => data)
       .catch((error) => console.error(error));
   },
 
-  getNotifications: function (counter: number) {
-    const url = `${host}/v3/alice/notifications`;
+  getNotifications: async function (counter: number) {
+    const url = `${host}/api/alice/notifications`;
 
     return fetch(url, {
       method: 'GET',
       headers: this.getHeaders(),
     })
       .then((r) => {
-        if (r.status === 200) return r;
+        if (r.ok) return r;
         throw new Error('Network response was not ok');
       })
       .then((r) => r.json())
-      .then((data) => data.filter((n: any) => n.id >= counter))
+      .then((data) => data.filter((n: any) => n.id > counter))
       .catch((error) => console.error(error));
   },
 };

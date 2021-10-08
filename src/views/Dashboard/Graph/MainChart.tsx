@@ -73,8 +73,7 @@ const MainChart = ({ data, history }: IChart) => {
 
   useEffect(() => {
     updateData();
-    // eslint-disable-next-line
-  }, [data]);
+  }, [data, updateData]);
 
   return <Line data={state} options={mainChartOpts} />;
 };

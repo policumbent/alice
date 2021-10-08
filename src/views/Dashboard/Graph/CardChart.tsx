@@ -49,8 +49,8 @@ const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
 
   useEffect(() => {
     updateLine();
-    // eslint-disable-next-line
-  }, [data]);
+  }, [data, updateLine]);
+
   return <Line data={line} options={opts} />;
 };
 

@@ -3,6 +3,7 @@
   "version": "0.10.0",
   "private": true,
   "homepage": "./",
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@coreui/coreui": "2.1.16",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.3.1",

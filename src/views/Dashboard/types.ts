@@ -21,9 +21,10 @@ export interface IHistory {
 }
 
 export interface IWeather {
-  windSpeed: number;
-  windDirection: number;
-  temperature: number;
+  humidity: number;
   pressure: number;
+  temperature: number;
   timestamp: number;
+  wind_direction: number;
+  wind_speed: number;
 }
