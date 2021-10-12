@@ -106,7 +106,7 @@ const Dashboard = () => {
   }, [fetchData, setPolling]);
 
   /* If there is no data yet, show blank screen */
-  if (!data || !history) {
+  if (!data || !history || !weather) {
     return null;
   }
 

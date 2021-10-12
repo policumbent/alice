@@ -27,6 +27,8 @@ const Notifications = () => {
   const counter = useRef(0);
 
   // 5 secs polling on notifications api
+  //
+  // eslint-disable-next-line
   const notificationsPolling = () => {
     setInterval(async () => {
       const notes = await api.getNotifications(counter.current);
@@ -48,7 +50,7 @@ const Notifications = () => {
   };
 
   useEffect(() => {
-    notificationsPolling();
+    // notificationsPolling();
   }, []);
 
   return <ReactNotification />;
