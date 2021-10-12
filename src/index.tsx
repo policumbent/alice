@@ -7,7 +7,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorkerRegister';
 
 import ReactGA from 'react-ga';
-ReactGA.initialize(process.env.REACT_GA_TRACKING_ID || '');
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID || '');
 
 render(
   <StrictMode>

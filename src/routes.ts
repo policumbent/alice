@@ -2,8 +2,8 @@ import { lazy } from 'react';
 
 const Dashboard = lazy(() => import('views/Dashboard'));
 const Credits = lazy(() => import('views/Credits'));
-const Login = lazy(() => import('views/Login'));
-const Logout = lazy(() => import('views/Logout'));
+// const Login = lazy(() => import('views/Login'));
+// const Logout = lazy(() => import('views/Logout'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
