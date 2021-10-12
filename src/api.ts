@@ -1,4 +1,4 @@
-const host = process.env.NODE_ENV === 'production' ? 'https://serverino.policumbent.it:9002' : '';
+const host = 'https://serverino.policumbent.it:9002';
 
 // Interface for login form
 interface Login {

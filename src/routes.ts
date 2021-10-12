@@ -1,5 +1,4 @@
 import { lazy } from 'react';
-import DefaultLayout from 'containers/DefaultLayout';
 
 const Dashboard = lazy(() => import('views/Dashboard'));
 const Credits = lazy(() => import('views/Credits'));
@@ -12,11 +11,6 @@ const routes = [
     path: '/',
     exact: true,
     name: 'Home',
-    component: DefaultLayout,
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
     component: Dashboard,
   },
   {
@@ -24,16 +18,16 @@ const routes = [
     name: 'Credits',
     component: Credits,
   },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-  },
-  {
-    path: '/logout',
-    name: 'Logout',
-    component: Logout,
-  },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: Login,
+  // },
+  // {
+  //   path: '/logout',
+  //   name: 'Logout',
+  //   component: Logout,
+  // },
 ];
 
 export default routes;

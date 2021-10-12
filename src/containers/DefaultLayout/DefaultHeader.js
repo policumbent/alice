@@ -47,7 +47,7 @@ class DefaultHeader extends Component {
       <React.Fragment>
         <Nav className="mr-auto navbar-nav">
           <NavItem className="px-3">
-            <Link to="/dashboard" className="nav-link">
+            <Link to="/" className="nav-link">
               Dashboard
             </Link>
           </NavItem>
@@ -58,16 +58,16 @@ class DefaultHeader extends Component {
             <div>{this.state.show ? this.state.bike + ' on the road' : null}</div>
           </NavItem>
 
-          <NavItem className="px-2">
+          <NavItem className="pr-3 ml-3">
             <Link to="/credits" className="nav-link">
               Credits
             </Link>
           </NavItem>
-          <NavItem className="px-3">
+          {/* <NavItem className="px-3">
             <Link to={api.isLogged() ? '/logout' : '/login'} className="nav-link">
               {api.isLogged() ? 'Logout' : 'Login'}
             </Link>
-          </NavItem>
+          </NavItem> */}
         </Nav>
       </React.Fragment>
     );
