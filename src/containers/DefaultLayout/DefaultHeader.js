@@ -54,8 +54,8 @@ class DefaultHeader extends Component {
         </Nav>
         <AppNavbarBrand className="logo" full={brandFull} minimized={brandMinimized} />
         <Nav className="ml-auto navbar-nav">
-          <NavItem className="px-2 blink">
-            <div>{this.state.show ? this.state.bike + ' on the road' : null}</div>
+          <NavItem className="mr-2 px-1 blink">
+            <div>{this.state.show ? `${this.state.bike} on the road` : null}</div>
           </NavItem>
 
           <NavItem className="pr-3 ml-3">

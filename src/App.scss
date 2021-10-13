@@ -20,10 +20,13 @@
 .blink {
   animation: blinker 2.5s linear infinite;
 
-  color: red;
+  // color: #fa464e;
+  color: $danger;
   font-weight: bold;
   font-size: 1.1em;
-  // right: 50%;
+  border-style: solid;
+  border-width: medium;
+  border-radius: 12px;
 
   @media only screen and (max-width: 760px) {
     display: none;
