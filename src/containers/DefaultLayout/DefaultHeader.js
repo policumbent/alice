@@ -25,16 +25,38 @@ const brandMinimized = {
 class DefaultHeader extends Component {
   constructor() {
     super();
-    this.state = { bike: '', show: false };
+
+    api
+      .getConfig()
+      .then((data) => {
+        const bikeName = data.bikeName;
+        const show = parseDate(data.date, data.startTime) < Date.now();
+        this.setState({
+          bike: bikeName,
+          show: show,
+        });
+      })
+      .catch((e) => console.error(e));
+
+    localStorage.removeItem('blinker');
   }
 
-  async componentDidMount() {
-    const data = await api.getConfig();
+  componentDidMount() {
+    // polling over configuration change
+    setInterval(() => {
+      const data = localStorage.getItem('blinker');
 
-    this.setState({
-      bike: data.bikeName,
-      show: parseDate(data.date, data.startTime) < Date.now(),
-    });
+      if (data) {
+        const { bikeName, show } = JSON.parse(data);
+
+        if (bikeName !== this.state.bikeName || show !== this.state.show) {
+          this.setState({
+            bike: bikeName,
+            show: show,
+          });
+        }
+      }
+    }, 1000);
   }
 
   render() {
@@ -46,7 +68,7 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <Nav className="mr-auto navbar-nav">
-          <NavItem className="px-3">
+          <NavItem className="ml-4">
             <Link to="/" className="nav-link">
               Dashboard
             </Link>
@@ -54,9 +76,11 @@ class DefaultHeader extends Component {
         </Nav>
         <AppNavbarBrand className="logo" full={brandFull} minimized={brandMinimized} />
         <Nav className="ml-auto navbar-nav">
-          <NavItem className="mr-2 px-1 blink">
-            <div>{this.state.show ? `${this.state.bike} on the road` : null}</div>
-          </NavItem>
+          {this.state.show ? (
+            <NavItem className="mr-2 ">
+              <div className="blink px-1">{this.state.bike} on the road</div>
+            </NavItem>
+          ) : null}
 
           <NavItem className="mr-4 ml-3">
             <Link to="/credits" className="nav-link">

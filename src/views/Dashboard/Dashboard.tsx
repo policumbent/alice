@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useState, useEffect, useCallback } from 'react';
-import Countdown from 'react-countdown';
-import { Modal, ButtonGroup, Card, Col, Row } from 'react-bootstrap';
+import { ButtonGroup, Card, Col, Row } from 'react-bootstrap';
+
 import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
+import Countdown from 'components/countdown';
 
 import {
   MainChart,
@@ -35,7 +36,7 @@ const Dashboard = () => {
 
   const [config, setConfig] = useState(defaultConfig);
   const [startTime, setStartTime] = useState(0);
-  const [modalOpen, setModalOpen] = useState(startTime > Date.now());
+  const [modalOpen, setModalOpen] = useState(false);
   const [position, setPosition] = useState(options.view.position);
 
   /* Fetch data every second */
@@ -61,11 +62,13 @@ const Dashboard = () => {
         const start = parseDate(config.date, config.startTime);
 
         setConfig(config);
-        setStartTime(start);
-        setModalOpen(start > Date.now());
+        if (startTime === 0 || !modalOpen) {
+          setStartTime(start);
+          setModalOpen(start > Date.now());
+        }
       }
     },
-    [isMounted]
+    [isMounted, startTime, modalOpen]
   );
 
   const updateData = useCallback(
@@ -113,14 +116,12 @@ const Dashboard = () => {
   return (
     <article className="animated fadeIn">
       {/* Countdown per la live */}
-      <Modal isOpen={modalOpen} className={'modal-info'}>
-        <Modal.Header className="text-dark bg-yellow">La diretta live inizierà tra:</Modal.Header>
-        <Modal.Body>
-          <Countdown date={startTime} onComplete={() => setModalOpen(false)}>
-            <p>The bike is starting.</p>
-          </Countdown>
-        </Modal.Body>
-      </Modal>
+      <Countdown
+        show={modalOpen}
+        setShow={setModalOpen}
+        bikeName={config.bikeName}
+        startTime={startTime}
+      />
 
       {/* Row dei mini chart */}
       <Row>
