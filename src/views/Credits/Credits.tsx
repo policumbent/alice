@@ -43,7 +43,7 @@ const Credits = () => {
                   href="https://github.com/policumbent/alice">
                   policumbent/alice
                 </a>{' '}
-                on team's github. Contributions of any kind are welcome!
+                on team's github. <br /> Contributions of any kind are welcome!
               </p>
             </Card.Body>
           </Card>

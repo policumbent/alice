@@ -27,7 +27,7 @@ export const parseDate = (date: string, time: string): number => {
   const d = date.split('-').map((s) => parseInt(s));
   const t = time.split(':').map((s) => parseInt(s));
 
-  return Date.UTC(d[0], d[1] - 1, d[2], t[0], t[1], t[2]);
+  return Date.UTC(d[0], d[1] - 1, d[2], t[0] - 2, t[1], t[2]);
 };
 
 export const parseDateTime = (dateTime: string): Date => {
