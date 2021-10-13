@@ -58,7 +58,7 @@ class DefaultHeader extends Component {
             <div>{this.state.show ? `${this.state.bike} on the road` : null}</div>
           </NavItem>
 
-          <NavItem className="pr-3 ml-3">
+          <NavItem className="mr-4 ml-3">
             <Link to="/credits" className="nav-link">
               Credits
             </Link>
