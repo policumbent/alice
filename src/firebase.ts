@@ -13,8 +13,6 @@ const config = {
 };
 
 const app = initializeApp(config);
-const auth = getAuth(app);
-
-const firebase = { app, auth, getIdToken, signInWithEmailAndPassword };
+const firebase = { app, getAuth, getIdToken, signInWithEmailAndPassword };
 
 export default firebase;

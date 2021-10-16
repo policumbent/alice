@@ -58,8 +58,10 @@ const dataService = {
     const password = v.password || '';
 
     try {
-      const response = await fb.signInWithEmailAndPassword(fb.auth, username, password);
+      const auth = fb.getAuth(fb.app);
+      const response = await fb.signInWithEmailAndPassword(auth, username, password);
       const token = await fb.getIdToken(response.user);
+
       this.setJwt(token);
     } catch (err) {
       console.error(err);
