@@ -9,7 +9,7 @@ export const parseComments = (data: { timestamp: string; message: string }[]): s
   // this is char ASCII 255:
   // https://theasciicode.com.ar/extended-ascii-code/non-breaking-space-no-break-space-ascii-code-255.html
   const whiteSpace = ' ';
-  const betweenSeparator = `${whiteSpace.repeat(2)}|${whiteSpace.repeat(2)}`;
+  const betweenSeparator = `${whiteSpace.repeat(2)}🔥${whiteSpace.repeat(2)}`;
 
   let result = data.map((c) => {
     const ts = parseDateTime(c.timestamp);
@@ -19,8 +19,8 @@ export const parseComments = (data: { timestamp: string; message: string }[]): s
   });
 
   // add emojis
-  result.unshift('🚴‍♀️\t');
-  result.push('\t🚴');
+  result.unshift(`🚴‍♀️${whiteSpace.repeat(2)}`);
+  result.push(`${whiteSpace.repeat(2)}🚴`);
 
   // add space
   result.push(whiteSpace.repeat(50));

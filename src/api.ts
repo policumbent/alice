@@ -72,7 +72,9 @@ const dataService = {
 
   getHeaders: function (): Headers {
     const headers = new Headers();
-    if (this.isLogged()) headers.set('Authorization', 'Bearer ' + this.getJwt());
+    if (this.isLogged()) {
+      headers.set('Authorization', 'Bearer ' + this.getJwt());
+    }
     return headers;
   },
 
