@@ -18,6 +18,11 @@ export const parseComments = (data: { timestamp: string; message: string }[]): s
     return `${ts.getHours()}:${ts.getMinutes()} ${c.message}${separator}`;
   });
 
+  // add emojis
+  result.unshift('🚴‍♀️\t');
+  result.push('\t🚴');
+
+  // add space
   result.push(whiteSpace.repeat(50));
 
   return result;
