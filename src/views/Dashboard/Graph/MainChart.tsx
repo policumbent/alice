@@ -39,6 +39,9 @@ const MainChart = ({ data, history }: IChart) => {
     if (isLogged()) {
       oldDataSet1.hidden = false;
       oldDataSet4.hidden = false;
+    } else {
+      oldDataSet1.hidden = true;
+      oldDataSet4.hidden = true;
     }
 
     /* note: for timed labels

@@ -1,3 +1,5 @@
+import { default as fb } from 'firebase';
+
 const host = 'https://serverino.policumbent.it:9002';
 
 // Interface for login form
@@ -52,17 +54,16 @@ const dataService = {
   },
 
   login: async function (v: Login): Promise<boolean> {
-    await fetch(host + '/authenticate', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(v),
-    })
-      .then((data) => data.json())
-      .then((data) => this.setJwt(data.token))
-      .catch((err) => console.error(err));
+    const username = v.username || '';
+    const password = v.password || '';
+
+    try {
+      const response = await fb.signInWithEmailAndPassword(fb.auth, username, password);
+      const token = await fb.getIdToken(response.user);
+      this.setJwt(token);
+    } catch (err) {
+      console.error(err);
+    }
 
     return this.isLogged();
   },
