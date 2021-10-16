@@ -82,16 +82,16 @@ class DefaultHeader extends Component {
             </NavItem>
           ) : null}
 
-          <NavItem className="mr-4 ml-3">
+          <NavItem className="ml-3">
             <Link to="/credits" className="nav-link">
               Credits
             </Link>
           </NavItem>
-          {/* <NavItem className="px-3">
+          <NavItem className="mx-3">
             <Link to={api.isLogged() ? '/logout' : '/login'} className="nav-link">
               {api.isLogged() ? 'Logout' : 'Login'}
             </Link>
-          </NavItem> */}
+          </NavItem>
         </Nav>
       </React.Fragment>
     );
