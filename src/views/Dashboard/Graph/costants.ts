@@ -78,7 +78,7 @@ const mainChartData = {
       borderColor: brandInfo,
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
-      hidden: true,
+      hidden: false,
       data: Array(numElement + 1).fill(null),
     },
     {
@@ -107,7 +107,7 @@ const mainChartData = {
       borderColor: brandDanger,
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
-      hidden: true,
+      hidden: false,
       data: Array(numElement + 1).fill(null),
     },
   ],

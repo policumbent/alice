@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import {
@@ -15,19 +15,20 @@ import { filterReserved } from 'components/utils';
 import { ICardChart, IChart } from './types';
 
 const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
-  const initValue = {
-    ...state,
-    datasets: [
-      {
-        ...state.datasets[0],
-        data: history.map((e) => filterReserved(e[type])),
-      },
-    ],
-  };
+  // todo: fix when history is ready
+  // const initValue = {
+  //   ...state,
+  //   datasets: [
+  //     {
+  //       ...state.datasets[0],
+  //       data: history.map((e) => filterReserved(e[type])),
+  //     },
+  //   ],
+  // };
 
-  const [line, setLine] = useState(initValue);
+  const [line, setLine] = useState(cardChartData1);
 
-  const updateLine = useCallback(() => {
+  useEffect(() => {
     const value = filterReserved(data[type]);
 
     if (value !== null) {
@@ -45,11 +46,8 @@ const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
         };
       });
     }
-  }, [line.datasets, type, data]);
-
-  useEffect(() => {
-    updateLine();
-  }, [data, updateLine]);
+    // eslint-disable-next-line
+  }, [data, type]);
 
   return <Line data={line} options={opts} />;
 };

@@ -80,7 +80,6 @@ const Dashboard = () => {
         setData(data);
         setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
 
-        // NOTE: weather is private for not logged users
         if (weatherData) {
           setWeather(weatherData);
         }
