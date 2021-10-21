@@ -23,6 +23,8 @@ import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
+import { connectedNote, disconnectedNote } from 'components/utils';
+
 import { IData, IHistory, IWeather } from './types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
@@ -38,6 +40,7 @@ const Dashboard = () => {
   const [startTime, setStartTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [position, setPosition] = useState(options.view.position);
+  const [connected, setConnected] = useState<boolean>();
 
   /* Fetch data every second */
   const [, setPolling] = usePolling(() => fetchData(), 1000);
@@ -62,7 +65,7 @@ const Dashboard = () => {
         const start = parseDate(config.date, config.startTime);
 
         setConfig(config);
-        if (startTime === 0 || !modalOpen) {
+        if (startTime === 0 && !modalOpen) {
           setStartTime(start);
           setModalOpen(start > Date.now());
         }
@@ -76,7 +79,7 @@ const Dashboard = () => {
       data: IData & { latitude: string; longitude: string },
       weatherData: IWeather | null = null
     ) => {
-      if (isMounted.current) {
+      if (isMounted.current && !modalOpen) {
         setData(data);
         setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
 
@@ -85,7 +88,7 @@ const Dashboard = () => {
         }
       }
     },
-    [isMounted]
+    [isMounted, modalOpen]
   );
 
   const fetchData = useCallback(async () => {
@@ -100,12 +103,24 @@ const Dashboard = () => {
       const h = await api.getHistory(c.bikeName, numElement);
       updateHistory(h);
     }
-  }, [history, updateConfig, updateData, updateHistory]);
+
+    if (data.connected !== Boolean(connected)) {
+      setConnected(data.connected);
+    }
+  }, [history, updateConfig, updateData, updateHistory, connected]);
 
   useEffect(() => {
     fetchData();
     setPolling(true);
   }, [fetchData, setPolling]);
+
+  useEffect(() => {
+    if (connected) {
+      connectedNote();
+    } else if (connected === false) {
+      disconnectedNote();
+    }
+  }, [connected]);
 
   /* If there is no data yet, show blank screen */
   if (!data || !history || !weather) {

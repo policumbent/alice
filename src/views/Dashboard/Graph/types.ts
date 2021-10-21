@@ -1,7 +1,7 @@
 import { ccData, ccOpts1, ccOpts2, ccOpts3, ccOpts4 } from './costants';
 
 export interface IGData {
-  [key: string]: number;
+  [key: string]: number | boolean;
 
   cadence: number;
   heartrate: number;

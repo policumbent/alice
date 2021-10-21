@@ -1,57 +1,41 @@
-import { useEffect, useRef } from 'react';
+// import { useEffect, useRef } from 'react';
 
-import ReactNotification, { ReactNotificationOptions, store } from 'react-notifications-component';
-import { default as api } from 'api';
+// import ReactNotification, { ReactNotificationOptions, store } from 'react-notifications-component';
+import ReactNotification from 'react-notifications-component';
+// import { default as api } from 'api';
 
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 
-interface Note extends ReactNotificationOptions {}
-
-// base note
-const base: Note = {
-  insert: 'top',
-  container: 'top-right',
-  animationIn: ['animated', 'fadeIn'],
-  animationOut: ['animated', 'fadeOut'],
-  width: 300,
-  dismiss: {
-    duration: 2500,
-    onScreen: true, // true: mostra il countdown di scomparsa
-    pauseOnHover: true,
-    showIcon: true,
-  },
-};
-
 const Notifications = () => {
-  const counter = useRef(0);
+  // const counter = useRef(0);
 
   // 5 secs polling on notifications api
   //
   // eslint-disable-next-line
-  const notificationsPolling = () => {
-    setInterval(async () => {
-      const notes = await api.getNotifications(counter.current);
+  // const notificationsPolling = () => {
+  //   setInterval(async () => {
+  //     const notes = await api.getNotifications(counter.current);
 
-      notes.forEach((n: any) => {
-        const note: Note = {
-          message: n.message,
-          type: n.public ? 'info' : 'warning',
-          ...base,
-        };
+  //     notes.forEach((n: any) => {
+  //       const note: Note = {
+  //         message: n.message,
+  //         type: n.public ? 'info' : 'warning',
+  //         ...base,
+  //       };
 
-        // @todo Handle private notifications
+  //       // @todo Handle private notifications
 
-        store.addNotification(note);
+  //       store.addNotification(note);
 
-        counter.current = n.id;
-      });
-    }, 5 * 1000);
-  };
+  //       counter.current = n.id;
+  //     });
+  //   }, 5 * 1000);
+  // };
 
-  useEffect(() => {
-    // notificationsPolling();
-  }, []);
+  // useEffect(() => {
+  //   notificationsPolling();
+  // }, []);
 
   return <ReactNotification />;
 };

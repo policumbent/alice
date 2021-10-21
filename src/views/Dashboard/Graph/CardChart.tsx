@@ -29,7 +29,7 @@ const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
   const [line, setLine] = useState(cardChartData1);
 
   useEffect(() => {
-    const value = filterReserved(data[type]);
+    const value = filterReserved(Number(data[type]));
 
     if (value !== null) {
       const oldDataSet = { ...line.datasets[0] };
