@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
+
 import Notifications from 'components/notifications';
 
 import './App.scss';
