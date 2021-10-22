@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, getIdToken } from 'firebase/auth';
 import { getMessaging, onMessage, getToken, MessagePayload } from 'firebase/messaging';
+import { default as api } from 'api';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -30,6 +31,7 @@ export const getMessageToken = async () => {
     });
 
     if (currentToken) {
+      api.sendNotificationsToken(currentToken);
       console.log('Registration token is ok');
     } else {
       console.log('No registration token available. Request permission to generate one.');

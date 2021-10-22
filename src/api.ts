@@ -162,6 +162,32 @@ const dataService = {
       .then((data) => data.filter((n: any) => n.id > counter))
       .catch((error) => console.error(error));
   },
+
+  /**
+   * Put a token on firebase db
+   *
+   * @param token -> generated firebase token
+   *
+   */
+  sendNotificationsToken: async function (token: string) {
+    const url = `${host}/api/alice/tokens`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default dataService;
