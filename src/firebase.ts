@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, getIdToken } from 'firebase/auth';
-import { getMessaging, onMessage, getToken, MessagePayload } from 'firebase/messaging';
+import { getMessaging, getToken } from 'firebase/messaging';
 import { default as api } from 'api';
 
 const config = {
@@ -25,7 +25,7 @@ export const getAuthToken = async (username: string, password: string) => {
 export const getMessageToken = async () => {
   try {
     const messaging = getMessaging(app);
-    const swRegistration = await navigator.serviceWorker.register('/service-worker.js');
+    const swRegistration = await navigator.serviceWorker.ready;
     const currentToken = await getToken(messaging, {
       serviceWorkerRegistration: swRegistration,
     });
@@ -41,11 +41,11 @@ export const getMessageToken = async () => {
   }
 };
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    const messaging = getMessaging(app);
+// export const onMessageListener = () =>
+//   new Promise((resolve) => {
+//     const messaging = getMessaging(app);
 
-    onMessage(messaging, (payload: MessagePayload) => {
-      resolve(payload);
-    });
-  });
+//     onMessage(messaging, (payload) => {
+//       resolve(payload);
+//     });
+//   });
