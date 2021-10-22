@@ -23,7 +23,7 @@ import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
-import { connectedNote, disconnectedNote } from 'components/utils';
+import { connectedNote, disconnectedNote } from 'components/notifications';
 
 import { IData, IHistory, IWeather } from './types';
 

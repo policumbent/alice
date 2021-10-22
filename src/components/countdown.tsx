@@ -1,4 +1,5 @@
-import { Modal, Row, Col } from 'react-bootstrap';
+import { getMessageToken } from '../firebase';
+import { Modal, Row, Col, Button } from 'react-bootstrap';
 
 import { CountdownRenderProps, default as ReactCountdown } from 'react-countdown';
 
@@ -71,6 +72,9 @@ const Countdown = ({ show, startTime, setShow, bikeName }: ICountdown) => {
           onComplete={() => setTimeout(() => setShow(false), 1800)}
           renderer={renderer}
         />
+        <Button className="mt-4" variant="danger" onClick={() => getMessageToken()}>
+          Ricevi una notifica alla partenza
+        </Button>
       </Modal.Body>
     </Modal>
   );

@@ -1,4 +1,4 @@
-import { default as fb } from 'firebase';
+import { getAuthToken } from 'firebase';
 
 const host = 'https://serverino.policumbent.it:9002';
 
@@ -58,9 +58,7 @@ const dataService = {
     const password = v.password || '';
 
     try {
-      const auth = fb.getAuth(fb.app);
-      const response = await fb.signInWithEmailAndPassword(auth, username, password);
-      const token = await fb.getIdToken(response.user);
+      const token = await getAuthToken(username, password);
 
       this.setJwt(token);
     } catch (err) {

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, getIdToken } from 'firebase/auth';
+import { getMessaging, onMessage, getToken, MessagePayload } from 'firebase/messaging';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,6 +14,36 @@ const config = {
 };
 
 const app = initializeApp(config);
-const firebase = { app, getAuth, getIdToken, signInWithEmailAndPassword };
 
-export default firebase;
+export const getAuthToken = async (username: string, password: string) => {
+  const auth = getAuth(app);
+  const response = await signInWithEmailAndPassword(auth, username, password);
+  return await getIdToken(response.user);
+};
+
+export const getMessageToken = async () => {
+  try {
+    const messaging = getMessaging(app);
+    const swRegistration = await navigator.serviceWorker.register('/service-worker.js');
+    const currentToken = await getToken(messaging, {
+      serviceWorkerRegistration: swRegistration,
+    });
+
+    if (currentToken) {
+      console.log('Registration token is ok');
+    } else {
+      console.log('No registration token available. Request permission to generate one.');
+    }
+  } catch (e) {
+    console.log('An error occurred while retrieving token. ', e);
+  }
+};
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    const messaging = getMessaging(app);
+
+    onMessage(messaging, (payload: MessagePayload) => {
+      resolve(payload);
+    });
+  });

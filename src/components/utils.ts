@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { ReactNotificationOptions, store } from 'react-notifications-component';
 
 import { default as api } from 'api';
 
@@ -42,33 +41,6 @@ export const parseDateTime = (dateTime: string): Date => {
   const date = Date.UTC(dt[0], dt[1] - 1, dt[2], dt[3], dt[4], dt[5]);
 
   return new Date(date);
-};
-
-type Note = ReactNotificationOptions;
-
-// base note
-const base: Note = {
-  insert: 'top',
-  container: 'top-right',
-  animationIn: ['animated', 'fadeIn'],
-  animationOut: ['animated', 'fadeOut'],
-  width: 300,
-  dismiss: {
-    duration: 2500,
-    onScreen: true, // true: mostra il countdown di scomparsa
-    pauseOnHover: true,
-    showIcon: true,
-  },
-};
-
-export const connectedNote = () => {
-  const note: Note = { message: 'Bike is connected', type: 'success', ...base };
-  store.addNotification(note);
-};
-
-export const disconnectedNote = () => {
-  const note: Note = { message: 'Bike is not connected', type: 'danger', ...base };
-  store.addNotification(note);
 };
 
 export const useIsMounted = (): { current: boolean } => {
