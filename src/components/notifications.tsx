@@ -1,5 +1,5 @@
 import ReactNotification, { ReactNotificationOptions, store } from 'react-notifications-component';
-import { onMessageListener } from 'firebase';
+// import { onMessageListener } from 'firebase';
 
 type Note = ReactNotificationOptions;
 
@@ -11,7 +11,7 @@ const base: Note = {
   animationOut: ['animated', 'fadeOut'],
   width: 300,
   dismiss: {
-    duration: 2500,
+    duration: 10000,
     onScreen: true, // mostra il countdown di scomparsa
     pauseOnHover: true,
     showIcon: true,
@@ -34,15 +34,15 @@ export const disconnectedNote = () => {
 };
 
 const Notifications = () => {
-  /* When the app is open receive a toast notification */
-  onMessageListener()
-    .then((payload: any) => {
-      const title = payload.notification?.title;
-      const body = payload.notification?.body;
+  // /* When the app is open receive a toast notification */
+  // onMessageListener()
+  //   .then((payload: any) => {
+  //     const title = payload.notification?.title;
+  //     const body = payload.notification?.body;
 
-      infoNotification(title, body);
-    })
-    .catch((err) => console.log('failed: ', err));
+  //     infoNotification(title, body);
+  //   })
+  //   .catch((err) => console.log('failed: ', err));
 
   return <ReactNotification />;
 };
