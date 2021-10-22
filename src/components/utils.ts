@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, Dispatch, SetStateAction } from 'react';
+
 import { default as api } from 'api';
 
 export const filterReserved = (value: number) => (value === -1 ? null : value);
@@ -9,7 +10,7 @@ export const parseComments = (data: { timestamp: string; message: string }[]): s
   // this is char ASCII 255:
   // https://theasciicode.com.ar/extended-ascii-code/non-breaking-space-no-break-space-ascii-code-255.html
   const whiteSpace = ' ';
-  const betweenSeparator = `${whiteSpace.repeat(2)}|${whiteSpace.repeat(2)}`;
+  const betweenSeparator = `${whiteSpace.repeat(2)}🔥${whiteSpace.repeat(2)}`;
 
   let result = data.map((c) => {
     const ts = parseDateTime(c.timestamp);
@@ -18,6 +19,11 @@ export const parseComments = (data: { timestamp: string; message: string }[]): s
     return `${ts.getHours()}:${ts.getMinutes()} ${c.message}${separator}`;
   });
 
+  // add emojis
+  result.unshift(`🚴‍♀️${whiteSpace.repeat(2)}`);
+  result.push(`${whiteSpace.repeat(2)}🚴`);
+
+  // add space
   result.push(whiteSpace.repeat(50));
 
   return result;
@@ -27,7 +33,7 @@ export const parseDate = (date: string, time: string): number => {
   const d = date.split('-').map((s) => parseInt(s));
   const t = time.split(':').map((s) => parseInt(s));
 
-  return Date.UTC(d[0], d[1] - 1, d[2], t[0], t[1], t[2]);
+  return Date.UTC(d[0], d[1] - 1, d[2], t[0] - 2, t[1], t[2]);
 };
 
 export const parseDateTime = (dateTime: string): Date => {

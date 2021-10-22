@@ -1,12 +1,7 @@
-import { useEffect, useRef } from 'react';
-
 import ReactNotification, { ReactNotificationOptions, store } from 'react-notifications-component';
-import { default as api } from 'api';
+// import { onMessageListener } from 'firebase';
 
-import 'react-notifications-component/dist/theme.css';
-import 'animate.css';
-
-interface Note extends ReactNotificationOptions {}
+type Note = ReactNotificationOptions;
 
 // base note
 const base: Note = {
@@ -16,40 +11,38 @@ const base: Note = {
   animationOut: ['animated', 'fadeOut'],
   width: 300,
   dismiss: {
-    duration: 2500,
-    onScreen: true, // true: mostra il countdown di scomparsa
+    duration: 10000,
+    onScreen: true, // mostra il countdown di scomparsa
     pauseOnHover: true,
     showIcon: true,
   },
 };
 
+export const infoNotification = (title: string, message: string) => {
+  const note: Note = { message, title, type: 'info', ...base };
+  store.addNotification(note);
+};
+
+export const connectedNote = () => {
+  const note: Note = { message: 'Bike is connected', type: 'success', ...base };
+  store.addNotification(note);
+};
+
+export const disconnectedNote = () => {
+  const note: Note = { message: 'Bike is not connected', type: 'danger', ...base };
+  store.addNotification(note);
+};
+
 const Notifications = () => {
-  const counter = useRef(0);
+  // /* When the app is open receive a toast notification */
+  // onMessageListener()
+  //   .then((payload: any) => {
+  //     const title = payload.notification?.title;
+  //     const body = payload.notification?.body;
 
-  // 5 secs polling on notifications api
-  const notificationsPolling = () => {
-    setInterval(async () => {
-      const notes = await api.getNotifications(counter.current);
-
-      notes.forEach((n: any) => {
-        const note: Note = {
-          message: n.message,
-          type: n.public ? 'info' : 'warning',
-          ...base,
-        };
-
-        // @todo Handle private notifications
-
-        store.addNotification(note);
-
-        counter.current = n.id;
-      });
-    }, 5 * 1000);
-  };
-
-  useEffect(() => {
-    notificationsPolling();
-  }, []);
+  //     infoNotification(title, body);
+  //   })
+  //   .catch((err) => console.log('failed: ', err));
 
   return <ReactNotification />;
 };

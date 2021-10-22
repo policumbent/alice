@@ -13,6 +13,7 @@ export interface IData extends IGData {
   accZ: number;
   accZMax: number;
   timestamp: number;
+  connected: boolean;
 }
 
 export interface IHistory {

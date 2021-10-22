@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useState, useEffect, useCallback } from 'react';
-import Countdown from 'react-countdown';
-import { Modal, ButtonGroup, Card, Col, Row } from 'react-bootstrap';
+import { ButtonGroup, Card, Col, Row } from 'react-bootstrap';
+
 import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
+import Countdown from 'components/countdown';
 
 import {
   MainChart,
@@ -22,6 +23,8 @@ import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from 'api';
 import { parseDate, useIsMounted, usePolling } from 'components/utils';
+import { connectedNote, disconnectedNote } from 'components/notifications';
+
 import { IData, IHistory, IWeather } from './types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
@@ -35,8 +38,9 @@ const Dashboard = () => {
 
   const [config, setConfig] = useState(defaultConfig);
   const [startTime, setStartTime] = useState(0);
-  const [modalOpen, setModalOpen] = useState(startTime > Date.now());
+  const [modalOpen, setModalOpen] = useState(false);
   const [position, setPosition] = useState(options.view.position);
+  const [connected, setConnected] = useState<boolean>();
 
   /* Fetch data every second */
   const [, setPolling] = usePolling(() => fetchData(), 1000);
@@ -61,11 +65,13 @@ const Dashboard = () => {
         const start = parseDate(config.date, config.startTime);
 
         setConfig(config);
-        setStartTime(start);
-        setModalOpen(start > Date.now());
+        if (startTime === 0 && !modalOpen) {
+          setStartTime(start);
+          setModalOpen(start > Date.now());
+        }
       }
     },
-    [isMounted]
+    [isMounted, startTime, modalOpen]
   );
 
   const updateData = useCallback(
@@ -73,17 +79,16 @@ const Dashboard = () => {
       data: IData & { latitude: string; longitude: string },
       weatherData: IWeather | null = null
     ) => {
-      if (isMounted.current) {
+      if (isMounted.current && !modalOpen) {
         setData(data);
         setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
 
-        // NOTE: weather is private for not logged users
         if (weatherData) {
           setWeather(weatherData);
         }
       }
     },
-    [isMounted]
+    [isMounted, modalOpen]
   );
 
   const fetchData = useCallback(async () => {
@@ -98,29 +103,39 @@ const Dashboard = () => {
       const h = await api.getHistory(c.bikeName, numElement);
       updateHistory(h);
     }
-  }, [history, updateConfig, updateData, updateHistory]);
+
+    if (data.connected !== Boolean(connected)) {
+      setConnected(data.connected);
+    }
+  }, [history, updateConfig, updateData, updateHistory, connected]);
 
   useEffect(() => {
     fetchData();
     setPolling(true);
   }, [fetchData, setPolling]);
 
+  useEffect(() => {
+    if (connected) {
+      connectedNote();
+    } else if (connected === false) {
+      disconnectedNote();
+    }
+  }, [connected]);
+
   /* If there is no data yet, show blank screen */
-  if (!data || !history) {
+  if (!data || !history || !weather) {
     return null;
   }
 
   return (
     <article className="animated fadeIn">
       {/* Countdown per la live */}
-      <Modal isOpen={modalOpen} className={'modal-info'}>
-        <Modal.Header className="text-dark bg-yellow">La diretta live inizierà tra:</Modal.Header>
-        <Modal.Body>
-          <Countdown date={startTime} onComplete={() => setModalOpen(false)}>
-            <p>The bike is starting.</p>
-          </Countdown>
-        </Modal.Body>
-      </Modal>
+      <Countdown
+        show={modalOpen}
+        setShow={setModalOpen}
+        bikeName={config.bikeName}
+        startTime={startTime}
+      />
 
       {/* Row dei mini chart */}
       <Row>

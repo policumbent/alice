@@ -1,4 +1,6 @@
-const host = process.env.NODE_ENV === 'production' ? 'https://serverino.policumbent.it:9002' : '';
+import { getAuthToken } from 'firebase';
+
+const host = 'https://serverino.policumbent.it:9002';
 
 // Interface for login form
 interface Login {
@@ -52,24 +54,25 @@ const dataService = {
   },
 
   login: async function (v: Login): Promise<boolean> {
-    await fetch(host + '/authenticate', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(v),
-    })
-      .then((data) => data.json())
-      .then((data) => this.setJwt(data.token))
-      .catch((err) => console.error(err));
+    const username = v.username || '';
+    const password = v.password || '';
+
+    try {
+      const token = await getAuthToken(username, password);
+
+      this.setJwt(token);
+    } catch (err) {
+      console.error(err);
+    }
 
     return this.isLogged();
   },
 
   getHeaders: function (): Headers {
     const headers = new Headers();
-    if (this.isLogged()) headers.set('Authorization', 'Bearer ' + this.getJwt());
+    if (this.isLogged()) {
+      headers.set('Authorization', 'Bearer ' + this.getJwt());
+    }
     return headers;
   },
 
@@ -158,6 +161,32 @@ const dataService = {
       .then((r) => r.json())
       .then((data) => data.filter((n: any) => n.id > counter))
       .catch((error) => console.error(error));
+  },
+
+  /**
+   * Put a token on firebase db
+   *
+   * @param token -> generated firebase token
+   *
+   */
+  sendNotificationsToken: async function (token: string) {
+    const url = `${host}/api/alice/tokens`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 

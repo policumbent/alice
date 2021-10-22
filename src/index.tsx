@@ -5,6 +5,13 @@ import { render } from 'react-dom';
 
 import App from './App';
 import * as serviceWorker from './serviceWorkerRegister';
+import ReactGA from 'react-ga4';
+
+try {
+  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID || '');
+} catch (e) {
+  console.warn(e);
+}
 
 render(
   <StrictMode>

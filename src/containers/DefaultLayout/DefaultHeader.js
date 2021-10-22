@@ -25,16 +25,38 @@ const brandMinimized = {
 class DefaultHeader extends Component {
   constructor() {
     super();
-    this.state = { bike: '', show: false };
+
+    api
+      .getConfig()
+      .then((data) => {
+        const bikeName = data.bikeName;
+        const show = parseDate(data.date, data.startTime) < Date.now();
+        this.setState({
+          bike: bikeName,
+          show: show,
+        });
+      })
+      .catch((e) => console.error(e));
+
+    localStorage.removeItem('blinker');
   }
 
-  async componentDidMount() {
-    const data = await api.getConfig();
+  componentDidMount() {
+    // polling over configuration change
+    setInterval(() => {
+      const data = localStorage.getItem('blinker');
 
-    this.setState({
-      bike: data.bikeName,
-      show: parseDate(data.date, data.startTime) < Date.now(),
-    });
+      if (data) {
+        const { bikeName, show } = JSON.parse(data);
+
+        if (bikeName !== this.state.bikeName || show !== this.state.show) {
+          this.setState({
+            bike: bikeName,
+            show: show,
+          });
+        }
+      }
+    }, 1000);
   }
 
   render() {
@@ -46,24 +68,26 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <Nav className="mr-auto navbar-nav">
-          <NavItem className="px-3">
-            <Link to="/dashboard" className="nav-link">
+          <NavItem className="ml-4">
+            <Link to="/" className="nav-link">
               Dashboard
             </Link>
           </NavItem>
         </Nav>
         <AppNavbarBrand className="logo" full={brandFull} minimized={brandMinimized} />
         <Nav className="ml-auto navbar-nav">
-          <NavItem className="px-2 blink">
-            <div>{this.state.show ? this.state.bike + ' on the road' : null}</div>
-          </NavItem>
+          {this.state.show ? (
+            <NavItem className="mr-2 ">
+              <div className="blink px-1">{this.state.bike} on the road</div>
+            </NavItem>
+          ) : null}
 
-          <NavItem className="px-2">
+          <NavItem className="ml-3">
             <Link to="/credits" className="nav-link">
               Credits
             </Link>
           </NavItem>
-          <NavItem className="px-3">
+          <NavItem className="mx-3">
             <Link to={api.isLogged() ? '/logout' : '/login'} className="nav-link">
               {api.isLogged() ? 'Logout' : 'Login'}
             </Link>

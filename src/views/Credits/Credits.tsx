@@ -6,15 +6,15 @@ const Credits = () => {
   return (
     <article className="animated fadeIn">
       <Row>
-        <Col className="mx-auto" xs="12" md="7" xl="4">
+        <Col className="mx-auto mt-5 pt-5" xs="12" md="7" xl="4">
           <Card>
             <Card.Header>
-              <h2 className="text-center">
+              <h3 className="text-center pt-1">
                 <FaCode /> with <FaHeart /> by
-              </h2>
+              </h3>
             </Card.Header>
             <Card.Body className="text-center">
-              <h4>
+              <h5 className="mt-2">
                 Gabriele Belluardo{' '}
                 <a
                   className="text-center github-icon"
@@ -23,8 +23,8 @@ const Credits = () => {
                   href="https://github.com/gabelluardo">
                   <FaGithub />
                 </a>
-              </h4>
-              <h4>
+              </h5>
+              <h5>
                 Stefano Loscalzo{' '}
                 <a
                   className="text-center github-icon"
@@ -33,7 +33,18 @@ const Credits = () => {
                   href="https://github.com/stelosca96">
                   <FaGithub />
                 </a>
-              </h4>
+              </h5>
+              <br />
+              <p className="mt-2">
+                All source code can be found at{' '}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://github.com/policumbent/alice">
+                  policumbent/alice
+                </a>{' '}
+                on team's github. <br /> Contributions of any kind are welcome!
+              </p>
             </Card.Body>
           </Card>
         </Col>
