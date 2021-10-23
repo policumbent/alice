@@ -32,15 +32,17 @@ export const parseComments = (data: { timestamp: string; message: string }[]): s
 export const parseDate = (date: string, time: string): number => {
   const d = date.split('-').map((s) => parseInt(s));
   const t = time.split(':').map((s) => parseInt(s));
+  const utc = Date.UTC(d[0], d[1] - 1, d[2], t[0] - 2, t[1], t[2]);
 
-  return Date.UTC(d[0], d[1] - 1, d[2], t[0] - 2, t[1], t[2]);
+  return utc;
 };
 
 export const parseDateTime = (dateTime: string): Date => {
   const dt = dateTime.split(/[-: ]+/).map((s) => parseInt(s));
-  const date = Date.UTC(dt[0], dt[1] - 1, dt[2], dt[3], dt[4], dt[5]);
+  const utc = Date.UTC(dt[0], dt[1] - 1, dt[2], dt[3] - 2, dt[4], dt[5]);
+  const date = new Date(utc);
 
-  return new Date(date);
+  return date;
 };
 
 export const useIsMounted = (): { current: boolean } => {
