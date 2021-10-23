@@ -2,9 +2,9 @@ import { useRef, useEffect, useState, Dispatch, SetStateAction } from 'react';
 
 import { default as api } from 'api';
 
-export const filterReserved = (value: number) => (api.getJwt() ? value : null);
-
 export const isLogged = (): boolean => api.isLogged();
+
+export const filterReserved = (value: number) => (isLogged() ? value : 0);
 
 export const parseComments = (data: { timestamp: string; message: string }[]): string[] => {
   // this is char ASCII 255:
@@ -47,8 +47,8 @@ export const parseDateTime = (dateTime: string): Date => {
 
 export const convertTimeMinSec = (time: number) => {
   const floatMinutes = time / 60;
-  const minutes = Math.floor(floatMinutes);
-  const seconds = (floatMinutes - minutes) * 6;
+  const minutes = Math.trunc(floatMinutes);
+  const seconds = Math.floor((floatMinutes - minutes) * 6);
 
   return `${minutes}' ${seconds}"`;
 };

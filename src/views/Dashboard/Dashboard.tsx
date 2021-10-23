@@ -22,7 +22,7 @@ import { LeafletMap, options } from './Map';
 import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from 'api';
-import { parseDate, convertTimeMinSec, useIsMounted, usePolling } from 'components/utils';
+import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from 'components/utils';
 import { connectedNote, disconnectedNote } from 'components/notifications';
 
 import { IData, IHistory, IWeather } from './types';
@@ -145,7 +145,7 @@ const Dashboard = () => {
               <ButtonGroup id="card1" className="float-right">
                 <FaSpaceShuttle size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{data.power === -1 ? 'Reserved' : data.power}</div>
+              <div className="text-value">{!isLogged() ? 'Reserved' : data.power}</div>
               <div>Power [W]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
@@ -190,9 +190,7 @@ const Dashboard = () => {
               <ButtonGroup id="card4" className="float-right">
                 <FiActivity size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">
-                {data.heartrate === -1 ? 'Reserved' : data.heartrate}
-              </div>
+              <div className="text-value">{!isLogged() ? 'Reserved' : data.heartrate}</div>
               <div>Heartrate [bpm]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">

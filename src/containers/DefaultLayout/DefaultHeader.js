@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Nav, NavItem } from 'react-bootstrap';
+import { Nav, NavItem, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { AppNavbarBrand } from './components';
@@ -9,6 +9,7 @@ import logo from 'assets/img/brand/logo.svg';
 import sygnet from 'assets/img/brand/sygnet.svg';
 import { default as api } from 'api';
 import { parseDate } from 'components/utils';
+import { getMessageToken } from '../../firebase';
 
 const propTypes = {
   children: PropTypes.node,
@@ -72,6 +73,11 @@ class DefaultHeader extends Component {
             <Link to="/" className="nav-link">
               Dashboard
             </Link>
+          </NavItem>
+          <NavItem className="ml-4">
+            <Button variant="danger" onClick={() => getMessageToken()}>
+              Ricevi le notifiche
+            </Button>
           </NavItem>
         </Nav>
         <AppNavbarBrand className="logo" full={brandFull} minimized={brandMinimized} />
