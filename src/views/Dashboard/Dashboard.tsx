@@ -22,7 +22,7 @@ import { LeafletMap, options } from './Map';
 import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from 'api';
-import { parseDate, useIsMounted, usePolling } from 'components/utils';
+import { parseDate, convertTimeMinSec, useIsMounted, usePolling } from 'components/utils';
 import { connectedNote, disconnectedNote } from 'components/notifications';
 
 import { IData, IHistory, IWeather } from './types';
@@ -231,7 +231,12 @@ const Dashboard = () => {
 
       {/* Row degli extra */}
       <Row>
-        <ExtraCard name="Time" unit="m" bgColor="pink" value={data.time} />
+        <ExtraCard
+          name="Time"
+          unit={data.time < 60 ? 'sec' : 'min, sec'}
+          bgColor="pink"
+          value={data.time < 60 ? data.time : convertTimeMinSec(data.time)}
+        />
         <ExtraCard name="Gear" bgColor="dark" value={data.gear} />
         <ExtraCard name="Distance" unit="m" bgColor="secondary" value={data.distance} />
         <ExtraCard name="Altitude" unit="m" bgColor="yellow" value={data.altitude} />

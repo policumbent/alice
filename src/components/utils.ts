@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, Dispatch, SetStateAction } from 'react';
 
 import { default as api } from 'api';
 
-export const filterReserved = (value: number) => (value === -1 ? null : value);
+export const filterReserved = (value: number) => (api.getJwt() ? value : null);
 
 export const isLogged = (): boolean => api.isLogged();
 
@@ -43,6 +43,14 @@ export const parseDateTime = (dateTime: string): Date => {
   const date = new Date(utc);
 
   return date;
+};
+
+export const convertTimeMinSec = (time: number) => {
+  const floatMinutes = time / 60;
+  const minutes = Math.floor(floatMinutes);
+  const seconds = (floatMinutes - minutes) * 6;
+
+  return `${minutes}' ${seconds}"`;
 };
 
 export const useIsMounted = (): { current: boolean } => {

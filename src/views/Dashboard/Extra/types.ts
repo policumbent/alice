@@ -2,7 +2,7 @@ export interface IExtra {
   bgColor: string;
   name: string;
   unit?: string;
-  value?: number;
+  value?: number | string;
 }
 
 export interface IWCard {
