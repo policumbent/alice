@@ -29,11 +29,7 @@ $main-color: gray;
 /* Header */
 
 .logo {
-  position: absolute;
-  left: 50%;
-  margin-left: -77.5px;
-
-  @media only screen and (max-width: 350px) {
+  @media only screen and (max-width: 520px) {
     img {
       display: none;
     }
@@ -53,7 +49,7 @@ $main-color: gray;
   border-width: medium;
   border-radius: 12px;
 
-  @media only screen and (max-width: 760px) {
+  @media only screen and (max-width: 900px) {
     display: none;
   }
 }

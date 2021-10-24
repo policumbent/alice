@@ -74,16 +74,18 @@ class DefaultHeader extends Component {
               Dashboard
             </Link>
           </NavItem>
-          <NavItem className="ml-4">
-            <Button variant="danger" onClick={() => getMessageToken()}>
-              Ricevi le notifiche
-            </Button>
-          </NavItem>
+          {localStorage.getItem('notifications') ? (
+            <NavItem className="ml-2 mr-auto">
+              <Button variant="danger" onClick={() => getMessageToken()}>
+                Attiva notifiche
+              </Button>
+            </NavItem>
+          ) : null}
         </Nav>
-        <AppNavbarBrand className="logo" full={brandFull} minimized={brandMinimized} />
+        <AppNavbarBrand className="m-auto logo" full={brandFull} minimized={brandMinimized} />
         <Nav className="ml-auto navbar-nav">
           {this.state.show ? (
-            <NavItem className="mr-2 ">
+            <NavItem className="mr-2 ml-auto">
               <div className="blink px-1">{this.state.bike} on the road</div>
             </NavItem>
           ) : null}

@@ -32,6 +32,7 @@ export const getMessageToken = async () => {
 
     if (currentToken) {
       api.sendNotificationsToken(currentToken);
+      localStorage.setItem('notifications', currentToken);
       console.log('Registration token is ok');
     } else {
       console.log('No registration token available. Request permission to generate one.');
