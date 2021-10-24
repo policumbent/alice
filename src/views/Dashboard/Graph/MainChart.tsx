@@ -6,26 +6,25 @@ import { filterReserved, isLogged } from 'components/utils';
 import { IChart } from './types';
 
 const MainChart = ({ data, history }: IChart) => {
-  // todo: fix when history is ready
-  // const initValue = () => {
-  //   const s = mainChartData;
-  //   const power = history.map((e) => filterReserved(e.power));
-  //   const cadence = history.map((e) => e.cadence);
-  //   const speed = history.map((e) => e.speed);
-  //   const heartrate = history.map((e) => filterReserved(e.heartrate));
+  const initValue = () => {
+    const s = mainChartData;
+    const power = history.map((e) => filterReserved(e.power));
+    const cadence = history.map((e) => e.cadence);
+    const speed = history.map((e) => e.speed);
+    const heartrate = history.map((e) => filterReserved(e.heartrate));
 
-  //   return {
-  //     ...s,
-  //     datasets: [
-  //       { ...s.datasets[0], data: [...power] },
-  //       { ...s.datasets[1], data: [...cadence] },
-  //       { ...s.datasets[2], data: [...speed] },
-  //       { ...s.datasets[3], data: [...heartrate] },
-  //     ],
-  //   };
-  // };
+    return {
+      ...s,
+      datasets: [
+        { ...s.datasets[0], data: [...power] },
+        { ...s.datasets[1], data: [...cadence] },
+        { ...s.datasets[2], data: [...speed] },
+        { ...s.datasets[3], data: [...heartrate] },
+      ],
+    };
+  };
 
-  const [state, setState] = useState(mainChartData);
+  const [state, setState] = useState(initValue());
 
   useEffect(() => {
     const { power, cadence, speed, heartrate } = data;

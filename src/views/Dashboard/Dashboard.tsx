@@ -48,12 +48,9 @@ const Dashboard = () => {
   const updateHistory = useCallback(
     (history) => {
       if (isMounted.current && history) {
-        // TODO: uncomment when history api is ready
-        //
-        // const chart = history.map((e: any) => createData(e));
-        // const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
-        // setHistory({ chart, miniChart });
-        setHistory(history);
+        const chart = history.map((e: any) => createData(e));
+        const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
+        setHistory({ chart, miniChart });
       }
     },
     [isMounted]

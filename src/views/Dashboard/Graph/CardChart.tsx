@@ -15,18 +15,17 @@ import { filterReserved } from 'components/utils';
 import { ICardChart, IChart } from './types';
 
 const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
-  // todo: fix when history is ready
-  // const initValue = {
-  //   ...state,
-  //   datasets: [
-  //     {
-  //       ...state.datasets[0],
-  //       data: history.map((e) => filterReserved(e[type])),
-  //     },
-  //   ],
-  // };
+  const initValue = {
+    ...state,
+    datasets: [
+      {
+        ...state.datasets[0],
+        data: history.map((e) => filterReserved(Number(e[type]))),
+      },
+    ],
+  };
 
-  const [line, setLine] = useState(cardChartData1);
+  const [line, setLine] = useState(initValue);
 
   useEffect(() => {
     const value = filterReserved(Number(data[type]));
