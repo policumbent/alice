@@ -11,16 +11,16 @@ import {
   cardChartOpts3,
   cardChartOpts4,
 } from './costants';
-import { filterReserved } from 'components/utils';
+import { filterReserved } from 'utils';
 import { ICardChart, IChart } from './types';
 
-const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
+const CardChart = ({ state, type, data, history, opts, isLogged }: ICardChart) => {
   const initValue = {
     ...state,
     datasets: [
       {
         ...state.datasets[0],
-        data: history.map((e) => filterReserved(Number(e[type]))),
+        data: history.map((e) => filterReserved(Number(e[type]), isLogged)),
       },
     ],
   };
@@ -28,7 +28,7 @@ const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
   const [line, setLine] = useState(initValue);
 
   useEffect(() => {
-    const value = filterReserved(Number(data[type]));
+    const value = filterReserved(Number(data[type]), isLogged);
 
     if (value !== null) {
       const oldDataSet = { ...line.datasets[0] };
@@ -51,7 +51,7 @@ const CardChart = ({ state, type, data, history, opts }: ICardChart) => {
   return <Line data={line} options={opts} />;
 };
 
-const PowerCard = ({ data, history }: IChart) => {
+const PowerCard = ({ data, history, isLogged }: IChart) => {
   return (
     <CardChart
       state={cardChartData1}
@@ -59,11 +59,12 @@ const PowerCard = ({ data, history }: IChart) => {
       type="power"
       data={data}
       history={history}
+      isLogged={isLogged}
     />
   );
 };
 
-const CadenceCard = ({ data, history }: IChart) => {
+const CadenceCard = ({ data, history, isLogged }: IChart) => {
   return (
     <CardChart
       state={cardChartData2}
@@ -71,11 +72,12 @@ const CadenceCard = ({ data, history }: IChart) => {
       type="cadence"
       data={data}
       history={history}
+      isLogged={isLogged}
     />
   );
 };
 
-const SpeedCard = ({ data, history }: IChart) => {
+const SpeedCard = ({ data, history, isLogged }: IChart) => {
   return (
     <CardChart
       state={cardChartData3}
@@ -83,11 +85,12 @@ const SpeedCard = ({ data, history }: IChart) => {
       type="speed"
       data={data}
       history={history}
+      isLogged={isLogged}
     />
   );
 };
 
-const HRCard = ({ data, history }: IChart) => {
+const HRCard = ({ data, history, isLogged }: IChart) => {
   return (
     <CardChart
       state={cardChartData4}
@@ -95,6 +98,7 @@ const HRCard = ({ data, history }: IChart) => {
       type="heartrate"
       data={data}
       history={history}
+      isLogged={isLogged}
     />
   );
 };

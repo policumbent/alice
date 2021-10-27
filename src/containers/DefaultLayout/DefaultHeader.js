@@ -8,8 +8,9 @@ import { AppNavbarBrand } from './components';
 import logo from 'assets/img/brand/logo.svg';
 import sygnet from 'assets/img/brand/sygnet.svg';
 import { default as api } from 'api';
-import { parseDate } from 'components/utils';
-import { getMessageToken } from '../../firebase';
+import { parseDate, isNotificationsActive } from 'utils';
+import { getMessageToken } from 'firebase';
+import Store from 'utils/store';
 
 const propTypes = {
   children: PropTypes.node,
@@ -39,16 +40,16 @@ class DefaultHeader extends Component {
       })
       .catch((e) => console.error(e));
 
-    localStorage.removeItem('blinker');
+    Store.remove('blinker');
   }
 
   componentDidMount() {
     // polling over configuration change
     setInterval(() => {
-      const data = localStorage.getItem('blinker');
+      const data = Store.get('blinker');
 
       if (data) {
-        const { bikeName, show } = JSON.parse(data);
+        const { bikeName, show } = data;
 
         if (bikeName !== this.state.bikeName || show !== this.state.show) {
           this.setState({
@@ -66,23 +67,28 @@ class DefaultHeader extends Component {
       // eslint-disable-next-line
       ...attributes
     } = this.props;
+
     return (
       <React.Fragment>
         <Nav className="mr-auto navbar-nav">
-          <NavItem className="ml-4">
+          <NavItem className="ml-3 mr-auto">
             <Link to="/" className="nav-link">
               Dashboard
             </Link>
           </NavItem>
-          {localStorage.getItem('notifications') ? (
-            <NavItem className="ml-2 mr-auto">
-              <Button variant="danger" onClick={() => getMessageToken()}>
-                Attiva notifiche
+          <NavItem className="mr-auto">
+            {isNotificationsActive() ? null : (
+              <Button className="ml-3" variant="danger" onClick={() => getMessageToken()}>
+                Notifiche
               </Button>
-            </NavItem>
-          ) : null}
+            )}
+          </NavItem>
         </Nav>
-        <AppNavbarBrand className="m-auto logo" full={brandFull} minimized={brandMinimized} />
+        <AppNavbarBrand
+          className={`mx-auto ${isNotificationsActive() ? null : 'pr-5'} logo`}
+          full={brandFull}
+          minimized={brandMinimized}
+        />
         <Nav className="ml-auto navbar-nav">
           {this.state.show ? (
             <NavItem className="mr-2 ml-auto">
@@ -90,12 +96,12 @@ class DefaultHeader extends Component {
             </NavItem>
           ) : null}
 
-          <NavItem className="ml-3">
+          <NavItem className="mr-3 ml-auto">
             <Link to="/credits" className="nav-link">
               Credits
             </Link>
           </NavItem>
-          <NavItem className="mx-3">
+          <NavItem className="ml-auto mr-3">
             <Link to={api.isLogged() ? '/logout' : '/login'} className="nav-link">
               {api.isLogged() ? 'Logout' : 'Login'}
             </Link>

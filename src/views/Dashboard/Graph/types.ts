@@ -17,6 +17,7 @@ export function createData(d: any): IGData {
 export interface IChart {
   data: IGData;
   history: IGData[];
+  isLogged: boolean;
 }
 
 export interface ICardChart {
@@ -25,4 +26,5 @@ export interface ICardChart {
   opts: ccOpts1 | ccOpts2 | ccOpts3 | ccOpts4;
   state: ccData;
   type: string;
+  isLogged: boolean;
 }

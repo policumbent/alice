@@ -1,7 +1,9 @@
-import { getMessageToken } from '../firebase';
+import { getMessageToken } from 'firebase';
 import { Modal, Row, Col, Button } from 'react-bootstrap';
 
 import { CountdownRenderProps, default as ReactCountdown } from 'react-countdown';
+import { isNotificationsActive } from 'utils';
+import Store from 'utils/store';
 
 interface ICountdown {
   bikeName: string;
@@ -16,8 +18,7 @@ const Countdown = ({ show, startTime, setShow, bikeName }: ICountdown) => {
 
     if (completed) {
       // set localStorage variable for blinker
-      const obj = JSON.stringify({ bikeName: bikeName, show: true });
-      localStorage.setItem('blinker', obj);
+      Store.setWithTTL('blinker', { bikeName: bikeName, show: true });
 
       // Render a completed state
       return (
@@ -29,8 +30,7 @@ const Countdown = ({ show, startTime, setShow, bikeName }: ICountdown) => {
         </h3>
       );
     } else {
-      const obj = JSON.stringify({ bikeName: bikeName, show: false });
-      localStorage.setItem('blinker', obj);
+      Store.setWithTTL('blinker', { bikeName: bikeName, show: false });
 
       // Render a countdown
       return (
@@ -72,9 +72,11 @@ const Countdown = ({ show, startTime, setShow, bikeName }: ICountdown) => {
           onComplete={() => setTimeout(() => setShow(false), 1800)}
           renderer={renderer}
         />
-        <Button className="mt-4" variant="danger" onClick={() => getMessageToken()}>
-          Ricevi una notifica alla partenza
-        </Button>
+        {isNotificationsActive() ? null : (
+          <Button className="mt-4" variant="danger" onClick={() => getMessageToken()}>
+            Ricevi una notifica alla partenza
+          </Button>
+        )}
       </Modal.Body>
     </Modal>
   );

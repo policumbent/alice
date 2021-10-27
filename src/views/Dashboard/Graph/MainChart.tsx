@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { mainChartData, mainChartOpts } from './costants';
-import { filterReserved, isLogged } from 'components/utils';
+import { filterReserved } from 'utils';
 import { IChart } from './types';
 
-const MainChart = ({ data, history }: IChart) => {
+const MainChart = ({ data, history, isLogged }: IChart) => {
   const initValue = () => {
     const s = mainChartData;
-    const power = history.map((e) => filterReserved(e.power));
+    const power = history.map((e) => filterReserved(e.power, isLogged));
     const cadence = history.map((e) => e.cadence);
     const speed = history.map((e) => e.speed);
-    const heartrate = history.map((e) => filterReserved(e.heartrate));
+    const heartrate = history.map((e) => filterReserved(e.heartrate, isLogged));
 
     return {
       ...s,
@@ -35,7 +35,7 @@ const MainChart = ({ data, history }: IChart) => {
     const oldDataSet4 = state.datasets[3]; // HR
 
     // Show power and hr if logged
-    if (isLogged()) {
+    if (isLogged) {
       oldDataSet1.hidden = false;
       oldDataSet4.hidden = false;
     } else {
@@ -55,7 +55,7 @@ const MainChart = ({ data, history }: IChart) => {
         datasets: [
           {
             ...oldDataSet1,
-            data: [...oldDataSet1.data.slice(1), filterReserved(power)],
+            data: [...oldDataSet1.data.slice(1), filterReserved(power, isLogged)],
           },
           {
             ...oldDataSet2,
@@ -67,7 +67,7 @@ const MainChart = ({ data, history }: IChart) => {
           },
           {
             ...oldDataSet4,
-            data: [...oldDataSet4.data.slice(1), filterReserved(heartrate)],
+            data: [...oldDataSet4.data.slice(1), filterReserved(heartrate, isLogged)],
           },
         ],
       };

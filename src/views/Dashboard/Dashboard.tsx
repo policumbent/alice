@@ -22,7 +22,7 @@ import { LeafletMap, options } from './Map';
 import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from 'api';
-import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from 'components/utils';
+import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from 'utils';
 import { connectedNote, disconnectedNote } from 'components/notifications';
 
 import { IData, IHistory, IWeather } from './types';
@@ -41,6 +41,7 @@ const Dashboard = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [position, setPosition] = useState(options.view.position);
   const [connected, setConnected] = useState<boolean>();
+  const [logged, setLogged] = useState<boolean>(isLogged());
 
   /* Fetch data every second */
   const [, setPolling] = usePolling(() => fetchData(), 1000);
@@ -142,11 +143,11 @@ const Dashboard = () => {
               <ButtonGroup id="card1" className="float-right">
                 <FaSpaceShuttle size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{!isLogged() ? 'Reserved' : data.power}</div>
+              <div className="text-value">{!logged ? 'Reserved' : data.power}</div>
               <div>Power [W]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <PowerCard data={data} history={history.miniChart} />
+              <PowerCard isLogged={logged} data={data} history={history.miniChart} />
             </div>
           </Card>
         </Col>
@@ -161,7 +162,7 @@ const Dashboard = () => {
               <div>Cadence [rpm]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <CadenceCard data={data} history={history.miniChart} />
+              <CadenceCard isLogged={logged} data={data} history={history.miniChart} />
             </div>
           </Card>
         </Col>
@@ -176,7 +177,7 @@ const Dashboard = () => {
               <div>Speed [km/h]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <SpeedCard data={data} history={history.miniChart} />
+              <SpeedCard isLogged={logged} data={data} history={history.miniChart} />
             </div>
           </Card>
         </Col>
@@ -187,11 +188,11 @@ const Dashboard = () => {
               <ButtonGroup id="card4" className="float-right">
                 <FiActivity size={'1.5em'} />
               </ButtonGroup>
-              <div className="text-value">{!isLogged() ? 'Reserved' : data.heartrate}</div>
+              <div className="text-value">{!logged ? 'Reserved' : data.heartrate}</div>
               <div>Heartrate [bpm]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <HRCard data={data} history={history.miniChart} />
+              <HRCard isLogged={logged} data={data} history={history.miniChart} />
             </div>
           </Card>
         </Col>
@@ -203,7 +204,7 @@ const Dashboard = () => {
           <Card>
             <Card.Body>
               <div className="central-chart">
-                <MainChart data={data} history={history.chart} />
+                <MainChart isLogged={logged} data={data} history={history.chart} />
               </div>
             </Card.Body>
           </Card>
@@ -250,7 +251,7 @@ const Dashboard = () => {
       </Row>
 
       {/*// Row riservata agli utenti loggati */}
-      <Row hidden={!api.isLogged()}>
+      <Row hidden={!logged}>
         <WeatherCard
           name={['Acc X', 'Acc X ']}
           unit={['m/s²', 'm/s²']}

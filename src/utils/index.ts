@@ -1,10 +1,23 @@
 import { useRef, useEffect, useState, Dispatch, SetStateAction } from 'react';
 
 import { default as api } from 'api';
+import Store from './store';
 
 export const isLogged = (): boolean => api.isLogged();
 
-export const filterReserved = (value: number) => (isLogged() ? value : 0);
+export const isNotificationsActive = (): boolean => {
+  const token = Store.get('notifications');
+
+  return token !== null && token !== '';
+};
+
+export function hoursToMs(hh: number) {
+  return hh * 60 * 60 * 1000;
+}
+
+export const filterReserved = (value: number, logged: boolean) => {
+  return logged ? value : 0;
+};
 
 export const parseComments = (data: { timestamp: string; message: string }[]): string[] => {
   // this is char ASCII 255:
