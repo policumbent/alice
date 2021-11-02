@@ -27,6 +27,7 @@ const brandMinimized = {
 class DefaultHeader extends Component {
   constructor() {
     super();
+    this.state = { bike: null, show: null };
 
     api
       .getConfig()

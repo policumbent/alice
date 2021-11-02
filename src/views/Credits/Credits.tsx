@@ -42,11 +42,16 @@ const Credits = () => {
                   rel="noopener noreferrer"
                   href="https://github.com/policumbent/alice">
                   policumbent/alice
-                </a>{' '}
+                </a>
                 on team's github. <br /> Contributions of any kind are welcome!
               </p>
             </Card.Body>
           </Card>
+          <div className="text-center mt-4 text-muted">
+            <p>
+              {process.env.REACT_APP_NAME?.toLocaleUpperCase()} v{process.env.REACT_APP_VERSION}
+            </p>
+          </div>
         </Col>
       </Row>
     </article>
