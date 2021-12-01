@@ -1,18 +1,14 @@
-import ReactDOM from 'react-dom';
 import { ExtraCard, WeatherCard } from '../Extra';
 import { IExtra, IWCard } from '../Extra/types';
+import { render } from '@testing-library/react';
 
 const fakeExtra: IExtra = { bgColor: '', name: '', unit: '', value: 0 };
 const fakeWeather: IWCard = { bgColor: '', name: ['', ''], unit: ['', ''], value: [0, 0] };
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<ExtraCard {...fakeExtra} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  render(<ExtraCard {...fakeExtra} />);
 });
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<WeatherCard {...fakeWeather} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  render(<WeatherCard {...fakeWeather} />);
 });
