@@ -2,10 +2,10 @@
 @import 'variables';
 
 // Import styles
-@import '~@coreui/coreui/scss/coreui';
+@import '@coreui/coreui/scss/coreui';
 
 // Temp fix for bootstrap
-@import '~@coreui/coreui/scss/_dropdown-menu-right';
+@import '@coreui/coreui/scss/_dropdown-menu-right';
 
 // If you want to add something do it here
 @import 'custom';

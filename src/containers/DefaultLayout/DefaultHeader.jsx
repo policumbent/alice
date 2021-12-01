@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 
 import { AppNavbarBrand } from './components';
 
-import logo from 'assets/img/brand/logo.svg';
-import sygnet from 'assets/img/brand/sygnet.svg';
-import { default as api } from 'api';
-import { parseDate, isNotificationsActive } from 'utils';
-import { getMessageToken } from 'firebase';
-import Store from 'utils/store';
+import logo from '../../assets/img/brand/logo.svg';
+import sygnet from '../../assets/img/brand/sygnet.svg';
+import { default as api } from '../../api';
+import { parseDate, isNotificationsActive } from '../../utils';
+import { getMessageToken } from '../../firebase';
+import Store from '../../utils/store';
 
 const propTypes = {
   children: PropTypes.node,

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { mainChartData, mainChartOpts } from './costants';
-import { filterReserved } from 'utils';
+import { filterReserved } from '../../../utils';
 import { IChart } from './types';
 
 const MainChart = ({ data, history, isLogged }: IChart) => {

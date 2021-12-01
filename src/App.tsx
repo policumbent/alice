@@ -1,12 +1,10 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { DefaultLayout } from 'containers';
-import { Page404, Page500 } from 'views/Pages';
+import { DefaultLayout } from './containers';
+import { Page404, Page500 } from './views/Pages';
 
-import Notifications from 'components/notifications';
+import Notifications from './components/notifications';
 
 import './App.scss';
-
-// const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 const App = () => {
   return (

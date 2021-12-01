@@ -42,7 +42,7 @@ const Credits = () => {
                   rel="noopener noreferrer"
                   href="https://github.com/policumbent/alice">
                   policumbent/alice
-                </a>
+                </a>{' '}
                 on team's github. <br /> Contributions of any kind are welcome!
               </p>
             </Card.Body>

@@ -3,7 +3,7 @@ import { Col, Row, Card, Button, Form, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 
-import { default as api } from 'api';
+import { default as api } from '../../api';
 
 const Login = () => {
   const history = useHistory();

@@ -6,7 +6,6 @@ import { ButtonGroup, Card, Col, Row } from 'react-bootstrap';
 import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
-import Countdown from 'components/countdown';
 
 import {
   MainChart,
@@ -21,9 +20,10 @@ import { createData } from './Graph/types';
 import { LeafletMap, options } from './Map';
 import { ExtraCard, WeatherCard } from './Extra';
 
-import { default as api } from 'api';
-import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from 'utils';
-import { connectedNote, disconnectedNote } from 'components/notifications';
+import { default as api } from '../../api';
+import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from '../../utils';
+import { connectedNote, disconnectedNote } from '../../components/notifications';
+import Countdown from '../../components/countdown';
 
 import { IData, IHistory, IWeather } from './types';
 

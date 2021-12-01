@@ -1,4 +1,4 @@
-import { getAuthToken } from 'firebase';
+import { getAuthToken } from './firebase';
 
 const host = 'https://serverino.policumbent.it:9002';
 

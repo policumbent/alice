@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, Dispatch, SetStateAction } from 'react';
 
-import { default as api } from 'api';
+import { default as api } from '../api';
 import Store from './store';
 
 export const isLogged = (): boolean => api.isLogged();

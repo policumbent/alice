@@ -11,7 +11,7 @@ import {
   cardChartOpts3,
   cardChartOpts4,
 } from './costants';
-import { filterReserved } from 'utils';
+import { filterReserved } from '../../../utils';
 import { ICardChart, IChart } from './types';
 
 const CardChart = ({ state, type, data, history, opts, isLogged }: ICardChart) => {
