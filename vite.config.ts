@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import react from 'vite-preset-react';
 import envCompatible from 'vite-plugin-env-compatible';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   build: {
@@ -10,6 +11,7 @@ export default defineConfig({
   },
   plugins: [
     svgr(),
+    VitePWA(),
     envCompatible({ prefix: 'REACT_APP' }),
     react({
       removeDevtoolsInProd: true,

@@ -1,5 +1,12 @@
-import ReactNotification, { ReactNotificationOptions, store } from 'react-notifications-component';
+import RN, { ReactNotificationOptions, store } from 'react-notifications-component';
 // import { onMessageListener } from 'firebase';
+
+// This is a workaround for a rollup bug: https://github.com/vitejs/vite/issues/2139#issuecomment-854960323
+export const ReactNotification = interopDefault(RN);
+
+function interopDefault<T>(value: T): T {
+  return (value as any).default;
+}
 
 type Note = ReactNotificationOptions;
 
