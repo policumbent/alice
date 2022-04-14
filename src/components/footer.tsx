@@ -50,7 +50,8 @@ const Footer = () => {
       onFocus={() => moveOption('over')}
       onMouseOver={() => moveOption('over')}
       onMouseLeave={() => moveOption('leave')}
-      onTouchStart={() => moveOption('touch')}>
+      onTouchStart={() => moveOption('touch')}
+    >
       <Ticker mode="smooth" offset={'run-in'} move={move} speed={7}>
         {() => <>{comments}</>}
       </Ticker>

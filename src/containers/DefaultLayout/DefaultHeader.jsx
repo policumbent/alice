@@ -28,7 +28,9 @@ class DefaultHeader extends Component {
   constructor() {
     super();
     this.state = { bike: null, show: null };
+  }
 
+  componentDidMount() {
     api
       .getConfig()
       .then((data) => {
@@ -42,9 +44,7 @@ class DefaultHeader extends Component {
       .catch((e) => console.error(e));
 
     Store.remove('blinker');
-  }
 
-  componentDidMount() {
     // polling over configuration change
     setInterval(() => {
       const data = Store.get('blinker');

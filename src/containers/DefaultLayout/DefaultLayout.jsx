@@ -1,8 +1,6 @@
-import React, { Component, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-
-import { AppFooter, AppHeader } from './components';
 
 // routes config
 import routes from '../../routes';
@@ -20,11 +18,11 @@ const DefaultLayout = (props) => {
 
   return (
     <div className="app">
-      <AppHeader>
+      <div className="app-header navbar">
         <Suspense fallback={loading}>
           <DefaultHeader onLogout={(e) => signOut(e)} />
         </Suspense>
-      </AppHeader>
+      </div>
       <main className="main app-body">
         <Container fluid className="main-container">
           <Suspense fallback={loading}>
@@ -44,11 +42,11 @@ const DefaultLayout = (props) => {
           </Suspense>
         </Container>
       </main>
-      <AppFooter fixed className="ticker-footer">
+      <div className="app-footer footer-fixed ticker-footer">
         <Suspense fallback={loading}>
           <DefaultFooter />
         </Suspense>
-      </AppFooter>
+      </div>
     </div>
   );
 };

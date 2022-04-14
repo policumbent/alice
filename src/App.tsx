@@ -12,8 +12,11 @@ const App = () => {
       <Notifications />
       <BrowserRouter>
         <Switch>
+          {/* @ts-ignore  */}
           <Route path="/404" component={Page404} />
+          {/* @ts-ignore  */}
           <Route path="/500" component={Page500} />
+          {/* @ts-ignore  */}
           <Route path="/" component={DefaultLayout} />
         </Switch>
       </BrowserRouter>

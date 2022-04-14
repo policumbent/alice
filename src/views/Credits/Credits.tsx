@@ -20,7 +20,8 @@ const Credits = () => {
                   className="text-center github-icon"
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://github.com/gabelluardo">
+                  href="https://github.com/gabelluardo"
+                >
                   <FaGithub />
                 </a>
               </h5>
@@ -30,7 +31,8 @@ const Credits = () => {
                   className="text-center github-icon"
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://github.com/stelosca96">
+                  href="https://github.com/stelosca96"
+                >
                   <FaGithub />
                 </a>
               </h5>
@@ -40,7 +42,8 @@ const Credits = () => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://github.com/policumbent/alice">
+                  href="https://github.com/policumbent/alice"
+                >
                   policumbent/alice
                 </a>{' '}
                 on team's github. <br /> Contributions of any kind are welcome!

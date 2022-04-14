@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import Countdown from '../countdown';
 
-it('renders without crashing', () => {
+test('renders without crashing', () => {
   const props = {
     show: true,
     startTime: 0,

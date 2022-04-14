@@ -28,12 +28,16 @@ import Countdown from '../../components/countdown';
 import { IData, IHistory, IWeather } from './types';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
+const defaultHistory = {
+  chart: [{ heartrate: 0, cadence: 0, power: 0, speed: 0 }],
+  miniChart: [{ heartrate: 0, cadence: 0, power: 0, speed: 0 }],
+};
 
 const Dashboard = () => {
   const isMounted = useIsMounted();
 
   const [data, setData] = useState<IData>();
-  const [history, setHistory] = useState<IHistory>();
+  const [history, setHistory] = useState<IHistory>(defaultHistory);
   const [weather, setWeather] = useState<IWeather>();
 
   const [config, setConfig] = useState(defaultConfig);
@@ -97,10 +101,10 @@ const Dashboard = () => {
     const wData = await api.getWeatherSingleStation('ws1');
     updateData(data, wData);
 
-    if (!history) {
-      const h = await api.getHistory(c.bikeName, numElement);
-      updateHistory(h);
-    }
+    // if (!history) {
+    //   const h = await api.getHistory(c.bikeName, numElement);
+    //   updateHistory(h);
+    // }
 
     if (data.connected !== Boolean(connected)) {
       setConnected(data.connected);

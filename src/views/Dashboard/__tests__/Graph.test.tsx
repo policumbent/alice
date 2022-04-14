@@ -15,24 +15,24 @@ const fakeData = {
 const fakeHistory = [fakeData, fakeData];
 const fakeMain = { data: fakeData, history: fakeHistory, isLogged: true };
 
-it('placeholder', () => {});
+test('placeholder', () => {});
 
-// it('renders without crashing', () => {
+// test('renders without crashing', () => {
 //   render(<MainChart {...fakeMain} />);
 // });
 
-// it('renders without crashing', () => {
+// test('renders without crashing', () => {
 //   render(<CadenceCard {...fakeMain} />);
 // });
 
-// it('renders without crashing', () => {
+// test('renders without crashing', () => {
 //   render(<PowerCard {...fakeMain} />);
 // });
 
-// it('renders without crashing', () => {
+// test('renders without crashing', () => {
 //   render(<SpeedCard {...fakeMain} />);
 // });
 
-// it('renders without crashing', () => {
+// test('renders without crashing', () => {
 //   render(<HRCard {...fakeMain} />);
 // });

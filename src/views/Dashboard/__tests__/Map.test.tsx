@@ -6,8 +6,8 @@ import { ILeafletMap } from '../Map/types';
 
 const fakeMap: ILeafletMap = { position: [0, 0], options, track: 'bm', bikeName: '' };
 
-it('placeholder', () => {});
+test('placeholder', () => {});
 
-// it('renders without crashing', () => {
+// test('renders without crashing', () => {
 //   render(<LeafletMap {...fakeMap} />);
 // });

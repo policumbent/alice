@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
-jest.mock('react-chartjs-2', () => ({
+vi.mock('react-chartjs-2', () => ({
   Bar: () => null,
 }));

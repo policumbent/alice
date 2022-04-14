@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import Logout from './Logout';
 
-it('renders without crashing', () => {
+test('renders without crashing', () => {
   render(<Logout />);
 });

@@ -1,5 +1,7 @@
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
+
 import { defineConfig } from 'vite';
-// import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import react from 'vite-preset-react';
 import envCompatible from 'vite-plugin-env-compatible';
@@ -8,6 +10,11 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   build: {
     outDir: 'build',
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: 'src/setupTests.ts',
   },
   plugins: [
     svgr(),
