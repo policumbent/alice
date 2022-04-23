@@ -1,6 +1,8 @@
 import { IData, IWeather } from 'views/Dashboard/types';
 import { IGData } from 'views/Dashboard/Graph/types';
 
+let cnt : number = 0;
+
 type ISim = {
   heartrate: number[],
   power: number[],
@@ -16,7 +18,7 @@ const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * max);
   }
   
-  const genData = (cnt : number, sim : ISim) => {
+  const genData = (sim : ISim) => {
     const simData = {
       time: sim.time[cnt],
       distance: sim.distance[cnt],
@@ -29,13 +31,14 @@ const getRandomInt = (max: number) => {
       accYMax: getRandomInt(60),
       accZ: getRandomInt(60),
       accZMax: getRandomInt(60),
-      timestamp: getRandomInt(60),
+      timestamp: 0,
       connected: true,
       cadence: sim.cadence[cnt],
       heartrate: sim.heartrate[cnt],
       power: sim.power[cnt],
       speed: sim.speed[cnt],
     }
+    cnt++;
     return simData;
   }
      
@@ -48,7 +51,6 @@ const getRandomInt = (max: number) => {
       wind_direction: 0,
       wind_speed: 3,
     };
-  
     return fakeData;
   }
   
@@ -67,8 +69,8 @@ const getRandomInt = (max: number) => {
   
   const genPosition = (cnt : number) =>{
     const pos = {
-      latitude : '40.630423',
-      longitude : '-116.933498',
+      latitude : '40.433212',
+      longitude :  '-117.053714',
     }
     return pos;
   }
