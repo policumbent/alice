@@ -14,47 +14,38 @@ import {
   SpeedCard,
   HRCard,
   numCardElement,
-  numElement,
-} from './Graph';
-import { createData } from './Graph/types';
-import { LeafletMap, options } from './Map';
-import { ExtraCard, WeatherCard } from './Extra';
+} from '../Graph';
+import { LeafletMap, options } from '../Map';
+import { ExtraCard, WeatherCard } from '../Extra';
 
-import { default as api } from '../../api';
-import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged,} from '../../utils';
-import { connectedNote, disconnectedNote } from '../../components/notifications';
-import Countdown from '../../components/countdown';
+import { convertTimeMinSec, useIsMounted, usePolling} from '../../../utils';
+import { genChart, genData, genPosition, genWeather } from './util';
+import { connectedNote, disconnectedNote } from '../../../components/notifications';
 
-import { IData, IHistory, IWeather } from './types';
-import { Simulation } from './Simulation/Simulation';
+import { IData, IHistory, IWeather } from '../types';
+import { sim } from './data';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
-/*const defaultHistory = {
-  chart: [{ heartrate: 0, cadence: 0, power: 0, speed: 0 }],
-  miniChart: [{ heartrate: 0, cadence: 0, power: 0, speed: 0 }],
-};*/
 
-const Dashboard = () => {
+export const Simulation = () => {
   const isMounted = useIsMounted();
-
   const [data, setData] = useState<IData>();
-  const [history, setHistory] = useState<IHistory>(/*defaultHistory*/);
+  const [history, setHistory] = useState<IHistory>();
   const [weather, setWeather] = useState<IWeather>();
-
+  const [cnt, setCnt] = useState(0);
   const [config, setConfig] = useState(defaultConfig);
-  const [startTime, setStartTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [position, setPosition] = useState(options.view.position);
   const [connected, setConnected] = useState<boolean>();
-  const [logged, setLogged] = useState<boolean>(isLogged());
+  const [logged, setLogged] = useState<boolean>(true);
 
   /* Fetch data every second */
   const [, setPolling] = usePolling(() => fetchData(), 1000);
 
   const updateHistory = useCallback(
-    (history) => {
-      if (isMounted.current && history) {
-        const chart = history.map((e: any) => createData(e));
+    () => {
+      if (isMounted.current) {
+        const chart = genChart();
         const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
         setHistory({ chart, miniChart });
       }
@@ -62,29 +53,15 @@ const Dashboard = () => {
     [isMounted]
   );
 
-  const updateConfig = useCallback(
-    async (config) => {
-      if (isMounted.current && config) {
-        const start = parseDate(config.date, config.startTime);
-
-        setConfig(config);
-        if (startTime === 0 && !modalOpen) {
-          setStartTime(start);
-          setModalOpen(start > Date.now());
-        }
-      }
-    },
-    [isMounted, startTime, modalOpen]
-  );
-
   const updateData = useCallback(
     (
-      data: IData & { latitude: string; longitude: string },
+      data: IData,
+      position : { latitude: string; longitude: string },
       weatherData: IWeather | null = null
     ) => {
-      if (isMounted.current && !modalOpen) {
+      if (isMounted.current) {
         setData(data);
-        setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
+        setPosition([parseFloat(position.latitude), parseFloat(position.longitude)]);
 
         if (weatherData) {
           setWeather(weatherData);
@@ -94,29 +71,31 @@ const Dashboard = () => {
     [isMounted, modalOpen]
   );
 
-  const fetchData = useCallback(async () => {
-    const c = await api.getConfig();
-    await updateConfig(c);
-
-    const data = await api.getData(c.bikeName);
-    const wData = await api.getWeatherSingleStation('ws1');
-    updateData(data, wData);
-
-    // if (!history) {
-    //   const h = await api.getHistory(c.bikeName, numElement);
-    //   updateHistory(h);
-    // }
+  
+  const fetchData = useCallback(() => {
+    //const c = await api.getConfig();
+    //await updateConfig(c);
+    const data = genData(cnt, sim);
+    const fun = () => setCnt(cnt+1);
+    const position = genPosition(cnt);
+    const wData = genWeather();
+    updateData(data, position, wData);
+    fun();
+    if (!history) {
+      updateHistory();
+    }
 
     if (data.connected !== Boolean(connected)) {
       setConnected(data.connected);
     }
-  }, [history, updateConfig, updateData, updateHistory, connected]);
+    console.log(cnt);
+  }, [history, updateData, updateHistory, connected]);
 
   useEffect(() => {
-    fetchData();
+    setTimeout(() => fetchData(), 1000);
     setPolling(true);
   }, [fetchData, setPolling]);
-
+  
   useEffect(() => {
     if (connected) {
       connectedNote();
@@ -125,20 +104,25 @@ const Dashboard = () => {
     }
   }, [connected]);
 
-  /* If there is no data yet, show blank screen */
-  if (!data || !history || !weather) {
-    return Simulation();
-  }
+  
 
+  /*Avoid undefined data*/
+
+  if (!data || !history || !weather){
+    return(<div className="No-Data">
+        <h3>No data available at the moment, running a simulation...</h3>
+      </div>);
+  }
+  
   return (
     <article className="animated fadeIn">
-      {/* Countdown per la live */}
+      {/* Countdown per la live 
       <Countdown
         show={modalOpen}
         setShow={setModalOpen}
         bikeName={config.bikeName}
         startTime={startTime}
-      />
+      />*/}
 
       {/* Row dei mini chart */}
       <Row>
@@ -279,8 +263,10 @@ const Dashboard = () => {
         <ExtraCard name="Last Update" bgColor="gray" value={data.timestamp} />
         <ExtraCard name="Last Weather Update" bgColor="orange" value={weather?.timestamp} />
       </Row>
+      {/*Messaggio per la simulazione*/}
+      <div className="No-Data">
+        <h3>No data available at the moment, running a simulation...</h3>
+    </div>
     </article>
   );
 };
-
-export default Dashboard;
