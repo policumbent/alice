@@ -1,5 +1,6 @@
 import { IData, IWeather } from 'views/Dashboard/types';
 import { IGData } from 'views/Dashboard/Graph/types';
+import { GiLoveSong } from 'react-icons/gi';
 
 let cnt : number = 0;
 
@@ -19,6 +20,7 @@ const getRandomInt = (max: number) => {
   }
   
   const genData = (sim : ISim) => {
+    if (cnt == 375) cnt = 0;
     const simData = {
       time: sim.time[cnt],
       distance: sim.distance[cnt],
@@ -67,10 +69,13 @@ const getRandomInt = (max: number) => {
     return chart;
   }
   
-  const genPosition = (cnt : number) =>{
+  const genPosition = () =>{
+    const lat = 40.393217 + cnt*0.0002;
+    const long = -117.043414 - cnt*0.00005;
+    
     const pos = {
-      latitude : '40.433212',
-      longitude :  '-117.053714',
+      latitude : lat as unknown as string,
+      longitude :  long as unknown as string,
     }
     return pos;
   }

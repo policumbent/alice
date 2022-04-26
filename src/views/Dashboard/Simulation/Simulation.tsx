@@ -76,7 +76,7 @@ export const Simulation = () => {
     //const c = await api.getConfig();
     //await updateConfig(c);
     const data = genData(sim);
-    const position = genPosition(cnt);
+    const position = genPosition();
     const wData = genWeather();
     updateData(data, position, wData);
     if (!history) {
