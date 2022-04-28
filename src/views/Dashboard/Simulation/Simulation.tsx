@@ -7,20 +7,13 @@ import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
 
-import {
-  MainChart,
-  CadenceCard,
-  PowerCard,
-  SpeedCard,
-  HRCard,
-  numCardElement,
-} from '../Graph';
+import { MainChart, CadenceCard, PowerCard, SpeedCard, HRCard, numCardElement } from '../Graph';
 import { LeafletMap, options } from '../Map';
 import { ExtraCard, WeatherCard } from '../Extra';
 
-import { convertTimeMinSec, useIsMounted, usePolling} from '../../../utils';
+import { convertTimeMinSec, useIsMounted, usePolling } from '../../../utils';
 import { genChart, genData, genPosition, genWeather } from './util';
-import { connectedNote, disconnectedNote } from '../../../components/notifications';
+import { connectedNote, disconnectedNote } from '../../../components/Notifications';
 
 import { IData, IHistory, IWeather } from '../types';
 import { sim } from './data';
@@ -42,21 +35,18 @@ export const Simulation = () => {
   /* Fetch data every second */
   const [, setPolling] = usePolling(() => fetchData(), 1000);
 
-  const updateHistory = useCallback(
-    () => {
-      if (isMounted.current) {
-        const chart = genChart();
-        const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
-        setHistory({ chart, miniChart });
-      }
-    },
-    [isMounted]
-  );
+  const updateHistory = useCallback(() => {
+    if (isMounted.current) {
+      const chart = genChart();
+      const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
+      setHistory({ chart, miniChart });
+    }
+  }, [isMounted]);
 
   const updateData = useCallback(
     (
       data: IData,
-      position : { latitude: string; longitude: string },
+      position: { latitude: string; longitude: string },
       weatherData: IWeather | null = null
     ) => {
       if (isMounted.current) {
@@ -71,7 +61,6 @@ export const Simulation = () => {
     [isMounted, modalOpen]
   );
 
-  
   const fetchData = useCallback(() => {
     //const c = await api.getConfig();
     //await updateConfig(c);
@@ -93,7 +82,7 @@ export const Simulation = () => {
     fetchData();
     setPolling(true);
   }, [fetchData, setPolling]);
-  
+
   useEffect(() => {
     if (connected) {
       connectedNote();
@@ -102,16 +91,16 @@ export const Simulation = () => {
     }
   }, [connected]);
 
-  
-
   /*Avoid undefined data*/
 
-  if (!data || !history || !weather){
-    return(<div className="No-Data">
+  if (!data || !history || !weather) {
+    return (
+      <div className="No-Data">
         <h3>No data available at the moment, running a simulation...</h3>
-      </div>);
+      </div>
+    );
   }
-  
+
   return (
     <article className="animated fadeIn">
       {/* Countdown per la live 
@@ -264,7 +253,7 @@ export const Simulation = () => {
       {/*Messaggio per la simulazione*/}
       <div className="No-Data">
         <h3>No data available at the moment, running a simulation...</h3>
-    </div>
+      </div>
     </article>
   );
 };

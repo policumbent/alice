@@ -21,9 +21,9 @@ import { LeafletMap, options } from './Map';
 import { ExtraCard, WeatherCard } from './Extra';
 
 import { default as api } from '../../api';
-import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged,} from '../../utils';
-import { connectedNote, disconnectedNote } from '../../components/notifications';
-import Countdown from '../../components/countdown';
+import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from '../../utils';
+import { connectedNote, disconnectedNote } from '../../components/Notifications';
+import Countdown from '../../components/Countdown';
 
 import { IData, IHistory, IWeather } from './types';
 import { Simulation } from './Simulation/Simulation';
@@ -110,7 +110,7 @@ const Dashboard = () => {
     if (data.connected !== Boolean(connected)) {
       setConnected(data.connected);
     }
-  }, [history, updateConfig, updateData, updateHistory, connected]);
+  }, [updateConfig, updateData, connected]);
 
   useEffect(() => {
     fetchData();

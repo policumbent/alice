@@ -1,24 +1,29 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { DefaultLayout } from './containers';
-import { Page404, Page500 } from './views/Pages';
 
-import Notifications from './components/notifications';
+import Notifications from './components/Notifications';
+import Layout from './containers/Layout';
 
 import './App.scss';
+
+// routes config
+import routes from './routes';
 
 const App = () => {
   return (
     <div className="app-container">
       <Notifications />
       <BrowserRouter>
-        <Switch>
-          {/* @ts-ignore  */}
-          <Route path="/404" component={Page404} />
-          {/* @ts-ignore  */}
-          <Route path="/500" component={Page500} />
-          {/* @ts-ignore  */}
-          <Route path="/" component={DefaultLayout} />
-        </Switch>
+        <Layout>
+          <Switch>
+            {routes.map((route, idx) =>
+              !route.component ? null : (
+                <Route key={idx} path={route.path} exact={route.exact}>
+                  <route.component />
+                </Route>
+              )
+            )}
+          </Switch>
+        </Layout>
       </BrowserRouter>
     </div>
   );

@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import Countdown from '../countdown';
+import Countdown from '../Countdown';
 
 test('renders without crashing', () => {
   const props = {
