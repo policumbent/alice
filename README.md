@@ -8,15 +8,15 @@ Public PWA telemetry dashboard of <a href=https://www.policumbent.it>Team Policu
 <br>
 <br>
 
-<!-- ALL-CONTRIBUTORS-BADGE: START - Do not remove or modify this section -->
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3c225d0f-fb24-4e75-8da3-420ab5e0fa97/deploy-status)](https://app.netlify.com/sites/alice-policumbent/deploys)
-<!-- ALL-CONTRIBUTORS-BADGE: END -->
 
 </h3>
-
-
 
 ## Development
 
@@ -45,16 +45,17 @@ By default, runs tests related to files changed since the last commit.
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
-<!-- ALL-CONTRIBUTORS-LIST: START - Do not remove or modify this section -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="https://github.com/gabelluardo"><img src="https://avatars.githubusercontent.com/u/42920247?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriele Belluardo</b></sub></a><br /><a href="https://github.com/policumbent/alice/commits?author=gabelluardo" title="Code">💻</a> <a href="https://github.com/policumbent/alice/commits?author=gabelluardo" title="Documentation">📖</a> <a href="#ideas-gabelluardo" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/stelosca96"><img src="https://avatars.githubusercontent.com/u/44433696?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stefano Loscalzo</b></sub></a><br /><a href="https://github.com/policumbent/alice/commits?author=stelosca96" title="Code">💻</a> <a href="#design-stelosca96" title="Design">🎨</a> <a href="#ideas-stelosca96" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
-
-<!-- ALL-CONTRIBUTORS-LIST: END -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
