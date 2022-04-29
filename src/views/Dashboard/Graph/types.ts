@@ -16,13 +16,13 @@ export function createData(d: any): IGData {
 
 export interface IChart {
   data: IGData;
-  history: IGData[];
+  history: IGData[] | null | undefined;
   isLogged: boolean;
 }
 
 export interface ICardChart {
   data: IGData;
-  history: IGData[];
+  history: IGData[] | null | undefined;
   opts: ccOpts1 | ccOpts2 | ccOpts3 | ccOpts4;
   state: ccData;
   type: string;

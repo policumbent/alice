@@ -1,9 +1,9 @@
-import { getMessageToken } from 'firebase';
 import { Modal, Row, Col, Button } from 'react-bootstrap';
-
 import { CountdownRenderProps, default as ReactCountdown } from 'react-countdown';
-import { isNotificationsActive } from 'utils';
-import Store from 'utils/store';
+
+import { getMessageToken } from '../firebase';
+import { isNotificationsActive } from '../utils';
+import Store from '../utils/store';
 
 interface ICountdown {
   bikeName: string;

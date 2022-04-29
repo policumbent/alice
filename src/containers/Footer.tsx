@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-
-import { default as api } from 'api';
 import Ticker from 'react-ticker';
+
+import { default as api } from '../api';
 import { parseComments, usePolling } from '../utils';
 
 const Footer = () => {

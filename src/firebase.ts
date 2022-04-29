@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, getIdToken } from 'firebase/auth';
 import { getMessaging, getToken } from 'firebase/messaging';
-import { default as api } from 'api';
-import Store from 'utils/store';
+import { default as api } from './api';
+import Store from './utils/store';
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

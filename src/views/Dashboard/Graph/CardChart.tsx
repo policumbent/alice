@@ -10,8 +10,9 @@ import {
   cardChartOpts2,
   cardChartOpts3,
   cardChartOpts4,
+  numCardElement,
 } from './costants';
-import { filterReserved } from 'utils';
+import { filterReserved } from '../../../utils';
 import { ICardChart, IChart } from './types';
 
 const CardChart = ({ state, type, data, history, opts, isLogged }: ICardChart) => {
@@ -20,7 +21,9 @@ const CardChart = ({ state, type, data, history, opts, isLogged }: ICardChart) =
     datasets: [
       {
         ...state.datasets[0],
-        data: history.map((e) => filterReserved(Number(e[type]), isLogged)),
+        data:
+          history?.map((e) => filterReserved(Number(e[type]), isLogged)) ||
+          Array(numCardElement + 1).fill(null),
       },
     ],
   };
@@ -28,7 +31,10 @@ const CardChart = ({ state, type, data, history, opts, isLogged }: ICardChart) =
   const [line, setLine] = useState(initValue);
 
   useEffect(() => {
-    const value = filterReserved(Number(data[type]), isLogged);
+    const value =
+      type === 'power' || type === 'heartrate'
+        ? filterReserved(Number(data[type]), isLogged)
+        : data[type];
 
     if (value !== null) {
       const oldDataSet = { ...line.datasets[0] };

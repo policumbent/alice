@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { useState, useEffect, useCallback } from 'react';
 import { ButtonGroup, Card, Col, Row } from 'react-bootstrap';
 
 import { FiActivity } from 'react-icons/fi';
 import { GiSpeedometer, GiCartwheel } from 'react-icons/gi';
 import { FaSpaceShuttle } from 'react-icons/fa';
-import Countdown from 'components/countdown';
 
 import {
   MainChart,
@@ -21,11 +18,13 @@ import { createData } from './Graph/types';
 import { LeafletMap, options } from './Map';
 import { ExtraCard, WeatherCard } from './Extra';
 
-import { default as api } from 'api';
-import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from 'utils';
-import { connectedNote, disconnectedNote } from 'components/notifications';
+import { default as api } from '../../api';
+import { parseDate, convertTimeMinSec, useIsMounted, usePolling, isLogged } from '../../utils';
+import { connectedNote, disconnectedNote } from '../../components/Notifications';
+import Countdown from '../../components/Countdown';
 
 import { IData, IHistory, IWeather } from './types';
+import { genData, genPosition, genWeather } from './simulation';
 
 const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 
@@ -93,19 +92,28 @@ const Dashboard = () => {
     const c = await api.getConfig();
     await updateConfig(c);
 
-    const data = await api.getData(c.bikeName);
-    const wData = await api.getWeatherSingleStation('ws1');
-    updateData(data, wData);
+    // run simulation
+    if (process.env.REACT_APP_SIMULATION === 'true') {
+      const data: IData = genData();
+      const position: { latitude: string; longitude: string } = genPosition();
+      const wData = genWeather();
 
-    if (!history) {
-      const h = await api.getHistory(c.bikeName, numElement);
-      updateHistory(h);
-    }
+      updateData(Object.assign(data, position), wData);
+    } else {
+      const data = await api.getData(c.bikeName);
+      const wData = await api.getWeatherSingleStation('ws1');
+      updateData(data, wData);
 
-    if (data.connected !== Boolean(connected)) {
-      setConnected(data.connected);
+      if (!history) {
+        const h = await api.getHistory(c.bikeName, numElement);
+        updateHistory(h);
+      }
+
+      if (data.connected !== Boolean(connected)) {
+        setConnected(data.connected);
+      }
     }
-  }, [history, updateConfig, updateData, updateHistory, connected]);
+  }, [updateConfig, updateData, history, connected, updateHistory]);
 
   useEffect(() => {
     fetchData();
@@ -121,7 +129,7 @@ const Dashboard = () => {
   }, [connected]);
 
   /* If there is no data yet, show blank screen */
-  if (!data || !history || !weather) {
+  if (!data || !weather) {
     return null;
   }
 
@@ -147,7 +155,7 @@ const Dashboard = () => {
               <div>Power [W]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <PowerCard isLogged={logged} data={data} history={history.miniChart} />
+              <PowerCard isLogged={logged} data={data} history={history?.miniChart} />
             </div>
           </Card>
         </Col>
@@ -162,7 +170,7 @@ const Dashboard = () => {
               <div>Cadence [rpm]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <CadenceCard isLogged={logged} data={data} history={history.miniChart} />
+              <CadenceCard isLogged={logged} data={data} history={history?.miniChart} />
             </div>
           </Card>
         </Col>
@@ -177,7 +185,7 @@ const Dashboard = () => {
               <div>Speed [km/h]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <SpeedCard isLogged={logged} data={data} history={history.miniChart} />
+              <SpeedCard isLogged={logged} data={data} history={history?.miniChart} />
             </div>
           </Card>
         </Col>
@@ -192,7 +200,7 @@ const Dashboard = () => {
               <div>Heartrate [bpm]</div>
             </Card.Body>
             <div className="chart-wrapper card-chart">
-              <HRCard isLogged={logged} data={data} history={history.miniChart} />
+              <HRCard isLogged={logged} data={data} history={history?.miniChart} />
             </div>
           </Card>
         </Col>
@@ -204,7 +212,7 @@ const Dashboard = () => {
           <Card>
             <Card.Body>
               <div className="central-chart">
-                <MainChart isLogged={logged} data={data} history={history.chart} />
+                <MainChart isLogged={logged} data={data} history={history?.chart} />
               </div>
             </Card.Body>
           </Card>

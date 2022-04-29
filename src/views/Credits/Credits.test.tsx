@@ -1,8 +1,6 @@
-import ReactDOM from 'react-dom';
+import { render } from '@testing-library/react';
 import Credits from './Credits';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Credits />, div);
-  ReactDOM.unmountComponentAtNode(div);
+test('renders without crashing', () => {
+  render(<Credits />);
 });

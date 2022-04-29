@@ -17,8 +17,7 @@ export const options: mapOpts = {
   view: battleMontain,
   style: { height: 'inherit' },
   tile: {
-    url:
-      'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=5adf6850b4034fb3a71eff6eeab5d818',
+    url: 'https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=5adf6850b4034fb3a71eff6eeab5d818',
     attribution:
       '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     apiKey: '5adf6850b4034fb3a71eff6eeab5d818',

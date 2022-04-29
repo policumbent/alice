@@ -15,7 +15,7 @@ const defaultProps = {
   tag: 'a',
 };
 
-class AppNavbarBrand extends Component {
+class NavbarBrand extends Component {
   imgSrc(brand) {
     return brand.src ? brand.src : '';
   }
@@ -74,7 +74,7 @@ class AppNavbarBrand extends Component {
   }
 }
 
-AppNavbarBrand.propTypes = propTypes;
-AppNavbarBrand.defaultProps = defaultProps;
+NavbarBrand.propTypes = propTypes;
+NavbarBrand.defaultProps = defaultProps;
 
-export default AppNavbarBrand;
+export default NavbarBrand;
