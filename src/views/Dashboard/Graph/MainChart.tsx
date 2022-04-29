@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { mainChartData, mainChartOpts } from './costants';
+import { mainChartData, mainChartOpts, numElement } from './costants';
 import { filterReserved } from '../../../utils';
 import { IChart } from './types';
 
 const MainChart = ({ data, history, isLogged }: IChart) => {
   const initValue = () => {
     const s = mainChartData;
-    const power = history.map((e) => filterReserved(e.power, isLogged));
-    const cadence = history.map((e) => e.cadence);
-    const speed = history.map((e) => e.speed);
-    const heartrate = history.map((e) => filterReserved(e.heartrate, isLogged));
+
+    const power =
+      history?.map((e) => filterReserved(e.power, isLogged)) || Array(numElement + 1).fill(null);
+    const cadence = history?.map((e) => e.cadence) || Array(numElement + 1).fill(null);
+    const speed = history?.map((e) => e.speed) || Array(numElement + 1).fill(null);
+    const heartrate =
+      history?.map((e) => filterReserved(e.heartrate, isLogged)) ||
+      Array(numElement + 1).fill(null);
 
     return {
       ...s,

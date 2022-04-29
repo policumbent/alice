@@ -55,7 +55,6 @@ class Store {
     localStorage.removeItem(name);
   }
 
-  //
   /**
    * Put object data on local memory with a ttl
    *

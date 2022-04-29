@@ -17,6 +17,7 @@ const App = () => {
           <Switch>
             {routes.map((route, idx) =>
               !route.component ? null : (
+                // @ts-ignore
                 <Route key={idx} path={route.path} exact={route.exact}>
                   <route.component />
                 </Route>
