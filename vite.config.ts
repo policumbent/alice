@@ -6,16 +6,10 @@ import svgr from 'vite-plugin-svgr';
 import react from 'vite-preset-react';
 import envCompatible from 'vite-plugin-env-compatible';
 import { VitePWA } from 'vite-plugin-pwa';
-import path from 'path';
 
 export default defineConfig({
   build: {
     outDir: 'build',
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
   },
   test: {
     globals: true,
@@ -24,7 +18,7 @@ export default defineConfig({
   },
   plugins: [
     svgr(),
-    VitePWA({}),
+    VitePWA(),
     envCompatible({ prefix: 'REACT_APP' }),
     react({
       removeDevtoolsInProd: true,
