@@ -26,6 +26,15 @@
         "design",
         "ideas"
       ]
+    },
+    {
+      "login": "ghiannir",
+      "name": "Riccardo Ghianni",
+      "avatar_url": "https://avatars.githubusercontent.com/u/72158759?v=4",
+      "profile": "https://github.com/ghiannir",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
