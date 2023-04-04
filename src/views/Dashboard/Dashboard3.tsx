@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ButtonGroup, Card, Col, Row } from 'react-bootstrap';
 
 import { FiActivity } from 'react-icons/fi';
@@ -25,103 +25,100 @@ import Countdown from '../../components/Countdown';
 
 import { IData, IHistory, IWeather } from './types';
 import { genData, genPosition, genWeather } from './simulation';
-import SocketContext from '../../contexts/Socket/Context';
 
-export const defaultConfig = { bikeName: 'phoenix', trackName: 'bm' };
+const defaultConfig = { bikeName: 'taurusx', trackName: 'bm' };
 
 const Dashboard = () => {
-  const { socket, uid , data, weather, history , config } = useContext(SocketContext).SocketState;
-
   const isMounted = useIsMounted();
 
-  // const [data, setData] = useState<IData>();
-  // const [history, setHistory] = useState<IHistory>();
-  // const [weather, setWeather] = useState<IWeather>();
+  const [data, setData] = useState<IData>();
+  const [history, setHistory] = useState<IHistory>();
+  const [weather, setWeather] = useState<IWeather>();
 
-  // const [config, setConfig] = useState(defaultConfig);
+  const [config, setConfig] = useState(defaultConfig);
   const [startTime, setStartTime] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [position, setPosition] = useState(options.view.position);
-  const [connected, setConnected] = useState<boolean>(false);
+  const [connected, setConnected] = useState<boolean>();
   const [logged, setLogged] = useState<boolean>(isLogged());
 
   /* Fetch data every second */
-  // const [, setPolling] = usePolling(() => fetchData(), 1000);
+  const [, setPolling] = usePolling(() => fetchData(), 1000);
 
-  // const updateHistory = useCallback(
-  //   (history) => {
-  //     if (isMounted.current && history) {
-  //       const chart = history.map((e: any) => createData(e));
-  //       const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
-  //       setHistory({ chart, miniChart });
-  //     }
-  //   },
-  //   [isMounted]
-  // );
+  const updateHistory = useCallback(
+    (history) => {
+      if (isMounted.current && history) {
+        const chart = history.map((e: any) => createData(e));
+        const miniChart = chart.slice(numCardElement, chart.length - numCardElement);
+        setHistory({ chart, miniChart });
+      }
+    },
+    [isMounted]
+  );
 
-  // const updateConfig = useCallback(
-  //   async (config) => {
-  //     if (isMounted.current && config) {
-  //       const start = parseDate(config.date, config.startTime);
+  const updateConfig = useCallback(
+    async (config) => {
+      if (isMounted.current && config) {
+        const start = parseDate(config.date, config.startTime);
 
-  //       setConfig(config);
-  //       if (startTime === 0 && !modalOpen) {
-  //         setStartTime(start);
-  //         setModalOpen(start > Date.now());
-  //       }
-  //     }
-  //   },
-  //   [isMounted, startTime, modalOpen]
-  // );
+        setConfig(config);
+        if (startTime === 0 && !modalOpen) {
+          setStartTime(start);
+          setModalOpen(start > Date.now());
+        }
+      }
+    },
+    [isMounted, startTime, modalOpen]
+  );
 
-  // const updateData = useCallback(
-  //   (
-  //     data: IData & { latitude: string; longitude: string },
-  //     weatherData: IWeather | null = null
-  //   ) => {
-  //     if (isMounted.current && !modalOpen) {
-  //       setData(data);
-  //       setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
+  const updateData = useCallback(
+    (
+      data: IData & { latitude: string; longitude: string },
+      weatherData: IWeather | null = null
+    ) => {
+      if (isMounted.current && !modalOpen) {
+        setData(data);
+        setPosition([parseFloat(data.latitude), parseFloat(data.longitude)]);
 
-  //       if (weatherData) {
-  //         setWeather(weatherData);
-  //       }
-  //     }
-  //   },
-  //   [isMounted, modalOpen]
-  // );
+        if (weatherData) {
+          setWeather(weatherData);
+        }
+      }
+    },
+    [isMounted, modalOpen]
+  );
 
-  // const fetchData = useCallback(async () => {
-  //   const c = await api.getConfig();
-  //   await updateConfig(c);
+  const fetchData = useCallback(async () => {
+    const c = await api.getConfig();
+    await updateConfig(c);
 
-  //   // run simulation
-  //   if (process.env.REACT_APP_SIMULATION === 'true') {
-  //     const data: IData = genData();
-  //     const position: { latitude: string; longitude: string } = genPosition();
-  //     const wData = genWeather();
+    // run simulation
+    if (process.env.REACT_APP_SIMULATION === 'true') {
+      const data: IData = genData();
+      const position: { latitude: string; longitude: string } = genPosition();
+      const wData = genWeather();
 
-  //     updateData(Object.assign(data, position), wData);
-  //   } else {
-  //     const data = await api.getData(c.bikeName);
-  //     const wData = await api.getWeatherSingleStation('ws1');
-  //     updateData(data, wData);
+      updateData(Object.assign(data, position), wData);
+    } else {
+      const data = await api.getData(c.bikeName);
+      const wData = await api.getWeatherSingleStation('ws1');
+      updateData(data, wData);
 
-  //     if (!history) {
-  //       const h = await api.getHistory(c.bikeName, numElement);
-  //       updateHistory(h);
-  //     }
+      if (!history) {
+        const h = await api.getHistory(c.bikeName, numElement);
+        updateHistory(h);
+      }
 
-  //     if (data.connected !== Boolean(connected)) {
-  //       setConnected(data.connected);
-  //     }
-  //   }
-  // }, [updateConfig, updateData, history, connected, updateHistory]);
+      if (data.connected !== Boolean(connected)) {
+        setConnected(data.connected);
+      }
+    }
+  }, [updateConfig, updateData, history, connected, updateHistory]);
 
-  // useEffect(() => {
-  //   fetchData();
-  //   setPolling(true);
-  // }, [fetchData, setPolling]);
+  useEffect(() => {
+    fetchData();
+    setPolling(true);
+  }, [fetchData, setPolling]);
 
   useEffect(() => {
     if (connected) {
@@ -142,7 +139,7 @@ const Dashboard = () => {
       <Countdown
         show={modalOpen}
         setShow={setModalOpen}
-        bikeName={config? config.bikeName : 'phoenix'}
+        bikeName={config.bikeName}
         startTime={startTime}
       />
 
@@ -227,8 +224,8 @@ const Dashboard = () => {
                 <LeafletMap
                   position={position}
                   options={options}
-                  track={config ? config.trackName : 'mx'}
-                  bikeName={config ? config.bikeName : 'phoenix'}
+                  track={config.trackName}
+                  bikeName={config.bikeName}
                 />
               </div>
             </Card.Body>

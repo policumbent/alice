@@ -29,8 +29,3 @@ export interface IWeather {
   wind_direction: number;
   wind_speed: number;
 }
-
-export interface IConfig {
-  bikeName : string;
-  trackName : string;
-}
