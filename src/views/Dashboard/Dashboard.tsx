@@ -26,6 +26,7 @@ import Countdown from '../../components/Countdown';
 import { IData, IHistory, IWeather } from './types';
 import { genData, genPosition, genWeather } from './simulation';
 import SocketContext from '../../contexts/Socket/Context';
+import { SocketContextComponent } from '../../contexts/Socket/Component';
 
 export const defaultConfig = { bikeName: 'phoenix', trackName: 'bm' };
 
@@ -132,7 +133,7 @@ const Dashboard = () => {
   }, [connected]);
 
   /* If there is no data yet, show blank screen */
-  if (!data || !weather) {
+  if (!data) {
     return null;
   }
 

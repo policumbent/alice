@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 import { Socket } from "socket.io-client";
-import { IData, IWeather, IHistory, IConfig } from "views/Dashboard/types";
+import { IData, IWeather, IHistory, IConfig } from "../../views/Dashboard/types";
 import { defaultConfig } from "../../views/Dashboard/Dashboard";
 
 export  interface ISocketContextState {
@@ -18,7 +18,7 @@ export const defaultSocketContextState : ISocketContextState = {
     data : undefined,
     weather : undefined,
     history : undefined,
-    config : defaultConfig,
+    config : undefined,
 }
 
 export type TSocketContextActions = 'update_socket' | 'update_uid' | 

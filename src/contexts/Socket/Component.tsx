@@ -1,22 +1,19 @@
-import React, { useEffect, useReducer } from 'react';
-import { IHistory, IData, IWeather, IConfig } from 'views/Dashboard/types';
-import { useSocket } from 'views/Dashboard/useSocket';
+import React, { useEffect, useReducer, useState } from 'react';
+import { IHistory, IData, IWeather, IConfig } from '../../views/Dashboard/types';
+import { useSocket } from '../../views/Dashboard/useSocket';
 import { defaultSocketContextState, SocketContextProvider, SocketReducer } from './Context';
 
 export interface ISocketContextComponentProps {}
 
-const SocketContextComponent : React.FunctionComponent<ISocketContextComponentProps> = (props) => {
+export const SocketContextComponent : React.FunctionComponent<ISocketContextComponentProps> = (props) => {
     const { children } = props;
-    let data: IData;
-    let history : IHistory;
-    let weather : IWeather;
-    let config : IConfig;
+    const [ history, setHistory ] = useState<IHistory>();
 
     const [SocketState, SocketDispatch] = useReducer(SocketReducer, defaultSocketContextState);
     //loading
 
     const socket = useSocket('ws://localhost:1337', {
-        reconnectionAttempts : Infinity,
+        reconnectionAttempts : 5,
         reconnectionDelay: 5000,
         autoConnect: false,
     });
@@ -30,9 +27,13 @@ const SocketContextComponent : React.FunctionComponent<ISocketContextComponentPr
         startListeners();
         // send handshake
         sendHandshake();
-    });
+    }, []);
 
     const startListeners = () => {
+        // connect
+        socket.on('connect', () => {
+            console.info('Connection on socket established');
+        });
         // reconnect
         socket.io.on('reconnect', (attempt) => {
             console.info('Reconnected on attempt: ', attempt);
@@ -54,34 +55,35 @@ const SocketContextComponent : React.FunctionComponent<ISocketContextComponentPr
             alert('Unable to reconnect to the socket');
         });
 
-        socket.on('update data', (new_data : string) => {
-            //TODO: data = toIData(data);
-            //TODO: history = updateHistory(data, history);
+        socket.on('update data', (dataJSON : string) => {
+            const data : IData = JSON.parse(dataJSON);
+            // setHistory(updateHistory(data, history));
             SocketDispatch({type: 'update_data', payload: data});
-            SocketDispatch({type: 'update_history', payload: history});
+            // SocketDispatch({type: 'update_history', payload: history});
         });
 
-        socket.on('update weather', (new_weather : string) => {
-            //TODO weather = toIWeather(new_weather);
+        socket.on('update weather', (JSONweather : string) => {
+            const weather = JSON.parse(JSONweather);
             SocketDispatch({type: 'update_weather', payload: weather});
         });
 
-        socket.on('update config', (new_config : string) => {
-            // TODO config = toIConfig(new_config);
+        socket.on('update config', (JSONconfig : string) => {
+            const config = JSON.parse(JSONconfig);
             SocketDispatch({type: 'update_config', payload: config});
         });
     };
+    
+    const sendHandshake = () => {};
+    // const sendHandshake = () => {
+    //     console.info('Handshaking...');
 
-    const sendHandshake = () => {
-        console.info('Handshaking...');
+    //     socket.emit('handshake', (uid: string) => {
+    //         console.log('User handshake callback message received');
+    //         SocketDispatch({type: 'update_uid', payload: uid});
 
-        socket.emit('handshake', (uid: string) => {
-            console.log('User handshake callback message received');
-            SocketDispatch({type: 'update_uid', payload: uid});
-
-            //setLoading(false);
-        });
-    };
+    //         //setLoading(false);
+    //     });
+    // };
 
     return <SocketContextProvider value={{SocketState, SocketDispatch}}>
         {children}

@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorkerRegister';
 import ReactGA from 'react-ga4';
+import { SocketContextComponent } from './contexts/Socket/Component';
 
 try {
   ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID || '');
@@ -12,9 +13,13 @@ try {
 }
 
 render(
+  <SocketContextComponent>
   <StrictMode>
+    
     <App />
-  </StrictMode>,
+    
+  </StrictMode>
+  </SocketContextComponent>,
   document.getElementById('root')
 );
 
