@@ -33,10 +33,12 @@ export const SocketContextComponent : React.FunctionComponent<ISocketContextComp
         // connect
         socket.on('connect', () => {
             console.info('Connection on socket established');
+            socket.emit('data service', "");
         });
         // reconnect
         socket.io.on('reconnect', (attempt) => {
             console.info('Reconnected on attempt: ', attempt);
+            socket.emit('data service', "");
         });
 
         // reconnect attempt event
